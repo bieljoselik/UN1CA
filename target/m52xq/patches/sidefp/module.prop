@@ -1,4 +1,4 @@
 id=sidefp
 name=Fingerprint sensor position
-author=salvogiangri
+author=devcore94
 description=Sets correct fingerprint sensor position value.

@@ -1,4 +1,4 @@
 id=debloat
 name=Debloat list
-author=salvogiangri
+author=devcore94
 description=Applies ROM/device-specific debloat list in work dir.

@@ -1,4 +1,4 @@
 id=erofs
 name=EROFS support
-author=salvogiangri, utkustnr
+author=devcore94, utkustnr
 description=Adds EROFS support.

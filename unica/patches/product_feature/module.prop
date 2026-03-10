@@ -1,4 +1,4 @@
 id=product_feature
 name=SEC Product Feature patches
-author=salvogiangri
+author=devcore94
 description=Compares both source/target SPF flags and apply patches if required.

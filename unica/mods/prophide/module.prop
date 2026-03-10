@@ -1,4 +1,4 @@
 id=prophide
 name=Hide sensitive props
-author=salvogiangri
+author=devcore94
 description=Hides sensitive props at boot time.
