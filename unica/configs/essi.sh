@@ -1,7 +1,7 @@
 # Copyright (c) 2025 Salvo Giangreco
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-# MonsterROM_REBORN configuration file for Exynos devices (essi)
+# UN1CA configuration file for Exynos devices (essi)
 
 # Galaxy S26 (Exynos) (One UI 8.5)
 SOURCE_FIRMWARE="SM-S942B/XXV/352380644265191"

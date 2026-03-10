@@ -102,7 +102,7 @@ GENERATE_LPMAKE_OPT()
     echo "$OPT"
 }
 
-FILE_NAME="MonsterROM_REBORN_${ROM_VERSION}_$(date +%Y%m%d)_${TARGET_CODENAME}"
+FILE_NAME="UN1CA_${ROM_VERSION}_$(date +%Y%m%d)_${TARGET_CODENAME}"
 # ]
 
 echo "Set up tmp dir"
