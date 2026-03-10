@@ -1,10 +1,10 @@
 LOG "- Downloading BL_G998BXXSJHZA6_G998BXXSJHZA6_MQB105755821_REV01_user_low_ship_MULTI_CERT.tar.md5"
 DOWNLOAD_FILE \
-    "https://github.com/UN1CA/proprietary_vendor_samsung_exynos2100/releases/download/G998BXXSJHZA6_XXV_OXM/BL_G998BXXSJHZA6_G998BXXSJHZA6_MQB105755821_REV01_user_low_ship_MULTI_CERT.tar.md5" \
+    "https://github.com/MonsterROM_REBORN/proprietary_vendor_samsung_exynos2100/releases/download/G998BXXSJHZA6_XXV_OXM/BL_G998BXXSJHZA6_G998BXXSJHZA6_MQB105755821_REV01_user_low_ship_MULTI_CERT.tar.md5" \
     "$TMP_DIR/BL_G998BXXSJHZA6_G998BXXSJHZA6_MQB105755821_REV01_user_low_ship_MULTI_CERT.tar.md5" || return 1
 LOG "- Downloading CP_G998BXXSJHZA6_CP32677266_MQB105755821_REV01_user_low_ship_MULTI_CERT.tar.md5"
 DOWNLOAD_FILE \
-    "https://github.com/UN1CA/proprietary_vendor_samsung_exynos2100/releases/download/G998BXXSJHZA6_XXV_OXM/CP_G998BXXSJHZA6_CP32677266_MQB105755821_REV01_user_low_ship_MULTI_CERT.tar.md5" \
+    "https://github.com/MonsterROM_REBORN/proprietary_vendor_samsung_exynos2100/releases/download/G998BXXSJHZA6_XXV_OXM/CP_G998BXXSJHZA6_CP32677266_MQB105755821_REV01_user_low_ship_MULTI_CERT.tar.md5" \
     "$TMP_DIR/CP_G998BXXSJHZA6_CP32677266_MQB105755821_REV01_user_low_ship_MULTI_CERT.tar.md5" || return 1
 
 while IFS= read -r f; do

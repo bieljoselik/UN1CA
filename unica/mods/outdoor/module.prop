@@ -1,4 +1,4 @@
-id=outdoor
-name=Outdoor mode
-author=salvogiangri
-description=Adds Outdoor mode support in Settings app.
+id=settings
+name=Settings
+author=salvogiangri, ExtremeXT
+description=General mods and settings patches

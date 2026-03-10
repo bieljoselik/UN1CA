@@ -1,7 +1,7 @@
 # Copyright (c) 2025 Salvo Giangreco
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-# UN1CA debloat list
+# MonsterROM_REBORN debloat list
 # - Add entries inside the specific partition containing that file (<PARTITION>_DEBLOAT+="")
 # - DO NOT add the partition name at the start of any entry (eg. "/system/dpolicy_system")
 # - DO NOT add a slash at the start of any entry (eg. "/dpolicy_system")
@@ -82,10 +82,6 @@ SYSTEM_DEBLOAT+="
 system/etc/permissions/privapp-permissions-com.samsung.android.game.gamehome.xml
 system/priv-app/GameHome
 "
-
-ADD_TO_WORK_DIR "pa2qxxx" "system" \
-    "system/etc/permissions/signature-permissions-com.samsung.android.game.gamehome.xml" \
-    0 0 644 "u:object_r:system_file:s0"
 
 # Gemini shortcut
 PRODUCT_DEBLOAT+="
@@ -178,6 +174,11 @@ SYSTEM_DEBLOAT+="
 system/etc/permissions/privapp-permissions-com.mygalaxy.service.xml
 system/etc/sysconfig/preinstalled-packages-com.mygalaxy.service.xml
 system/priv-app/MyGalaxyService
+"
+
+# Phoneconfiguration
+SYSTEM_DEBLOAT+="
+system/priv-app/CIDManager
 "
 
 # Samsung Analytics

@@ -55,29 +55,6 @@ if [ "$(GET_FLOATING_FEATURE_CONFIG "SEC_FLOATING_FEATURE_GRAPHICS_SUPPORT_3D_SU
 fi
 LOG_STEP_OUT
 
-# Samsung Camera "hal3_mass-phone-release" app flavor
-if ! $SOURCE_CAMERA_SUPPORT_MASS_APP_FLAVOR; then
-    if $TARGET_CAMERA_SUPPORT_MASS_APP_FLAVOR; then
-        ADD_TO_WORK_DIR "r9qxxx" "system" "system/priv-app/SamsungCamera/SamsungCamera.apk" 0 0 644 "u:object_r:system_file:s0"
-        ADD_TO_WORK_DIR "r9qxxx" "system" "system/priv-app/SamsungCamera/SamsungCamera.apk.prof" 0 0 644 "u:object_r:system_file:s0"
-    fi
-else
-    if ! $TARGET_CAMERA_SUPPORT_MASS_APP_FLAVOR; then
-        # TODO handle this condition
-        LOG_MISSING_PATCHES "SOURCE_CAMERA_SUPPORT_MASS_APP_FLAVOR" "TARGET_CAMERA_SUPPORT_MASS_APP_FLAVOR"
-    fi
-fi
-
-# Add/delete Snapchat CameraKit Plugin if SHOOTING_MODE_FUN is (not) available
-if [ -f "$WORK_DIR/system/system/app/FunModeSDK/FunModeSDK.apk" ]; then
-    if ! grep -q "SHOOTING_MODE_FUN" "$WORK_DIR/system/system/cameradata/camera-feature.xml" 2> /dev/null; then
-        DELETE_FROM_WORK_DIR "system" "system/app/FunModeSDK"
-    fi
-else
-    if grep -q "SHOOTING_MODE_FUN" "$WORK_DIR/system/system/cameradata/camera-feature.xml" 2> /dev/null; then
-        ADD_TO_WORK_DIR "a73xqxx" "system" "system/app/FunModeSDK" 0 0 755 "u:object_r:system_file:s0"
-    fi
-fi
 
 # Single take "stp1-release" app flavor
 if grep -q "SUPPORT_SINGLE_TAKE_HIGHLIGHT_VIDEOS.*true" "$FW_DIR/$SOURCE_FIRMWARE_PATH/system/system/cameradata/camera-feature.xml" 2> /dev/null && \
@@ -181,7 +158,6 @@ if [[ "$SOURCE_GALLERY_CONFIG_PET_CLUSTER_VERSION" != "None" ]]; then
     if [[ "$TARGET_GALLERY_CONFIG_PET_CLUSTER_VERSION" == "None" ]]; then
         DELETE_FROM_WORK_DIR "system" "system/etc/default-permissions/default-permissions-com.samsung.petservice.xml"
         DELETE_FROM_WORK_DIR "system" "system/etc/permissions/privapp-permissions-com.samsung.petservice.xml"
-        DELETE_FROM_WORK_DIR "system" "system/lib64/libPetClustering.camera.samsung.so"
         DELETE_FROM_WORK_DIR "system" "system/priv-app/PetService"
     fi
 else
@@ -241,9 +217,7 @@ if [ -f "$WORK_DIR/vendor/lib64/libDualCamBokehCapture.camera.samsung.so" ] || {
     if ! grep -q "GlassSegSDK" "$WORK_DIR/system/system/cameradata/portrait_data/single_bokeh_feature.json" 2> /dev/null; then
         DELETE_FROM_WORK_DIR "system" "system/lib64/libarcsoft_single_cam_glasses_seg.so"
     fi
-    DELETE_FROM_WORK_DIR "system" "system/lib64/libarcsoft_superresolution_bokeh.so"
     DELETE_FROM_WORK_DIR "system" "system/lib64/libdualcam_refocus_image.so"
-    DELETE_FROM_WORK_DIR "system" "system/lib64/libhigh_dynamic_range_bokeh.so"
 fi
 if {
     [[ "$SOURCE_CAMERA_CONFIG_VENDOR_LIB_INFO" == *"fusion_high_res.arcsoft.v1"* ]] && \
@@ -300,51 +274,6 @@ fi
 if [ -f "$WORK_DIR/system/system/lib64/libImageSegmenter_v1.camera.samsung.so" ] && \
         [ ! -d "$WORK_DIR/vendor/etc/portrait_data/LF_segmenter" ]; then
     DELETE_FROM_WORK_DIR "system" "system/lib64/libImageSegmenter_v1.camera.samsung.so"
-fi
-
-# Fix object capture
-if [[ "$TARGET_OS_SINGLE_SYSTEM_IMAGE" == "essi" ]]; then
-    if {
-        [[ "$(GET_PROP "system" "ro.product.device")" =~ r0|g0|b0 ]] && \
-            ! [[ "$(GET_PROP "vendor" "ro.product.vendor.device")" =~ r0|g0|b0 ]]
-    } || {
-        [[ "$(GET_PROP "system" "ro.product.device")" == "a56"* ]] && \
-            [[ "$(GET_PROP "vendor" "ro.product.vendor.device")" != "a56"* ]]
-    }; then
-        HEX_PATCH "$WORK_DIR/system/system/lib64/libobjectcapture_jni.arcsoft.so" \
-            "e503162a47020094e022009121008052e203162a" "8500805247020094e02200912100805282008052"
-    elif ! [[ "$(GET_PROP "system" "ro.product.device")" =~ r0|g0|b0 ]] && \
-            [[ "$(GET_PROP "vendor" "ro.product.vendor.device")" =~ r0|g0|b0 ]]; then
-        HEX_PATCH "$WORK_DIR/system/system/lib64/libobjectcapture_jni.arcsoft.so" \
-            "e503162a47020094e022009121008052e203162a" "4500805247020094e02200912100805242008052"
-    elif [[ "$(GET_PROP "system" "ro.product.device")" != "a56"* ]] && \
-            [[ "$(GET_PROP "vendor" "ro.product.vendor.device")" == "a56"* ]]; then
-        HEX_PATCH "$WORK_DIR/system/system/lib64/libobjectcapture_jni.arcsoft.so" \
-            "e503162a47020094e022009121008052e203162a" "c500805247020094e022009121008052c2008052"
-    fi
-fi
-
-# Fix portrait mode
-if [ -f "$WORK_DIR/vendor/lib64/libDualCamBokehCapture.camera.samsung.so" ]; then
-    if grep -q "ro.build.flavor" "$WORK_DIR/vendor/lib64/libDualCamBokehCapture.camera.samsung.so" 2> /dev/null; then
-        SET_PROP "system" "ro.build.flavor" "$(GET_PROP "$FW_DIR/$TARGET_FIRMWARE_PATH/system/system/build.prop" "ro.build.flavor")"
-    elif grep -q "ro.product.name" "$WORK_DIR/vendor/lib64/libDualCamBokehCapture.camera.samsung.so" 2> /dev/null; then
-        HEX_PATCH "$WORK_DIR/vendor/lib/libDualCamBokehCapture.camera.samsung.so" \
-            "726f2e70726f647563742e6e616d6500" "726f2e756e6963612e63616d65726100"
-        HEX_PATCH "$WORK_DIR/vendor/lib/liblivefocus_capture_engine.so" \
-            "726f2e70726f647563742e6e616d6500" "726f2e756e6963612e63616d65726100"
-        HEX_PATCH "$WORK_DIR/vendor/lib/liblivefocus_preview_engine.so" \
-            "726f2e70726f647563742e6e616d6500" "726f2e756e6963612e63616d65726100"
-        HEX_PATCH "$WORK_DIR/vendor/lib64/libDualCamBokehCapture.camera.samsung.so" \
-            "726f2e70726f647563742e6e616d6500" "726f2e756e6963612e63616d65726100"
-        HEX_PATCH "$WORK_DIR/vendor/lib64/liblivefocus_capture_engine.so" \
-            "726f2e70726f647563742e6e616d6500" "726f2e756e6963612e63616d65726100"
-        HEX_PATCH "$WORK_DIR/vendor/lib64/liblivefocus_preview_engine.so" \
-            "726f2e70726f647563742e6e616d6500" "726f2e756e6963612e63616d65726100"
-        LOG "- Patching /system/system/etc/selinux/plat_property_contexts"
-        EVAL "echo \"ro.unica.camera u:object_r:build_prop:s0 exact string\"  >> \"$WORK_DIR/system/system/etc/selinux/plat_property_contexts\""
-        SET_PROP "system" "ro.unica.camera" "$(GET_PROP "$FW_DIR/$TARGET_FIRMWARE_PATH/system/system/build.prop" "ro.product.system.name")"
-    fi
 fi
 
 # Enable camera cutout protection

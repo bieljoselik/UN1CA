@@ -158,18 +158,6 @@ if [ "$TARGET_PLATFORM_SDK_VERSION" -lt "35" ]; then
     fi
 fi
 
-# Ensure config_num_physical_slots is configured (pre-API 36)
-# https://android.googlesource.com/platform/frameworks/opt/telephony/+/42e37234cee15c9f3fcfac0532110abfc8843b99%5E%21/#F0
-if [ "$TARGET_PLATFORM_SDK_VERSION" -lt "36" ]; then
-    if [ ! "$(GET_PROP "ro.telephony.sim_slots.count")" ] && \
-            ! grep -q "ro.telephony.sim_slots.count" "$WORK_DIR/vendor/bin/secril_config_svc" && \
-            ! grep -q -r "config_num_physical_slots" "$WORK_DIR/vendor/overlay"; then
-        PATCHED=true
-        APPLY_PATCH "system" "system/framework/telephony-common.jar" \
-            "$MODPATH/ril/telephony-common.jar/0001-Backport-legacy-UiccController-code.patch"
-    fi
-fi
-
 # Support legacy sdFAT kernel drivers (pre-API 35)
 # https://android.googlesource.com/platform/system/vold/+/refs/tags/android-16.0.0_r2/fs/Vfat.cpp#150
 # - Check for 'bogus directory:' to determine if newer sdFAT drivers are in place
@@ -232,19 +220,6 @@ if [ -f "$WORK_DIR/system/system/priv-app/StorageShare/StorageShare.apk" ]; then
     fi
 fi
 
-# Ensure Sem eBPF Smart Hotspot functionality (pre-API 35)
-# - Check for TARGET_PLATFORM_SDK_VERSION < 35 as 4.14 kernel support has been deprecated in Android V
-# - Disable "ro.kernel.version" == "4.14" leftover checks, 4.14 needs eBPF kernel backports anyway
-if [ "$TARGET_PLATFORM_SDK_VERSION" -lt "35" ]; then
-    EXTRACT_KERNEL_IMAGE
-    if grep -q "Linux version 4.14" "$TMP_DIR/out/kernel"; then
-        PATCHED=true
-        # [b.eq #0xXXXXXX] -> [nop]
-        HEX_PATCH "$WORK_DIR/system/system/bin/netd" "e001005480feff90" "1f2003d580feff90"
-        HEX_PATCH "$WORK_DIR/system/system/bin/netd" "2001005480feff90" "1f2003d580feff90"
-    fi
-fi
-
 # Ensure sbauth support in target firmware
 TARGET_FIRMWARE_PATH="$(cut -d "/" -f 1 -s <<< "$TARGET_FIRMWARE")_$(cut -d "/" -f 2 -s <<< "$TARGET_FIRMWARE")"
 if [ -f "$WORK_DIR/system/system/bin/sbauth" ] && \
@@ -265,7 +240,7 @@ if [ "$TARGET_PLATFORM_SDK_VERSION" -lt "35" ]; then
 fi
 
 # Support legacy usb_notify kernel drivers (pre-API 36)
-# https://github.com/salvogiangri/UN1CA/discussions/519
+# https://github.com/salvogiangri/MonsterROM_REBORN/discussions/519
 # - Check for 'SKY_DEFAULT' to determine if newer usb_notify drivers are in place
 if [ "$TARGET_PLATFORM_SDK_VERSION" -lt "36" ]; then
     VBOOT_MISSING=true

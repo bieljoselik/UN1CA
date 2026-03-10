@@ -1,72 +1,1910 @@
-From effca5806f78e4eadb904c26b8c43b7c1ef092b3 Mon Sep 17 00:00:00 2001
-From: Salvo Giangreco <giangrecosalvo9@gmail.com>
-Date: Sun, 31 Aug 2025 12:35:57 +0200
+From 0f358b8f094638879e25c1bdc52074c9d921bcaa Mon Sep 17 00:00:00 2001
+From: ditternation <ditternation@outlook.com>
+Date: Thu, 11 Dec 2025 14:18:32 +0100
 Subject: [PATCH] Allow custom booster thresholds values
 
-UN1CA: this patch is not complete! Please check unica/patches/product_feature/customize.sh for more info.
 ---
- .../server/wifi/SemFrameworkFacade.smali      | 32 ++++++++++---------
- 1 file changed, 17 insertions(+), 15 deletions(-)
+ .../server/wifi/SemFrameworkFacade.smali      | 1891 +++++++++++++++++
+ 1 file changed, 1891 insertions(+)
+ create mode 100644 out/target/t2s/apktool/system/framework/semwifi-service.jar/smali/com/samsung/android/server/wifi/SemFrameworkFacade.smali
 
-diff --git a/smali/com/samsung/android/server/wifi/SemFrameworkFacade.smali b/smali/com/samsung/android/server/wifi/SemFrameworkFacade.smali
-index 9b20944..8768c27 100644
---- a/smali/com/samsung/android/server/wifi/SemFrameworkFacade.smali
-+++ b/smali/com/samsung/android/server/wifi/SemFrameworkFacade.smali
-@@ -350,37 +350,39 @@
- .method public getBoosterThresholds()[I
-     .locals 3
- 
--    const-string p0, "0"
-+    const-string p0, "CONFIG_DATA_ACTIVITY_AFFINITY_BOOSTER_THRESHOLD"
- 
-     invoke-static {p0}, Ljava/lang/Integer;->parseInt(Ljava/lang/String;)I
- 
--    move-result v0
-+    move-result p0
- 
--    const/high16 v1, 0x100000
-+    const/high16 v0, 0x100000
- 
--    mul-int/2addr v0, v1
-+    mul-int/2addr p0, v0
- 
--    div-int/lit8 v0, v0, 0x8
-+    div-int/lit8 p0, p0, 0x8
- 
--    const-string v2, "100"
-+    const-string v1, "CONFIG_CPU_CSTATE_DISABLE_THRESHOLD"
- 
--    invoke-static {v2}, Ljava/lang/Integer;->parseInt(Ljava/lang/String;)I
-+    invoke-static {v1}, Ljava/lang/Integer;->parseInt(Ljava/lang/String;)I
- 
--    move-result v2
+diff --git a/out/target/t2s/apktool/system/framework/semwifi-service.jar/smali/com/samsung/android/server/wifi/SemFrameworkFacade.smali b/out/target/t2s/apktool/system/framework/semwifi-service.jar/smali/com/samsung/android/server/wifi/SemFrameworkFacade.smali
+new file mode 100644
+index 00000000..0f2f89dc
+--- /dev/null
++++ b/out/target/t2s/apktool/system/framework/semwifi-service.jar/smali/com/samsung/android/server/wifi/SemFrameworkFacade.smali
+@@ -0,0 +1,1891 @@
++.class public Lcom/samsung/android/server/wifi/SemFrameworkFacade;
++.super Ljava/lang/Object;
++.source "qb/104146992 589272d9e07a6e129f8daf45b6f5055b65f2cd0694f8cd54820bb35d8c8416a8"
++
++
++# static fields
++.field public static final IS_JDM_PRODUCT:Z = false
++
++.field public static final ONE_UI_VERSION_5_1_0:I = 0xc3b4
++
++.field public static final ONE_UI_VERSION_6_0_0:I = 0xea60
++
++.field public static final ONE_UI_VERSION_6_1_0:I = 0xeac4
++
++.field public static final SUPPORT_MOBILE_AP_ENHANCED:Z = true
++
++.field public static final SUPPORT_MOBILE_AP_ENHANCED_D2D:Z = true
++
++.field public static final SUPPORT_MOBILE_AP_ENHANCED_LITE:Z = false
++
++.field public static final SUPPORT_MOBILE_AP_ENHANCED_WIFI_ONLY_LITE:Z = false
++
++.field public static final SYSTEM_DB_NEARBY_SCANNING:Ljava/lang/String; = "nearby_scanning_enabled"
++
++.field public static final SYSTEM_DB_SEM_EMERGENCY_MODE:Ljava/lang/String; = "emergency_mode"
++
++.field public static final TAG:Ljava/lang/String; = "SemFrameworkFacade"
++
++
++# instance fields
++.field public CONFIG_OPBRANDING_FOR_MOBILE_AP:Ljava/lang/String;
++
++.field public mActivityManager:Landroid/app/ActivityManager;
++
++.field public mCarrierConfigManager:Landroid/telephony/CarrierConfigManager;
++
++.field public mContentResolver:Landroid/content/ContentResolver;
++
++.field public mOneUIVersion:I
++
++
++# direct methods
++.method public constructor <init>()V
++    .locals 1
++
++    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
++
++    const/4 v0, 0x0
++
++    iput-object v0, p0, Lcom/samsung/android/server/wifi/SemFrameworkFacade;->mContentResolver:Landroid/content/ContentResolver;
++
++    iput-object v0, p0, Lcom/samsung/android/server/wifi/SemFrameworkFacade;->mCarrierConfigManager:Landroid/telephony/CarrierConfigManager;
++
++    iput-object v0, p0, Lcom/samsung/android/server/wifi/SemFrameworkFacade;->mActivityManager:Landroid/app/ActivityManager;
++
++    return-void
++.end method
++
++.method public static readSalesCode()Ljava/lang/String;
++    .locals 2
++
++    const-string v0, ""
++
++    :try_start_0
++    const-string v1, "persist.omc.sales_code"
++
++    invoke-static {v1}, Landroid/os/SystemProperties;->get(Ljava/lang/String;)Ljava/lang/String;
++
++    move-result-object v0
++
++    invoke-static {v0}, Landroid/text/TextUtils;->isEmpty(Ljava/lang/CharSequence;)Z
++
 +    move-result v1
- 
--    mul-int/2addr v2, v1
-+    mul-int/2addr v1, v0
- 
--    div-int/lit8 v2, v2, 0x8
-+    div-int/lit8 v1, v1, 0x8
- 
--    invoke-static {p0}, Ljava/lang/Integer;->parseInt(Ljava/lang/String;)I
-+    const-string v2, "CONFIG_L1SS_DISABLE_THRESHOLD"
- 
--    move-result p0
-+    invoke-static {v2}, Ljava/lang/Integer;->parseInt(Ljava/lang/String;)I
- 
--    mul-int/2addr p0, v1
++
++    if-eqz v1, :cond_0
++
++    const-string v1, "ro.csc.sales_code"
++
++    invoke-static {v1}, Landroid/os/SystemProperties;->get(Ljava/lang/String;)Ljava/lang/String;
++
++    move-result-object v0
++
++    invoke-static {v0}, Landroid/text/TextUtils;->isEmpty(Ljava/lang/CharSequence;)Z
++
++    move-result v1
++
++    if-eqz v1, :cond_0
++
++    const-string v1, "ril.sales_code"
++
++    invoke-static {v1}, Landroid/os/SystemProperties;->get(Ljava/lang/String;)Ljava/lang/String;
++
++    move-result-object v0
++    :try_end_0
++    .catch Ljava/lang/Exception; {:try_start_0 .. :try_end_0} :catch_0
++
++    :catch_0
++    :cond_0
++    return-object v0
++.end method
++
++
++# virtual methods
++.method public final checkAndGetMobileHotspotBrandingInfo()V
++    .locals 1
++
++    iget-object v0, p0, Lcom/samsung/android/server/wifi/SemFrameworkFacade;->CONFIG_OPBRANDING_FOR_MOBILE_AP:Ljava/lang/String;
++
++    if-nez v0, :cond_0
++
++    invoke-static {}, Lcom/samsung/android/wifi/SemWifiApCust;->getInstance()Lcom/samsung/android/wifi/SemWifiApCust;
++
++    sget-object v0, Lcom/samsung/android/wifi/SemWifiApCust;->mMHSCustomer:Ljava/lang/String;
++
++    iput-object v0, p0, Lcom/samsung/android/server/wifi/SemFrameworkFacade;->CONFIG_OPBRANDING_FOR_MOBILE_AP:Ljava/lang/String;
++
++    :cond_0
++    return-void
++.end method
++
++.method public getActivity(Landroid/content/Context;ILandroid/content/Intent;I)Landroid/app/PendingIntent;
++    .locals 0
++
++    invoke-static {p1, p2, p3, p4}, Landroid/app/PendingIntent;->getActivity(Landroid/content/Context;ILandroid/content/Intent;I)Landroid/app/PendingIntent;
++
++    move-result-object p0
++
++    return-object p0
++.end method
++
++.method public final getActivityManager(Landroid/content/Context;)Landroid/app/ActivityManager;
++    .locals 1
++
++    iget-object v0, p0, Lcom/samsung/android/server/wifi/SemFrameworkFacade;->mActivityManager:Landroid/app/ActivityManager;
++
++    if-nez v0, :cond_0
++
++    const-string v0, "activity"
++
++    invoke-virtual {p1, v0}, Landroid/content/Context;->getSystemService(Ljava/lang/String;)Ljava/lang/Object;
++
++    move-result-object p1
++
++    check-cast p1, Landroid/app/ActivityManager;
++
++    iput-object p1, p0, Lcom/samsung/android/server/wifi/SemFrameworkFacade;->mActivityManager:Landroid/app/ActivityManager;
++
++    :cond_0
++    iget-object p0, p0, Lcom/samsung/android/server/wifi/SemFrameworkFacade;->mActivityManager:Landroid/app/ActivityManager;
++
++    return-object p0
++.end method
++
++.method public getAutoWifiCarrierFeature()Z
++    .locals 3
++
++    invoke-static {}, Lcom/samsung/android/feature/SemCarrierFeature;->getInstance()Lcom/samsung/android/feature/SemCarrierFeature;
++
++    move-result-object p0
++
++    const-string v0, "CarrierFeature_Wifi_AutoWifi_DefaultOn"
++
++    const/4 v1, 0x1
++
++    const/4 v2, 0x0
++
++    invoke-virtual {p0, v2, v0, v2, v1}, Lcom/samsung/android/feature/SemCarrierFeature;->getBoolean(ILjava/lang/String;ZZ)Z
++
++    move-result p0
++
++    return p0
++.end method
++
++.method public getAutoWifiDefaultValue()Z
++    .locals 2
++
++    const-string v0, "ro.product.first_api_level"
++
++    const/4 v1, -0x1
++
++    invoke-static {v0, v1}, Landroid/os/SystemProperties;->getInt(Ljava/lang/String;I)I
++
++    move-result v0
++
++    invoke-virtual {p0}, Lcom/samsung/android/server/wifi/SemFrameworkFacade;->isComcastVendor()Z
++
++    move-result v1
++
++    if-nez v1, :cond_2
++
++    invoke-virtual {p0}, Lcom/samsung/android/server/wifi/SemFrameworkFacade;->getAutoWifiCarrierFeature()Z
++
++    move-result v1
++
++    if-eqz v1, :cond_0
++
++    const/16 v1, 0x22
++
++    if-gt v0, v1, :cond_2
++
++    :cond_0
++    const-string v0, "CHA"
++
++    invoke-static {}, Lcom/samsung/android/server/wifi/SemFrameworkFacade;->readSalesCode()Ljava/lang/String;
++
++    move-result-object v1
++
++    invoke-virtual {v0, v1}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
++
++    move-result v0
++
++    if-nez v0, :cond_2
++
++    const-string v0, "SPO"
++
++    invoke-static {}, Lcom/samsung/android/server/wifi/SemFrameworkFacade;->readSalesCode()Ljava/lang/String;
++
++    move-result-object v1
++
++    invoke-virtual {v0, v1}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
++
++    move-result v0
++
++    if-nez v0, :cond_2
++
++    const-string v0, "BMC"
++
++    invoke-static {}, Lcom/samsung/android/server/wifi/SemFrameworkFacade;->readSalesCode()Ljava/lang/String;
++
++    move-result-object v1
++
++    invoke-virtual {v0, v1}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
++
++    move-result v0
++
++    if-nez v0, :cond_2
++
++    const-string v0, "VMC"
++
++    invoke-static {}, Lcom/samsung/android/server/wifi/SemFrameworkFacade;->readSalesCode()Ljava/lang/String;
++
++    move-result-object v1
++
++    invoke-virtual {v0, v1}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
++
++    move-result v0
++
++    if-nez v0, :cond_2
++
++    const-string v0, "PCM"
++
++    invoke-static {}, Lcom/samsung/android/server/wifi/SemFrameworkFacade;->readSalesCode()Ljava/lang/String;
++
++    move-result-object v1
++
++    invoke-virtual {v0, v1}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
++
++    move-result v0
++
++    if-nez v0, :cond_2
++
++    const-string v0, "SOL"
++
++    invoke-static {}, Lcom/samsung/android/server/wifi/SemFrameworkFacade;->readSalesCode()Ljava/lang/String;
++
++    move-result-object v1
++
++    invoke-virtual {v0, v1}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
++
++    move-result v0
++
++    if-nez v0, :cond_2
++
++    invoke-virtual {p0}, Lcom/samsung/android/server/wifi/SemFrameworkFacade;->isATTVendor()Z
++
++    move-result p0
++
++    if-eqz p0, :cond_1
++
++    goto :goto_0
++
++    :cond_1
++    const/4 p0, 0x0
++
++    return p0
++
++    :cond_2
++    :goto_0
++    const/4 p0, 0x1
++
++    return p0
++.end method
++
++.method public getBooleanCscFeature(Ljava/lang/String;)Z
++    .locals 0
++
++    invoke-static {}, Lcom/samsung/android/feature/SemCscFeature;->getInstance()Lcom/samsung/android/feature/SemCscFeature;
++
++    move-result-object p0
++
++    invoke-virtual {p0, p1}, Lcom/samsung/android/feature/SemCscFeature;->getBoolean(Ljava/lang/String;)Z
++
++    move-result p0
++
++    return p0
++.end method
++
++.method public getBoosterThresholds()[I
++    .locals 3
++
++    const-string p0, "0"
++
++    invoke-static {p0}, Ljava/lang/Integer;->parseInt(Ljava/lang/String;)I
++
++    move-result v0
++
++    const/high16 v1, 0x100000
++
++    mul-int/2addr v0, v1
++
++    div-int/lit8 v0, v0, 0x8
++
++    invoke-static {p0}, Ljava/lang/Integer;->parseInt(Ljava/lang/String;)I
++
 +    move-result v2
- 
--    div-int/lit8 p0, p0, 0x8
-+    mul-int/2addr v2, v0
++
++    mul-int/2addr v2, v1
 +
 +    div-int/lit8 v2, v2, 0x8
- 
--    filled-new-array {v0, v2, p0}, [I
-+    filled-new-array {p0, v1, v2}, [I
- 
-     move-result-object p0
- 
++
++    invoke-static {p0}, Ljava/lang/Integer;->parseInt(Ljava/lang/String;)I
++
++    move-result p0
++
++    mul-int/2addr p0, v1
++
++    div-int/lit8 p0, p0, 0x8
++
++    filled-new-array {v0, v2, p0}, [I
++
++    move-result-object p0
++
++    return-object p0
++.end method
++
++.method public getBroadcast(Landroid/content/Context;ILandroid/content/Intent;I)Landroid/app/PendingIntent;
++    .locals 0
++
++    invoke-static {p1, p2, p3, p4}, Landroid/app/PendingIntent;->getBroadcast(Landroid/content/Context;ILandroid/content/Intent;I)Landroid/app/PendingIntent;
++
++    move-result-object p0
++
++    return-object p0
++.end method
++
++.method public final getCarrierConfigManager(Landroid/content/Context;)Landroid/telephony/CarrierConfigManager;
++    .locals 1
++
++    iget-object v0, p0, Lcom/samsung/android/server/wifi/SemFrameworkFacade;->mCarrierConfigManager:Landroid/telephony/CarrierConfigManager;
++
++    if-nez v0, :cond_0
++
++    const-string v0, "carrier_config"
++
++    invoke-virtual {p1, v0}, Landroid/content/Context;->getSystemService(Ljava/lang/String;)Ljava/lang/Object;
++
++    move-result-object p1
++
++    check-cast p1, Landroid/telephony/CarrierConfigManager;
++
++    iput-object p1, p0, Lcom/samsung/android/server/wifi/SemFrameworkFacade;->mCarrierConfigManager:Landroid/telephony/CarrierConfigManager;
++
++    :cond_0
++    iget-object p0, p0, Lcom/samsung/android/server/wifi/SemFrameworkFacade;->mCarrierConfigManager:Landroid/telephony/CarrierConfigManager;
++
++    return-object p0
++.end method
++
++.method public getConfigWiFiDisableInECBM(Landroid/content/Context;)Z
++    .locals 0
++
++    invoke-virtual {p0, p1}, Lcom/samsung/android/server/wifi/SemFrameworkFacade;->getCarrierConfigManager(Landroid/content/Context;)Landroid/telephony/CarrierConfigManager;
++
++    move-result-object p0
++
++    if-eqz p0, :cond_0
++
++    invoke-virtual {p0}, Landroid/telephony/CarrierConfigManager;->getConfig()Landroid/os/PersistableBundle;
++
++    move-result-object p0
++
++    const-string p1, "config_wifi_disable_in_ecbm"
++
++    invoke-virtual {p0, p1}, Landroid/os/PersistableBundle;->getBoolean(Ljava/lang/String;)Z
++
++    move-result p0
++
++    return p0
++
++    :cond_0
++    const/4 p0, 0x1
++
++    return p0
++.end method
++
++.method public final getContentResolver(Landroid/content/Context;)Landroid/content/ContentResolver;
++    .locals 1
++
++    iget-object v0, p0, Lcom/samsung/android/server/wifi/SemFrameworkFacade;->mContentResolver:Landroid/content/ContentResolver;
++
++    if-nez v0, :cond_0
++
++    invoke-virtual {p1}, Landroid/content/Context;->getContentResolver()Landroid/content/ContentResolver;
++
++    move-result-object p1
++
++    iput-object p1, p0, Lcom/samsung/android/server/wifi/SemFrameworkFacade;->mContentResolver:Landroid/content/ContentResolver;
++
++    :cond_0
++    iget-object p0, p0, Lcom/samsung/android/server/wifi/SemFrameworkFacade;->mContentResolver:Landroid/content/ContentResolver;
++
++    return-object p0
++.end method
++
++.method public getDvfsManager(Landroid/content/Context;Ljava/lang/String;)Lcom/samsung/android/os/SemDvfsManager;
++    .locals 0
++
++    invoke-static {p1, p2}, Lcom/samsung/android/os/SemDvfsManager;->createInstance(Landroid/content/Context;Ljava/lang/String;)Lcom/samsung/android/os/SemDvfsManager;
++
++    move-result-object p0
++
++    return-object p0
++.end method
++
++.method public getForegroundPackageName(Landroid/content/Context;)Ljava/lang/String;
++    .locals 1
++
++    invoke-virtual {p0, p1}, Lcom/samsung/android/server/wifi/SemFrameworkFacade;->getActivityManager(Landroid/content/Context;)Landroid/app/ActivityManager;
++
++    move-result-object p0
++
++    if-eqz p0, :cond_0
++
++    const/4 p1, 0x1
++
++    invoke-virtual {p0, p1}, Landroid/app/ActivityManager;->getRunningTasks(I)Ljava/util/List;
++
++    move-result-object p0
++
++    :try_start_0
++    invoke-interface {p0}, Ljava/util/List;->isEmpty()Z
++
++    move-result p1
++
++    if-nez p1, :cond_0
++
++    const/4 p1, 0x0
++
++    invoke-interface {p0, p1}, Ljava/util/List;->get(I)Ljava/lang/Object;
++
++    move-result-object p0
++
++    check-cast p0, Landroid/app/ActivityManager$RunningTaskInfo;
++
++    iget-object p0, p0, Landroid/app/ActivityManager$RunningTaskInfo;->topActivity:Landroid/content/ComponentName;
++
++    invoke-virtual {p0}, Landroid/content/ComponentName;->getPackageName()Ljava/lang/String;
++
++    move-result-object p0
++    :try_end_0
++    .catch Ljava/lang/NullPointerException; {:try_start_0 .. :try_end_0} :catch_0
++
++    return-object p0
++
++    :catch_0
++    move-exception p0
++
++    new-instance p1, Ljava/lang/StringBuilder;
++
++    const-string v0, "getForegroundPackageName: "
++
++    invoke-direct {p1, v0}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
++
++    invoke-virtual {p1, p0}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
++
++    invoke-virtual {p1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
++
++    move-result-object p0
++
++    const-string p1, "SemFrameworkFacade"
++
++    invoke-static {p1, p0}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
++
++    :cond_0
++    const/4 p0, 0x0
++
++    return-object p0
++.end method
++
++.method public getIWifiManager()Landroid/net/wifi/IWifiManager;
++    .locals 0
++
++    const-string p0, "wifi"
++
++    invoke-static {p0}, Landroid/os/ServiceManager;->getService(Ljava/lang/String;)Landroid/os/IBinder;
++
++    move-result-object p0
++
++    invoke-static {p0}, Landroid/net/wifi/IWifiManager$Stub;->asInterface(Landroid/os/IBinder;)Landroid/net/wifi/IWifiManager;
++
++    move-result-object p0
++
++    return-object p0
++.end method
++
++.method public getIlaConfiguration()I
++    .locals 0
++
++    const-string p0, "1"
++
++    invoke-static {p0}, Ljava/lang/Integer;->parseInt(Ljava/lang/String;)I
++
++    move-result p0
++
++    return p0
++.end method
++
++.method public getInsConfiguration()I
++    .locals 0
++
++    const-string p0, "100"
++
++    invoke-static {p0}, Ljava/lang/Integer;->parseInt(Ljava/lang/String;)I
++
++    move-result p0
++
++    return p0
++.end method
++
++.method public getIntegerSetting(Landroid/content/ContentResolver;Ljava/lang/String;I)I
++    .locals 0
++
++    invoke-static {p1, p2, p3}, Landroid/provider/Settings$Global;->getInt(Landroid/content/ContentResolver;Ljava/lang/String;I)I
++
++    move-result p0
++
++    return p0
++.end method
++
++.method public getIntegerSetting(Landroid/content/Context;Ljava/lang/String;I)I
++    .locals 0
++
++    invoke-virtual {p0, p1}, Lcom/samsung/android/server/wifi/SemFrameworkFacade;->getContentResolver(Landroid/content/Context;)Landroid/content/ContentResolver;
++
++    move-result-object p0
++
++    invoke-static {p0, p2, p3}, Landroid/provider/Settings$Global;->getInt(Landroid/content/ContentResolver;Ljava/lang/String;I)I
++
++    move-result p0
++
++    return p0
++.end method
++
++.method public getIwhConfiguration()I
++    .locals 0
++
++    const-string p0, "2"
++
++    invoke-static {p0}, Ljava/lang/Integer;->parseInt(Ljava/lang/String;)I
++
++    move-result p0
++
++    return p0
++.end method
++
++.method public getLongSetting(Landroid/content/Context;Ljava/lang/String;J)J
++    .locals 0
++
++    invoke-virtual {p0, p1}, Lcom/samsung/android/server/wifi/SemFrameworkFacade;->getContentResolver(Landroid/content/Context;)Landroid/content/ContentResolver;
++
++    move-result-object p0
++
++    invoke-static {p0, p2, p3, p4}, Landroid/provider/Settings$Global;->getLong(Landroid/content/ContentResolver;Ljava/lang/String;J)J
++
++    move-result-wide p0
++
++    return-wide p0
++.end method
++
++.method public getMobileRxBytes()J
++    .locals 2
++
++    invoke-static {}, Landroid/net/TrafficStats;->getMobileRxBytes()J
++
++    move-result-wide v0
++
++    return-wide v0
++.end method
++
++.method public getMobileTxBytes()J
++    .locals 2
++
++    invoke-static {}, Landroid/net/TrafficStats;->getMobileTxBytes()J
++
++    move-result-wide v0
++
++    return-wide v0
++.end method
++
++.method public getOpBranding()Lcom/samsung/android/wifi/SemOpBrandingLoader$SemVendor;
++    .locals 0
++
++    invoke-static {}, Lcom/samsung/android/wifi/SemOpBrandingLoader;->getInstance()Lcom/samsung/android/wifi/SemOpBrandingLoader;
++
++    move-result-object p0
++
++    invoke-virtual {p0}, Lcom/samsung/android/wifi/SemOpBrandingLoader;->getOpBranding()Lcom/samsung/android/wifi/SemOpBrandingLoader$SemVendor;
++
++    move-result-object p0
++
++    return-object p0
++.end method
++
++.method public getPackageName(Landroid/content/Context;I)Ljava/lang/String;
++    .locals 1
++
++    if-ltz p2, :cond_1
++
++    invoke-virtual {p0, p1}, Lcom/samsung/android/server/wifi/SemFrameworkFacade;->getActivityManager(Landroid/content/Context;)Landroid/app/ActivityManager;
++
++    move-result-object p0
++
++    invoke-virtual {p0}, Landroid/app/ActivityManager;->getRunningAppProcesses()Ljava/util/List;
++
++    move-result-object p0
++
++    if-eqz p0, :cond_1
++
++    invoke-interface {p0}, Ljava/util/List;->iterator()Ljava/util/Iterator;
++
++    move-result-object p0
++
++    :cond_0
++    invoke-interface {p0}, Ljava/util/Iterator;->hasNext()Z
++
++    move-result p1
++
++    if-eqz p1, :cond_1
++
++    invoke-interface {p0}, Ljava/util/Iterator;->next()Ljava/lang/Object;
++
++    move-result-object p1
++
++    check-cast p1, Landroid/app/ActivityManager$RunningAppProcessInfo;
++
++    iget v0, p1, Landroid/app/ActivityManager$RunningAppProcessInfo;->pid:I
++
++    if-ne v0, p2, :cond_0
++
++    iget-object p0, p1, Landroid/app/ActivityManager$RunningAppProcessInfo;->processName:Ljava/lang/String;
++
++    return-object p0
++
++    :cond_1
++    const/4 p0, 0x0
++
++    return-object p0
++.end method
++
++.method public getRxBytes(Ljava/lang/String;)J
++    .locals 0
++
++    invoke-static {p1}, Landroid/net/TrafficStats;->getRxBytes(Ljava/lang/String;)J
++
++    move-result-wide p0
++
++    return-wide p0
++.end method
++
++.method public getRxPackets(Ljava/lang/String;)J
++    .locals 0
++
++    invoke-static {p1}, Landroid/net/TrafficStats;->getRxPackets(Ljava/lang/String;)J
++
++    move-result-wide p0
++
++    return-wide p0
++.end method
++
++.method public getSecureIntegerSetting(Landroid/content/Context;Ljava/lang/String;I)I
++    .locals 0
++
++    invoke-virtual {p0, p1}, Lcom/samsung/android/server/wifi/SemFrameworkFacade;->getContentResolver(Landroid/content/Context;)Landroid/content/ContentResolver;
++
++    move-result-object p0
++
++    invoke-static {p0, p2, p3}, Landroid/provider/Settings$Secure;->getInt(Landroid/content/ContentResolver;Ljava/lang/String;I)I
++
++    move-result p0
++
++    return p0
++.end method
++
++.method public getSecureLongSetting(Landroid/content/Context;Ljava/lang/String;J)J
++    .locals 0
++
++    invoke-virtual {p0, p1}, Lcom/samsung/android/server/wifi/SemFrameworkFacade;->getContentResolver(Landroid/content/Context;)Landroid/content/ContentResolver;
++
++    move-result-object p0
++
++    invoke-static {p0, p2, p3, p4}, Landroid/provider/Settings$Secure;->getLong(Landroid/content/ContentResolver;Ljava/lang/String;J)J
++
++    move-result-wide p0
++
++    return-wide p0
++.end method
++
++.method public getSecureStringSetting(Landroid/content/Context;Ljava/lang/String;)Ljava/lang/String;
++    .locals 0
++
++    invoke-virtual {p0, p1}, Lcom/samsung/android/server/wifi/SemFrameworkFacade;->getContentResolver(Landroid/content/Context;)Landroid/content/ContentResolver;
++
++    move-result-object p0
++
++    invoke-static {p0, p2}, Landroid/provider/Settings$Secure;->getString(Landroid/content/ContentResolver;Ljava/lang/String;)Ljava/lang/String;
++
++    move-result-object p0
++
++    return-object p0
++.end method
++
++.method public getSecureUriFor(Ljava/lang/String;)Landroid/net/Uri;
++    .locals 0
++
++    invoke-static {p1}, Landroid/provider/Settings$Secure;->getUriFor(Ljava/lang/String;)Landroid/net/Uri;
++
++    move-result-object p0
++
++    return-object p0
++.end method
++
++.method public getStringCscFeature(Ljava/lang/String;)Ljava/lang/String;
++    .locals 0
++
++    invoke-static {}, Lcom/samsung/android/feature/SemCscFeature;->getInstance()Lcom/samsung/android/feature/SemCscFeature;
++
++    move-result-object p0
++
++    invoke-virtual {p0, p1}, Lcom/samsung/android/feature/SemCscFeature;->getString(Ljava/lang/String;)Ljava/lang/String;
++
++    move-result-object p0
++
++    return-object p0
++.end method
++
++.method public getStringCscFeature(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
++    .locals 0
++
++    invoke-static {}, Lcom/samsung/android/feature/SemCscFeature;->getInstance()Lcom/samsung/android/feature/SemCscFeature;
++
++    move-result-object p0
++
++    invoke-virtual {p0, p1, p2}, Lcom/samsung/android/feature/SemCscFeature;->getString(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
++
++    move-result-object p0
++
++    return-object p0
++.end method
++
++.method public getStringSetting(Landroid/content/Context;Ljava/lang/String;)Ljava/lang/String;
++    .locals 0
++
++    invoke-virtual {p0, p1}, Lcom/samsung/android/server/wifi/SemFrameworkFacade;->getContentResolver(Landroid/content/Context;)Landroid/content/ContentResolver;
++
++    move-result-object p0
++
++    invoke-static {p0, p2}, Landroid/provider/Settings$Global;->getString(Landroid/content/ContentResolver;Ljava/lang/String;)Ljava/lang/String;
++
++    move-result-object p0
++
++    return-object p0
++.end method
++
++.method public getSystemIntegerSetting(Landroid/content/Context;Ljava/lang/String;I)I
++    .locals 0
++
++    invoke-virtual {p0, p1}, Lcom/samsung/android/server/wifi/SemFrameworkFacade;->getContentResolver(Landroid/content/Context;)Landroid/content/ContentResolver;
++
++    move-result-object p0
++
++    invoke-static {p0, p2, p3}, Landroid/provider/Settings$System;->getInt(Landroid/content/ContentResolver;Ljava/lang/String;I)I
++
++    move-result p0
++
++    return p0
++.end method
++
++.method public getSystemProperties(Ljava/lang/String;I)I
++    .locals 0
++
++    invoke-static {p1, p2}, Landroid/os/SystemProperties;->getInt(Ljava/lang/String;I)I
++
++    move-result p0
++
++    return p0
++.end method
++
++.method public getSystemProperties(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
++    .locals 0
++
++    invoke-static {p1, p2}, Landroid/os/SystemProperties;->get(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
++
++    move-result-object p0
++
++    return-object p0
++.end method
++
++.method public getSystemUriFor(Ljava/lang/String;)Landroid/net/Uri;
++    .locals 0
++
++    invoke-static {p1}, Landroid/provider/Settings$System;->getUriFor(Ljava/lang/String;)Landroid/net/Uri;
++
++    move-result-object p0
++
++    return-object p0
++.end method
++
++.method public getTotalRxBytes()J
++    .locals 2
++
++    invoke-static {}, Landroid/net/TrafficStats;->getTotalRxBytes()J
++
++    move-result-wide v0
++
++    return-wide v0
++.end method
++
++.method public getTotalTxBytes()J
++    .locals 2
++
++    invoke-static {}, Landroid/net/TrafficStats;->getTotalTxBytes()J
++
++    move-result-wide v0
++
++    return-wide v0
++.end method
++
++.method public getTxBytes(Ljava/lang/String;)J
++    .locals 0
++
++    invoke-static {p1}, Landroid/net/TrafficStats;->getTxBytes(Ljava/lang/String;)J
++
++    move-result-wide p0
++
++    return-wide p0
++.end method
++
++.method public getTxPackets(Ljava/lang/String;)J
++    .locals 0
++
++    invoke-static {p1}, Landroid/net/TrafficStats;->getTxPackets(Ljava/lang/String;)J
++
++    move-result-wide p0
++
++    return-wide p0
++.end method
++
++.method public getUidRxBytes(I)J
++    .locals 0
++
++    invoke-static {p1}, Landroid/net/TrafficStats;->getUidRxBytes(I)J
++
++    move-result-wide p0
++
++    return-wide p0
++.end method
++
++.method public getUidRxPackets(I)J
++    .locals 0
++
++    invoke-static {p1}, Landroid/net/TrafficStats;->getUidRxPackets(I)J
++
++    move-result-wide p0
++
++    return-wide p0
++.end method
++
++.method public getUidTxBytes(I)J
++    .locals 0
++
++    invoke-static {p1}, Landroid/net/TrafficStats;->getUidTxBytes(I)J
++
++    move-result-wide p0
++
++    return-wide p0
++.end method
++
++.method public getUidTxPackets(I)J
++    .locals 0
++
++    invoke-static {p1}, Landroid/net/TrafficStats;->getUidTxPackets(I)J
++
++    move-result-wide p0
++
++    return-wide p0
++.end method
++
++.method public getUriFor(Ljava/lang/String;)Landroid/net/Uri;
++    .locals 0
++
++    invoke-static {p1}, Landroid/provider/Settings$Global;->getUriFor(Ljava/lang/String;)Landroid/net/Uri;
++
++    move-result-object p0
++
++    return-object p0
++.end method
++
++.method public isATTVendor()Z
++    .locals 1
++
++    const-string p0, "ATT"
++
++    invoke-static {}, Lcom/samsung/android/server/wifi/SemFrameworkFacade;->readSalesCode()Ljava/lang/String;
++
++    move-result-object v0
++
++    invoke-virtual {p0, v0}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
++
++    move-result p0
++
++    if-nez p0, :cond_1
++
++    const-string p0, "AIO"
++
++    invoke-static {}, Lcom/samsung/android/server/wifi/SemFrameworkFacade;->readSalesCode()Ljava/lang/String;
++
++    move-result-object v0
++
++    invoke-virtual {p0, v0}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
++
++    move-result p0
++
++    if-nez p0, :cond_1
++
++    const-string p0, "APP"
++
++    invoke-static {}, Lcom/samsung/android/server/wifi/SemFrameworkFacade;->readSalesCode()Ljava/lang/String;
++
++    move-result-object v0
++
++    invoke-virtual {p0, v0}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
++
++    move-result p0
++
++    if-eqz p0, :cond_0
++
++    goto :goto_0
++
++    :cond_0
++    const/4 p0, 0x0
++
++    return p0
++
++    :cond_1
++    :goto_0
++    const/4 p0, 0x1
++
++    return p0
++.end method
++
++.method public isAdvancedAutohotspotSupported()Z
++    .locals 0
++
++    const/4 p0, 0x1
++
++    return p0
++.end method
++
++.method public isAppForeground(Landroid/content/Context;I)Z
++    .locals 0
++
++    invoke-virtual {p0, p1}, Lcom/samsung/android/server/wifi/SemFrameworkFacade;->getActivityManager(Landroid/content/Context;)Landroid/app/ActivityManager;
++
++    move-result-object p0
++
++    const/4 p1, 0x0
++
++    if-nez p0, :cond_0
++
++    return p1
++
++    :cond_0
++    invoke-virtual {p0, p2}, Landroid/app/ActivityManager;->getUidImportance(I)I
++
++    move-result p0
++
++    const/16 p2, 0xc8
++
++    if-gt p0, p2, :cond_1
++
++    const/4 p0, 0x1
++
++    return p0
++
++    :cond_1
++    return p1
++.end method
++
++.method public isAutoWiFiEnableForATT()Z
++    .locals 2
++
++    const-string v0, "ro.product.vendor.device"
++
++    const/4 v1, 0x0
++
++    invoke-virtual {p0, v0, v1}, Lcom/samsung/android/server/wifi/SemFrameworkFacade;->getSystemProperties(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
++
++    move-result-object p0
++
++    const-string v0, "b6q"
++
++    invoke-virtual {p0, v0}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
++
++    move-result v0
++
++    const/4 v1, 0x1
++
++    if-nez v0, :cond_2
++
++    const-string v0, "q6q"
++
++    invoke-virtual {p0, v0}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
++
++    move-result v0
++
++    if-nez v0, :cond_2
++
++    const-string v0, "r12s"
++
++    invoke-virtual {p0, v0}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
++
++    move-result v0
++
++    if-nez v0, :cond_2
++
++    const-string v0, "gts10p"
++
++    invoke-virtual {p0, v0}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
++
++    move-result p0
++
++    if-eqz p0, :cond_0
++
++    goto :goto_0
++
++    :cond_0
++    const-string p0, "ro.product.first_api_level"
++
++    const/4 v0, -0x1
++
++    invoke-static {p0, v0}, Landroid/os/SystemProperties;->getInt(Ljava/lang/String;I)I
++
++    move-result p0
++
++    const/16 v0, 0x22
++
++    if-le p0, v0, :cond_1
++
++    return v1
++
++    :cond_1
++    const/4 p0, 0x0
++
++    return p0
++
++    :cond_2
++    :goto_0
++    return v1
++.end method
++
++.method public isComcastVendor()Z
++    .locals 1
++
++    const-string p0, "CCT"
++
++    invoke-static {}, Lcom/samsung/android/server/wifi/SemFrameworkFacade;->readSalesCode()Ljava/lang/String;
++
++    move-result-object v0
++
++    invoke-virtual {p0, v0}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
++
++    move-result p0
++
++    if-nez p0, :cond_1
++
++    const-string p0, "XMO"
++
++    invoke-static {}, Lcom/samsung/android/server/wifi/SemFrameworkFacade;->readSalesCode()Ljava/lang/String;
++
++    move-result-object v0
++
++    invoke-virtual {p0, v0}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
++
++    move-result p0
++
++    if-eqz p0, :cond_0
++
++    goto :goto_0
++
++    :cond_0
++    const/4 p0, 0x0
++
++    return p0
++
++    :cond_1
++    :goto_0
++    const/4 p0, 0x1
++
++    return p0
++.end method
++
++.method public isEnhancedMobileApModeForD2dOrWifiOnlyLite()Z
++    .locals 0
++
++    sget-boolean p0, Lcom/samsung/android/server/wifi/SemFrameworkFacade;->SUPPORT_MOBILE_AP_ENHANCED_D2D:Z
++
++    if-nez p0, :cond_1
++
++    sget-boolean p0, Lcom/samsung/android/server/wifi/SemFrameworkFacade;->SUPPORT_MOBILE_AP_ENHANCED_WIFI_ONLY_LITE:Z
++
++    if-eqz p0, :cond_0
++
++    goto :goto_0
++
++    :cond_0
++    const/4 p0, 0x0
++
++    return p0
++
++    :cond_1
++    :goto_0
++    const/4 p0, 0x1
++
++    return p0
++.end method
++
++.method public isEnhancedMobileApModeForLiteOrWifiOnlyLite()Z
++    .locals 0
++
++    const/4 p0, 0x1
++
++    return p0
++.end method
++
++.method public isFactoryBinary()Z
++    .locals 1
++
++    const-string p0, "ro.factory.factory_binary"
++
++    const-string v0, "Unknown"
++
++    invoke-static {p0, v0}, Landroid/os/SystemProperties;->get(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
++
++    move-result-object p0
++
++    const-string v0, "factory"
++
++    invoke-virtual {v0, p0}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
++
++    move-result p0
++
++    return p0
++.end method
++
++.method public isHotspotDongleProduct()Z
++    .locals 0
++
++    const/4 p0, 0x0
++
++    return p0
++.end method
++
++.method public isIotDevice()Z
++    .locals 0
++
++    const/4 p0, 0x0
++
++    return p0
++.end method
++
++.method public isJdmProduct()Z
++    .locals 0
++
++    sget-boolean p0, Lcom/samsung/android/server/wifi/SemFrameworkFacade;->IS_JDM_PRODUCT:Z
++
++    return p0
++.end method
++
++.method public isKTTVendor()Z
++    .locals 1
++
++    const-string p0, "KTT"
++
++    invoke-static {}, Lcom/samsung/android/server/wifi/SemFrameworkFacade;->readSalesCode()Ljava/lang/String;
++
++    move-result-object v0
++
++    invoke-virtual {p0, v0}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
++
++    move-result p0
++
++    if-nez p0, :cond_1
++
++    const-string p0, "KTC"
++
++    invoke-static {}, Lcom/samsung/android/server/wifi/SemFrameworkFacade;->readSalesCode()Ljava/lang/String;
++
++    move-result-object v0
++
++    invoke-virtual {p0, v0}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
++
++    move-result p0
++
++    if-nez p0, :cond_1
++
++    const-string p0, "KTO"
++
++    invoke-static {}, Lcom/samsung/android/server/wifi/SemFrameworkFacade;->readSalesCode()Ljava/lang/String;
++
++    move-result-object v0
++
++    invoke-virtual {p0, v0}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
++
++    move-result p0
++
++    if-eqz p0, :cond_0
++
++    goto :goto_0
++
++    :cond_0
++    const/4 p0, 0x0
++
++    return p0
++
++    :cond_1
++    :goto_0
++    const/4 p0, 0x1
++
++    return p0
++.end method
++
++.method public isKtPadDevice()Z
++    .locals 1
++
++    invoke-static {}, Lcom/samsung/android/feature/SemCscFeature;->getInstance()Lcom/samsung/android/feature/SemCscFeature;
++
++    move-result-object p0
++
++    const-string v0, "CscFeature_Wifi_SupportHomeAPVSIE"
++
++    invoke-virtual {p0, v0}, Lcom/samsung/android/feature/SemCscFeature;->getBoolean(Ljava/lang/String;)Z
++
++    move-result p0
++
++    return p0
++.end method
++
++.method public isMBOSupported()Z
++    .locals 0
++
++    const/4 p0, 0x1
++
++    return p0
++.end method
++
++.method public isMCFAutohotspotSupported(Landroid/content/Context;)Z
++    .locals 2
++
++    sget-boolean v0, Lcom/samsung/android/wifi/SemWifiManager;->MHSDBG:Z
++
++    const/4 v1, 0x0
++
++    if-eqz v0, :cond_0
++
++    invoke-virtual {p0}, Lcom/samsung/android/server/wifi/SemFrameworkFacade;->isSupportedContinuity()Z
++
++    move-result v0
++
++    if-eqz v0, :cond_0
++
++    invoke-virtual {p0, p1}, Lcom/samsung/android/server/wifi/SemFrameworkFacade;->getContentResolver(Landroid/content/Context;)Landroid/content/ContentResolver;
++
++    move-result-object p0
++
++    const-string p1, "vendor.wifiap.mcf.autohotspot"
++
++    invoke-static {p0, p1, v1}, Landroid/provider/Settings$Secure;->getInt(Landroid/content/ContentResolver;Ljava/lang/String;I)I
++
++    move-result p0
++
++    const/4 p1, 0x1
++
++    if-ne p0, p1, :cond_0
++
++    return p1
++
++    :cond_0
++    return v1
++.end method
++
++.method public isMCFClientAutohotspotSupported(Landroid/content/Context;)Z
++    .locals 2
++
++    sget-boolean v0, Lcom/samsung/android/wifi/SemWifiManager;->MHSDBG:Z
++
++    const/4 v1, 0x0
++
++    if-eqz v0, :cond_0
++
++    invoke-virtual {p0, p1}, Lcom/samsung/android/server/wifi/SemFrameworkFacade;->isMCFAutohotspotSupported(Landroid/content/Context;)Z
++
++    move-result v0
++
++    if-eqz v0, :cond_0
++
++    invoke-virtual {p0, p1}, Lcom/samsung/android/server/wifi/SemFrameworkFacade;->getContentResolver(Landroid/content/Context;)Landroid/content/ContentResolver;
++
++    move-result-object p0
++
++    const-string p1, "vendor.wifiap.mcf.autohotspot"
++
++    invoke-static {p0, p1, v1}, Landroid/provider/Settings$Secure;->getInt(Landroid/content/ContentResolver;Ljava/lang/String;I)I
++
++    move-result p0
++
++    const/4 p1, 0x1
++
++    if-ne p0, p1, :cond_0
++
++    return p1
++
++    :cond_0
++    return v1
++.end method
++
++.method public isNiapModeOn(Landroid/content/Context;)Z
++    .locals 0
++
++    const-class p0, Landroid/app/admin/DevicePolicyManager;
++
++    invoke-virtual {p1, p0}, Landroid/content/Context;->getSystemService(Ljava/lang/Class;)Ljava/lang/Object;
++
++    move-result-object p0
++
++    check-cast p0, Landroid/app/admin/DevicePolicyManager;
++
++    const/4 p1, 0x0
++
++    invoke-virtual {p0, p1}, Landroid/app/admin/DevicePolicyManager;->isCommonCriteriaModeEnabled(Landroid/content/ComponentName;)Z
++
++    move-result p0
++
++    return p0
++.end method
++
++.method public isPlatformSigned(Landroid/content/Context;I)Z
++    .locals 0
++
++    invoke-virtual {p0, p1, p2}, Lcom/samsung/android/server/wifi/SemFrameworkFacade;->getPackageName(Landroid/content/Context;I)Ljava/lang/String;
++
++    move-result-object p2
++
++    invoke-virtual {p0, p1, p2}, Lcom/samsung/android/server/wifi/SemFrameworkFacade;->isPlatformSigned(Landroid/content/Context;Ljava/lang/String;)Z
++
++    move-result p0
++
++    return p0
++.end method
++
++.method public isPlatformSigned(Landroid/content/Context;Ljava/lang/String;)Z
++    .locals 1
++
++    invoke-static {p2}, Landroid/text/TextUtils;->isEmpty(Ljava/lang/CharSequence;)Z
++
++    move-result p0
++
++    const/4 v0, 0x0
++
++    if-eqz p0, :cond_0
++
++    return v0
++
++    :cond_0
++    :try_start_0
++    invoke-virtual {p1}, Landroid/content/Context;->getPackageManager()Landroid/content/pm/PackageManager;
++
++    move-result-object p0
++
++    const-string p1, "android"
++
++    invoke-virtual {p0, p1, p2}, Landroid/content/pm/PackageManager;->checkSignatures(Ljava/lang/String;Ljava/lang/String;)I
++
++    move-result p0
++    :try_end_0
++    .catch Ljava/lang/Exception; {:try_start_0 .. :try_end_0} :catch_0
++
++    if-nez p0, :cond_1
++
++    const/4 p0, 0x1
++
++    return p0
++
++    :cond_1
++    return v0
++
++    :catch_0
++    move-exception p0
++
++    const-string p1, "SemFrameworkFacade"
++
++    const-string p2, "exception in checkSignature : "
++
++    invoke-static {p2, p0, p1}, Lcom/samsung/android/server/wifi/SemFrameworkFacade$$ExternalSyntheticOutline0;->m(Ljava/lang/String;Ljava/lang/Exception;Ljava/lang/String;)V
++
++    return v0
++.end method
++
++.method public isSepLiteModel(Landroid/content/Context;)Z
++    .locals 0
++
++    invoke-virtual {p1}, Landroid/content/Context;->getPackageManager()Landroid/content/pm/PackageManager;
++
++    move-result-object p0
++
++    const-string p1, "com.samsung.feature.samsung_experience_mobile_lite"
++
++    invoke-virtual {p0, p1}, Landroid/content/pm/PackageManager;->hasSystemFeature(Ljava/lang/String;)Z
++
++    move-result p0
++
++    return p0
++.end method
++
++.method public isSepStandardModel(Landroid/content/Context;)Z
++    .locals 0
++
++    invoke-virtual {p1}, Landroid/content/Context;->getPackageManager()Landroid/content/pm/PackageManager;
++
++    move-result-object p0
++
++    const-string p1, "com.samsung.feature.samsung_experience_mobile"
++
++    invoke-virtual {p0, p1}, Landroid/content/pm/PackageManager;->hasSystemFeature(Ljava/lang/String;)Z
++
++    move-result p0
++
++    return p0
++.end method
++
++.method public isSetupwizardFinished()Z
++    .locals 1
++
++    const-string p0, "persist.sys.setupwizard"
++
++    const-string v0, "NOTSET"
++
++    invoke-static {p0, v0}, Landroid/os/SystemProperties;->get(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
++
++    move-result-object p0
++
++    const-string v0, "FINISH"
++
++    invoke-virtual {v0, p0}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
++
++    move-result p0
++
++    return p0
++.end method
++
++.method public isShowDataSelectPopupOnBootup()Z
++    .locals 1
++
++    invoke-static {}, Lcom/samsung/android/feature/SemCscFeature;->getInstance()Lcom/samsung/android/feature/SemCscFeature;
++
++    move-result-object p0
++
++    const-string v0, "CscFeature_RIL_ShowDataSelectPopupOnBootup"
++
++    invoke-virtual {p0, v0}, Lcom/samsung/android/feature/SemCscFeature;->getBoolean(Ljava/lang/String;)Z
++
++    move-result p0
++
++    return p0
++.end method
++
++.method public isSupportChameleon()Z
++    .locals 1
++
++    invoke-virtual {p0}, Lcom/samsung/android/server/wifi/SemFrameworkFacade;->checkAndGetMobileHotspotBrandingInfo()V
++
++    const-string v0, "SPRINT"
++
++    iget-object p0, p0, Lcom/samsung/android/server/wifi/SemFrameworkFacade;->CONFIG_OPBRANDING_FOR_MOBILE_AP:Ljava/lang/String;
++
++    invoke-virtual {v0, p0}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
++
++    move-result p0
++
++    return p0
++.end method
++
++.method public isSupportMobileAp6G()Z
++    .locals 0
++
++    const/4 p0, 0x1
++
++    return p0
++.end method
++
++.method public isSupportVerizonProvisioning()Z
++    .locals 1
++
++    invoke-virtual {p0}, Lcom/samsung/android/server/wifi/SemFrameworkFacade;->checkAndGetMobileHotspotBrandingInfo()V
++
++    const-string v0, "VZW"
++
++    iget-object p0, p0, Lcom/samsung/android/server/wifi/SemFrameworkFacade;->CONFIG_OPBRANDING_FOR_MOBILE_AP:Ljava/lang/String;
++
++    invoke-virtual {v0, p0}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
++
++    move-result p0
++
++    return p0
++.end method
++
++.method public isSupported6Ghz()Z
++    .locals 0
++
++    const/4 p0, 0x1
++
++    return p0
++.end method
++
++.method public isSupportedAdps()Z
++    .locals 1
++
++    invoke-static {}, Lcom/samsung/android/feature/SemFloatingFeature;->getInstance()Lcom/samsung/android/feature/SemFloatingFeature;
++
++    move-result-object p0
++
++    const-string v0, "SEC_FLOATING_FEATURE_WIFI_SUPPORT_ADPS"
++
++    invoke-virtual {p0, v0}, Lcom/samsung/android/feature/SemFloatingFeature;->getBoolean(Ljava/lang/String;)Z
++
++    move-result p0
++
++    return p0
++.end method
++
++.method public isSupportedBigdataHqmService()Z
++    .locals 0
++
++    const/4 p0, 0x1
++
++    return p0
++.end method
++
++.method public isSupportedBigdataSurveyMode()Z
++    .locals 1
++
++    invoke-static {}, Lcom/samsung/android/feature/SemFloatingFeature;->getInstance()Lcom/samsung/android/feature/SemFloatingFeature;
++
++    move-result-object p0
++
++    const-string v0, "SEC_FLOATING_FEATURE_CONTEXTSERVICE_ENABLE_SURVEY_MODE"
++
++    invoke-virtual {p0, v0}, Lcom/samsung/android/feature/SemFloatingFeature;->getString(Ljava/lang/String;)Ljava/lang/String;
++
++    move-result-object p0
++
++    const-string v0, "TRUE"
++
++    invoke-virtual {v0, p0}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
++
++    move-result p0
++
++    return p0
++.end method
++
++.method public isSupportedContinuity()Z
++    .locals 1
++
++    invoke-static {}, Lcom/samsung/android/feature/SemFloatingFeature;->getInstance()Lcom/samsung/android/feature/SemFloatingFeature;
++
++    move-result-object p0
++
++    const-string v0, "SEC_FLOATING_FEATURE_MCF_SUPPORT_CONTINUITY"
++
++    invoke-virtual {p0, v0}, Lcom/samsung/android/feature/SemFloatingFeature;->getInt(Ljava/lang/String;)I
++
++    move-result p0
++
++    if-lez p0, :cond_0
++
++    const/4 p0, 0x1
++
++    return p0
++
++    :cond_0
++    const/4 p0, 0x0
++
++    return p0
++.end method
++
++.method public isSupportedMcfService()Z
++    .locals 1
++
++    invoke-static {}, Lcom/samsung/android/feature/SemFloatingFeature;->getInstance()Lcom/samsung/android/feature/SemFloatingFeature;
++
++    move-result-object p0
++
++    const-string v0, "SEC_FLOATING_FEATURE_MCF_SUPPORT_FRAMEWORK"
++
++    invoke-virtual {p0, v0}, Lcom/samsung/android/feature/SemFloatingFeature;->getBoolean(Ljava/lang/String;)Z
++
++    move-result p0
++
++    return p0
++.end method
++
++.method public isWifiProfileShareAHSupported(Landroid/content/Context;)Z
++    .locals 5
++
++    const-string v0, "ro.build.version.oneui"
++
++    const/4 v1, 0x0
++
++    invoke-static {v0, v1}, Landroid/os/SystemProperties;->getInt(Ljava/lang/String;I)I
++
++    move-result v0
++
++    iput v0, p0, Lcom/samsung/android/server/wifi/SemFrameworkFacade;->mOneUIVersion:I
++
++    sget-boolean v2, Lcom/samsung/android/wifi/SemWifiManager;->MHSDBG:Z
++
++    const v3, 0xeac4
++
++    const/4 v4, 0x1
++
++    if-eqz v2, :cond_2
++
++    if-ge v0, v3, :cond_1
++
++    invoke-virtual {p0, p1}, Lcom/samsung/android/server/wifi/SemFrameworkFacade;->getContentResolver(Landroid/content/Context;)Landroid/content/ContentResolver;
++
++    move-result-object p0
++
++    const-string p1, "vendor.wifiap.wifiprofileshare.autohotspot"
++
++    invoke-static {p0, p1, v1}, Landroid/provider/Settings$Secure;->getInt(Landroid/content/ContentResolver;Ljava/lang/String;I)I
++
++    move-result p0
++
++    if-ne p0, v4, :cond_0
++
++    goto :goto_0
++
++    :cond_0
++    return v1
++
++    :cond_1
++    :goto_0
++    return v4
++
++    :cond_2
++    if-lt v0, v3, :cond_3
++
++    return v4
++
++    :cond_3
++    return v1
++.end method
++
++.method public isWifiSharingEnabled(Landroid/content/Context;)Z
++    .locals 2
++
++    const-string v0, "wifi_ap_wifi_sharing"
++
++    const/4 v1, 0x0
++
++    invoke-virtual {p0, p1, v0, v1}, Lcom/samsung/android/server/wifi/SemFrameworkFacade;->getSecureIntegerSetting(Landroid/content/Context;Ljava/lang/String;I)I
++
++    move-result p0
++
++    const/4 p1, 0x1
++
++    if-ne p0, p1, :cond_0
++
++    return p1
++
++    :cond_0
++    return v1
++.end method
++
++.method public isWifiToCellularSupported()Z
++    .locals 0
++
++    const/4 p0, 0x1
++
++    return p0
++.end method
++
++.method public makeAlertDialogBuilder(Landroid/content/Context;)Landroid/app/AlertDialog$Builder;
++    .locals 0
++
++    new-instance p0, Landroid/app/AlertDialog$Builder;
++
++    invoke-direct {p0, p1}, Landroid/app/AlertDialog$Builder;-><init>(Landroid/content/Context;)V
++
++    return-object p0
++.end method
++
++.method public makeIpClient(Landroid/content/Context;Ljava/lang/String;Landroid/net/ip/IpClientCallbacks;)V
++    .locals 0
++
++    invoke-static {p1, p2, p3}, Landroid/net/ip/IpClientUtil;->makeIpClient(Landroid/content/Context;Ljava/lang/String;Landroid/net/ip/IpClientCallbacks;)V
++
++    return-void
++.end method
++
++.method public makeNotificationBuilder(Landroid/content/Context;Ljava/lang/String;)Landroid/app/Notification$Builder;
++    .locals 0
++
++    new-instance p0, Landroid/app/Notification$Builder;
++
++    invoke-direct {p0, p1, p2}, Landroid/app/Notification$Builder;-><init>(Landroid/content/Context;Ljava/lang/String;)V
++
++    return-object p0
++.end method
++
++.method public makeWifiAsyncChannel(Ljava/lang/String;)Lcom/samsung/android/server/wifi/util/SemWifiAsyncChannel;
++    .locals 0
++
++    new-instance p0, Lcom/samsung/android/server/wifi/util/SemWifiAsyncChannel;
++
++    invoke-direct {p0, p1}, Lcom/samsung/android/server/wifi/util/SemWifiAsyncChannel;-><init>(Ljava/lang/String;)V
++
++    return-object p0
++.end method
++
++.method public registerContentObserver(Landroid/content/Context;Landroid/net/Uri;ZLandroid/database/ContentObserver;)V
++    .locals 0
++
++    invoke-virtual {p0, p1}, Lcom/samsung/android/server/wifi/SemFrameworkFacade;->getContentResolver(Landroid/content/Context;)Landroid/content/ContentResolver;
++
++    move-result-object p0
++
++    invoke-virtual {p0, p2, p3, p4}, Landroid/content/ContentResolver;->registerContentObserver(Landroid/net/Uri;ZLandroid/database/ContentObserver;)V
++
++    return-void
++.end method
++
++.method public setIntegerSetting(Landroid/content/ContentResolver;Ljava/lang/String;I)Z
++    .locals 0
++
++    invoke-static {p1, p2, p3}, Landroid/provider/Settings$Global;->putInt(Landroid/content/ContentResolver;Ljava/lang/String;I)Z
++
++    move-result p0
++
++    return p0
++.end method
++
++.method public setIntegerSetting(Landroid/content/Context;Ljava/lang/String;I)Z
++    .locals 0
++
++    invoke-virtual {p0, p1}, Lcom/samsung/android/server/wifi/SemFrameworkFacade;->getContentResolver(Landroid/content/Context;)Landroid/content/ContentResolver;
++
++    move-result-object p0
++
++    invoke-static {p0, p2, p3}, Landroid/provider/Settings$Global;->putInt(Landroid/content/ContentResolver;Ljava/lang/String;I)Z
++
++    move-result p0
++
++    return p0
++.end method
++
++.method public setSecureIntegerSetting(Landroid/content/Context;Ljava/lang/String;I)Z
++    .locals 0
++
++    invoke-virtual {p0, p1}, Lcom/samsung/android/server/wifi/SemFrameworkFacade;->getContentResolver(Landroid/content/Context;)Landroid/content/ContentResolver;
++
++    move-result-object p0
++
++    invoke-static {p0, p2, p3}, Landroid/provider/Settings$Secure;->putInt(Landroid/content/ContentResolver;Ljava/lang/String;I)Z
++
++    move-result p0
++
++    return p0
++.end method
++
++.method public setSecureLongSetting(Landroid/content/Context;Ljava/lang/String;J)Z
++    .locals 0
++
++    invoke-virtual {p0, p1}, Lcom/samsung/android/server/wifi/SemFrameworkFacade;->getContentResolver(Landroid/content/Context;)Landroid/content/ContentResolver;
++
++    move-result-object p0
++
++    invoke-static {p0, p2, p3, p4}, Landroid/provider/Settings$Secure;->putLong(Landroid/content/ContentResolver;Ljava/lang/String;J)Z
++
++    move-result p0
++
++    return p0
++.end method
++
++.method public setSecureStringSetting(Landroid/content/Context;Ljava/lang/String;Ljava/lang/String;)Z
++    .locals 0
++
++    invoke-virtual {p0, p1}, Lcom/samsung/android/server/wifi/SemFrameworkFacade;->getContentResolver(Landroid/content/Context;)Landroid/content/ContentResolver;
++
++    move-result-object p0
++
++    invoke-static {p0, p2, p3}, Landroid/provider/Settings$Secure;->putString(Landroid/content/ContentResolver;Ljava/lang/String;Ljava/lang/String;)Z
++
++    move-result p0
++
++    return p0
++.end method
++
++.method public setStringSetting(Landroid/content/Context;Ljava/lang/String;Ljava/lang/String;)Z
++    .locals 0
++
++    invoke-virtual {p0, p1}, Lcom/samsung/android/server/wifi/SemFrameworkFacade;->getContentResolver(Landroid/content/Context;)Landroid/content/ContentResolver;
++
++    move-result-object p0
++
++    invoke-static {p0, p2, p3}, Landroid/provider/Settings$Global;->putString(Landroid/content/ContentResolver;Ljava/lang/String;Ljava/lang/String;)Z
++
++    move-result p0
++
++    return p0
++.end method
++
++.method public setSystemProperties(Ljava/lang/String;Ljava/lang/String;)V
++    .locals 0
++
++    invoke-static {p1, p2}, Landroid/os/SystemProperties;->set(Ljava/lang/String;Ljava/lang/String;)V
++
++    return-void
++.end method
++
++.method public showDisconnectToast(Landroid/content/Context;)V
++    .locals 1
++
++    const p0, 0x1041191
++
++    const/4 v0, 0x0
++
++    invoke-static {p1, p0, v0}, Landroid/widget/Toast;->makeText(Landroid/content/Context;II)Landroid/widget/Toast;
++
++    move-result-object p0
++
++    invoke-virtual {p0}, Landroid/widget/Toast;->show()V
++
++    return-void
++.end method
++
++.method public showToast(Landroid/content/Context;Ljava/lang/String;)V
++    .locals 0
++
++    const/4 p0, 0x0
++
++    invoke-static {p1, p2, p0}, Landroid/widget/Toast;->makeText(Landroid/content/Context;Ljava/lang/CharSequence;I)Landroid/widget/Toast;
++
++    move-result-object p0
++
++    invoke-virtual {p0}, Landroid/widget/Toast;->show()V
++
++    return-void
++.end method
++
++.method public unregisterContentObserver(Landroid/content/Context;Landroid/database/ContentObserver;)V
++    .locals 0
++
++    invoke-virtual {p0, p1}, Lcom/samsung/android/server/wifi/SemFrameworkFacade;->getContentResolver(Landroid/content/Context;)Landroid/content/ContentResolver;
++
++    move-result-object p0
++
++    invoke-virtual {p0, p2}, Landroid/content/ContentResolver;->unregisterContentObserver(Landroid/database/ContentObserver;)V
++
++    return-void
++.end method
 -- 
-2.51.0
+2.43.0
 

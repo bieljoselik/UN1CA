@@ -1,39 +1,343 @@
-From 048a49f0d76d5861725f17bd5a6e79d8ccbdea59 Mon Sep 17 00:00:00 2001
-From: Salvo Giangreco <giangrecosalvo9@gmail.com>
-Date: Sat, 30 Aug 2025 15:35:10 +0200
-Subject: [PATCH] Disable virtual vibration support
+From 14aa2a77bec3ffde821085ae7632e9266de608ae Mon Sep 17 00:00:00 2001
+From: ditternation <ditternation@outlook.com>
+Date: Fri, 12 Dec 2025 01:06:59 +0100
+Subject: [PATCH] Auto-update 0001-Disable-virtual-vibration-support.patch
 
 ---
- smali_classes6/com/samsung/android/audio/Rune.smali       | 2 +-
- smali_classes6/com/samsung/android/vibrator/VibRune.smali | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ .../com/samsung/android/audio/Rune.smali      | 44 +++++++++++++++++++
+ 1 file changed, 44 insertions(+)
 
-diff --git a/smali_classes6/com/samsung/android/audio/Rune.smali b/smali_classes6/com/samsung/android/audio/Rune.smali
-index da0fff18..73d8c8de 100644
---- a/smali_classes6/com/samsung/android/audio/Rune.smali
-+++ b/smali_classes6/com/samsung/android/audio/Rune.smali
-@@ -278,7 +278,7 @@
+diff --git a/out/target/t2s/apktool/system/framework/framework.jar/smali_classes6/com/samsung/android/audio/Rune.smali b/out/target/t2s/apktool/system/framework/framework.jar/smali_classes6/com/samsung/android/audio/Rune.smali
+index 6c14f755..a4883802 100644
+--- a/out/target/t2s/apktool/system/framework/framework.jar/smali_classes6/com/samsung/android/audio/Rune.smali
++++ b/out/target/t2s/apktool/system/framework/framework.jar/smali_classes6/com/samsung/android/audio/Rune.smali
+@@ -337,6 +337,7 @@
+ .method static constructor blacklist <clinit>()V
+     .locals 7
  
- .field public static final blacklist SEC_AUDIO_SUPPORT_SOUND_THEME:Z
++    .line 43
+     const-string v0, "2"
  
--.field public static final blacklist SEC_AUDIO_SUPPORT_VIRTUAL_VIBRATION_SOUND:Z = true
-+.field public static final blacklist SEC_AUDIO_SUPPORT_VIRTUAL_VIBRATION_SOUND:Z = false
+     invoke-static {v0}, Ljava/lang/Integer;->valueOf(Ljava/lang/String;)Ljava/lang/Integer;
+@@ -349,6 +350,7 @@
  
- .field public static final blacklist SEC_AUDIO_SUPPORT_VOIP_ANTI_HOWLING:Z
+     sput v0, Lcom/samsung/android/audio/Rune;->SEC_AUDIO_NUM_OF_SPEAKER:I
  
-diff --git a/smali_classes6/com/samsung/android/vibrator/VibRune.smali b/smali_classes6/com/samsung/android/vibrator/VibRune.smali
-index 9c2b5121..011fa696 100644
---- a/smali_classes6/com/samsung/android/vibrator/VibRune.smali
-+++ b/smali_classes6/com/samsung/android/vibrator/VibRune.smali
-@@ -60,7 +60,7 @@
++    .line 45
+     const-string v0, "300"
  
- .field public static final blacklist SUPPORT_VIBRATION_TAG:Z = true
+     invoke-static {v0}, Ljava/lang/Integer;->parseInt(Ljava/lang/String;)I
+@@ -371,10 +373,13 @@
+     :goto_0
+     sput-boolean v0, Lcom/samsung/android/audio/Rune;->SEC_AUDIO_UHQ:Z
  
--.field public static final blacklist SUPPORT_VIRTUAL_VIBRATION_SOUND:Z = true
-+.field public static final blacklist SUPPORT_VIRTUAL_VIBRATION_SOUND:Z = false
++    .line 53
+     sput-boolean v2, Lcom/samsung/android/audio/Rune;->SEC_AUDIO_USB_HEADSET_FOR_CAMCORDER:Z
  
- .field private static blacklist mIsHapticEngineIndexSupported:Z = false
++    .line 55
+     sput-boolean v2, Lcom/samsung/android/audio/Rune;->SEC_AUDIO_USB_HEADSET_CALL_SUPPORT:Z
  
++    .line 57
+     const-string/jumbo v0, "SPK_AEC"
+ 
+     invoke-static {v0, v0}, Landroid/text/TextUtils;->equals(Ljava/lang/CharSequence;Ljava/lang/CharSequence;)Z
+@@ -383,10 +388,12 @@
+ 
+     sput-boolean v0, Lcom/samsung/android/audio/Rune;->SEC_AUDIO_GAMECHAT_SPEAKER_AEC:Z
+ 
++    .line 59
+     const-string/jumbo v0, "ro.carrier"
+ 
+     const-string/jumbo v3, "Unknown"
+ 
++    .line 60
+     invoke-static {v0, v3}, Landroid/os/SystemProperties;->get(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+ 
+     move-result-object v0
+@@ -407,6 +414,7 @@
+ 
+     const-string/jumbo v3, "no"
+ 
++    .line 61
+     invoke-static {v0, v3}, Landroid/os/SystemProperties;->get(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+ 
+     move-result-object v0
+@@ -437,12 +445,14 @@
+     :goto_2
+     sput-boolean v0, Lcom/samsung/android/audio/Rune;->SEC_AUDIO_DEFAULT_STREAM_NOTIFICATION:Z
+ 
++    .line 69
+     const-string/jumbo v0, "sep_basic"
+ 
+     invoke-static {v0, v0}, Landroid/text/TextUtils;->equals(Ljava/lang/CharSequence;Ljava/lang/CharSequence;)Z
+ 
+     sput-boolean v2, Lcom/samsung/android/audio/Rune;->SEC_AUDIO_SUPPORT_SOUND_THEME:Z
+ 
++    .line 72
+     const-string/jumbo v3, "sep_lite_new"
+ 
+     invoke-static {v3, v0}, Landroid/text/TextUtils;->equals(Ljava/lang/CharSequence;Ljava/lang/CharSequence;)Z
+@@ -451,8 +461,10 @@
+ 
+     sput-boolean v0, Lcom/samsung/android/audio/Rune;->SEC_AUDIO_PERMISSION_UPDATE_DELAY_FOR_SEP_LITE:Z
+ 
++    .line 84
+     sput-boolean v2, Lcom/samsung/android/audio/Rune;->SEC_AUDIO_SUPPORT_ACH_RINGTONE:Z
+ 
++    .line 96
+     invoke-static {}, Lcom/samsung/android/feature/SemFloatingFeature;->getInstance()Lcom/samsung/android/feature/SemFloatingFeature;
+ 
+     move-result-object v0
+@@ -465,6 +477,7 @@
+ 
+     sput-boolean v0, Lcom/samsung/android/audio/Rune;->SEC_AUDIO_DOLBY_ENABLED:Z
+ 
++    .line 98
+     invoke-static {}, Lcom/samsung/android/feature/SemFloatingFeature;->getInstance()Lcom/samsung/android/feature/SemFloatingFeature;
+ 
+     move-result-object v0
+@@ -499,6 +512,7 @@
+     :goto_3
+     sput-boolean v0, Lcom/samsung/android/audio/Rune;->SEC_AUDIO_DOLBY_GAME_FX:Z
+ 
++    .line 100
+     invoke-static {}, Lcom/samsung/android/feature/SemFloatingFeature;->getInstance()Lcom/samsung/android/feature/SemFloatingFeature;
+ 
+     move-result-object v0
+@@ -511,6 +525,7 @@
+ 
+     sput-boolean v0, Lcom/samsung/android/audio/Rune;->SEC_AUDIO_EXTENSION_SITUATION_VOLUME:Z
+ 
++    .line 102
+     invoke-static {}, Lcom/samsung/android/feature/SemFloatingFeature;->getInstance()Lcom/samsung/android/feature/SemFloatingFeature;
+ 
+     move-result-object v0
+@@ -559,6 +574,7 @@
+     :goto_5
+     sput-boolean v0, Lcom/samsung/android/audio/Rune;->SEC_AUDIO_VOLUME_MONITOR:Z
+ 
++    .line 104
+     invoke-static {}, Lcom/samsung/android/feature/SemFloatingFeature;->getInstance()Lcom/samsung/android/feature/SemFloatingFeature;
+ 
+     move-result-object v0
+@@ -571,6 +587,7 @@
+ 
+     sput-boolean v0, Lcom/samsung/android/audio/Rune;->SEC_AUDIO_RECORDING_POPUP:Z
+ 
++    .line 106
+     invoke-static {}, Lcom/samsung/android/feature/SemFloatingFeature;->getInstance()Lcom/samsung/android/feature/SemFloatingFeature;
+ 
+     move-result-object v0
+@@ -583,8 +600,10 @@
+ 
+     sput-boolean v0, Lcom/samsung/android/audio/Rune;->SEC_AUDIO_CPU_STATE_LOCK:Z
+ 
++    .line 108
+     sput-boolean v2, Lcom/samsung/android/audio/Rune;->SEC_AUDIO_KARAOKE_LISTENBACK:Z
+ 
++    .line 110
+     invoke-static {}, Lcom/samsung/android/feature/SemFloatingFeature;->getInstance()Lcom/samsung/android/feature/SemFloatingFeature;
+ 
+     move-result-object v0
+@@ -605,6 +624,7 @@
+ 
+     sput-boolean v0, Lcom/samsung/android/audio/Rune;->SEC_AUDIO_REMOTE_MIC:Z
+ 
++    .line 112
+     invoke-static {}, Lcom/samsung/android/feature/SemFloatingFeature;->getInstance()Lcom/samsung/android/feature/SemFloatingFeature;
+ 
+     move-result-object v0
+@@ -623,6 +643,7 @@
+ 
+     sput-boolean v0, Lcom/samsung/android/audio/Rune;->SEC_AUDIO_VIDEO_CALL_VOICE_EFFECT:Z
+ 
++    .line 114
+     invoke-static {}, Lcom/samsung/android/feature/SemFloatingFeature;->getInstance()Lcom/samsung/android/feature/SemFloatingFeature;
+ 
+     move-result-object v0
+@@ -647,6 +668,7 @@
+     :goto_6
+     sput-boolean v0, Lcom/samsung/android/audio/Rune;->SEC_AUDIO_VOLUME_MONITOR_PHASE_3:Z
+ 
++    .line 116
+     invoke-static {}, Lcom/samsung/android/feature/SemFloatingFeature;->getInstance()Lcom/samsung/android/feature/SemFloatingFeature;
+ 
+     move-result-object v5
+@@ -663,6 +685,7 @@
+ 
+     sput-boolean v5, Lcom/samsung/android/audio/Rune;->SEC_AUDIO_CALL_MONSTER_SOUND:Z
+ 
++    .line 118
+     invoke-static {}, Lcom/samsung/android/feature/SemFloatingFeature;->getInstance()Lcom/samsung/android/feature/SemFloatingFeature;
+ 
+     move-result-object v5
+@@ -685,6 +708,7 @@
+     :goto_7
+     sput-boolean v4, Lcom/samsung/android/audio/Rune;->SEC_AUDIO_BT_VOLUME_MONITOR:Z
+ 
++    .line 120
+     invoke-static {}, Lcom/samsung/android/feature/SemFloatingFeature;->getInstance()Lcom/samsung/android/feature/SemFloatingFeature;
+ 
+     move-result-object v4
+@@ -697,6 +721,7 @@
+ 
+     sput-boolean v4, Lcom/samsung/android/audio/Rune;->SEC_AUDIO_SCREEN_CALL:Z
+ 
++    .line 122
+     invoke-static {}, Lcom/samsung/android/feature/SemFloatingFeature;->getInstance()Lcom/samsung/android/feature/SemFloatingFeature;
+ 
+     move-result-object v4
+@@ -709,6 +734,7 @@
+ 
+     sput-boolean v4, Lcom/samsung/android/audio/Rune;->SEC_AUDIO_SUPPORT_VOIP_SOUND_LOUDER:Z
+ 
++    .line 124
+     invoke-static {}, Lcom/samsung/android/feature/SemFloatingFeature;->getInstance()Lcom/samsung/android/feature/SemFloatingFeature;
+ 
+     move-result-object v4
+@@ -721,6 +747,7 @@
+ 
+     sput-boolean v4, Lcom/samsung/android/audio/Rune;->SEC_AUDIO_SUPPORT_VOIP_ANTI_HOWLING:Z
+ 
++    .line 126
+     invoke-static {}, Lcom/samsung/android/feature/SemFloatingFeature;->getInstance()Lcom/samsung/android/feature/SemFloatingFeature;
+ 
+     move-result-object v4
+@@ -737,6 +764,7 @@
+ 
+     sput-boolean v4, Lcom/samsung/android/audio/Rune;->SEC_AUDIO_VIDEO_CALL_VOICE_DEFAULT_EFFECT:Z
+ 
++    .line 128
+     invoke-static {}, Lcom/samsung/android/feature/SemFloatingFeature;->getInstance()Lcom/samsung/android/feature/SemFloatingFeature;
+ 
+     move-result-object v4
+@@ -753,6 +781,7 @@
+ 
+     if-eqz v4, :cond_9
+ 
++    .line 129
+     invoke-static {}, Lcom/samsung/android/feature/SemFloatingFeature;->getInstance()Lcom/samsung/android/feature/SemFloatingFeature;
+ 
+     move-result-object v4
+@@ -765,6 +794,7 @@
+ 
+     if-nez v4, :cond_9
+ 
++    .line 130
+     invoke-static {}, Lcom/samsung/android/feature/SemCscFeature;->getInstance()Lcom/samsung/android/feature/SemCscFeature;
+ 
+     move-result-object v4
+@@ -793,6 +823,7 @@
+     :goto_9
+     sput-boolean v3, Lcom/samsung/android/audio/Rune;->SEC_AUDIO_MIC_MODE_FOR_QUICK_PANEL_UI:Z
+ 
++    .line 132
+     invoke-static {}, Lcom/samsung/android/feature/SemFloatingFeature;->getInstance()Lcom/samsung/android/feature/SemFloatingFeature;
+ 
+     move-result-object v3
+@@ -807,6 +838,7 @@
+ 
+     sput-boolean v3, Lcom/samsung/android/audio/Rune;->SEC_AUDIO_VOIP_LIVE_TRANSLATE:Z
+ 
++    .line 134
+     invoke-static {}, Lcom/samsung/android/feature/SemFloatingFeature;->getInstance()Lcom/samsung/android/feature/SemFloatingFeature;
+ 
+     move-result-object v3
+@@ -819,6 +851,7 @@
+ 
+     sput-boolean v3, Lcom/samsung/android/audio/Rune;->SEC_AUDIO_MEDIA_SESSION_AI:Z
+ 
++    .line 140
+     invoke-static {}, Lcom/samsung/android/feature/SemFloatingFeature;->getInstance()Lcom/samsung/android/feature/SemFloatingFeature;
+ 
+     move-result-object v3
+@@ -829,6 +862,7 @@
+ 
+     sput-boolean v2, Lcom/samsung/android/audio/Rune;->SEC_AUDIO_KARAOKE:Z
+ 
++    .line 142
+     invoke-static {}, Lcom/samsung/android/feature/SemFloatingFeature;->getInstance()Lcom/samsung/android/feature/SemFloatingFeature;
+ 
+     move-result-object v3
+@@ -841,6 +875,7 @@
+ 
+     sput-boolean v3, Lcom/samsung/android/audio/Rune;->SEC_AUDIO_VOIP_VIA_SMART_VIEW:Z
+ 
++    .line 144
+     invoke-static {}, Lcom/samsung/android/feature/SemFloatingFeature;->getInstance()Lcom/samsung/android/feature/SemFloatingFeature;
+ 
+     move-result-object v3
+@@ -863,6 +898,7 @@
+     :goto_a
+     sput-boolean v3, Lcom/samsung/android/audio/Rune;->SEC_AUDIO_FM_RADIO:Z
+ 
++    .line 146
+     invoke-static {}, Lcom/samsung/android/feature/SemFloatingFeature;->getInstance()Lcom/samsung/android/feature/SemFloatingFeature;
+ 
+     move-result-object v4
+@@ -875,6 +911,7 @@
+ 
+     sput-boolean v4, Lcom/samsung/android/audio/Rune;->SEC_AUDIO_CARLIFE:Z
+ 
++    .line 152
+     invoke-static {}, Lcom/samsung/android/feature/SemCscFeature;->getInstance()Lcom/samsung/android/feature/SemCscFeature;
+ 
+     move-result-object v4
+@@ -893,6 +930,7 @@
+ 
+     sput-boolean v4, Lcom/samsung/android/audio/Rune;->SEC_AUDIO_BIKE_MODE:Z
+ 
++    .line 154
+     invoke-static {}, Lcom/samsung/android/feature/SemCscFeature;->getInstance()Lcom/samsung/android/feature/SemCscFeature;
+ 
+     move-result-object v4
+@@ -905,6 +943,7 @@
+ 
+     sput-boolean v4, Lcom/samsung/android/audio/Rune;->SEC_AUDIO_SAFE_VOLUME_COUNTRY:Z
+ 
++    .line 160
+     sget v5, Landroid/os/Build$VERSION;->DEVICE_INITIAL_SDK_INT:I
+ 
+     const/16 v6, 0x1e
+@@ -921,12 +960,14 @@
+     :goto_b
+     sput-boolean v5, Lcom/samsung/android/audio/Rune;->SEC_AUDIO_FIXED_SCO_VOLUME:Z
+ 
++    .line 162
+     invoke-static {}, Lcom/samsung/android/audio/AudioManagerHelper;->isSupportSoftPhone()Z
+ 
+     move-result v5
+ 
+     sput-boolean v5, Lcom/samsung/android/audio/Rune;->SEC_AUDIO_ATT_SOFTPHONE:Z
+ 
++    .line 190
+     const-string/jumbo v5, "ro.product_ship"
+ 
+     const-string/jumbo v6, "false"
+@@ -941,6 +982,7 @@
+ 
+     sput-boolean v5, Lcom/samsung/android/audio/Rune;->SEC_AUDIO_CUSTOM_SHELL_COMMAND:Z
+ 
++    .line 288
+     sput-boolean v3, Lcom/samsung/android/audio/Rune;->SEC_AUDIO_FM_RADIO_RECORDING:Z
+ 
+     if-nez v4, :cond_c
+@@ -950,6 +992,7 @@
+     :cond_c
+     move v1, v2
+ 
++    .line 348
+     :cond_d
+     sput-boolean v1, Lcom/samsung/android/audio/Rune;->SEC_AUDIO_SAFE_MEDIA_VOLUME:Z
+ 
+@@ -959,6 +1002,7 @@
+ .method public constructor blacklist <init>()V
+     .locals 0
+ 
++    .line 37
+     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+ 
+     return-void
 -- 
-2.51.0
+2.43.0
 

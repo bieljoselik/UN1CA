@@ -3,7 +3,7 @@ From: Salvo Giangreco <giangrecosalvo9@gmail.com>
 Date: Sun, 5 Oct 2025 22:46:03 +0200
 Subject: [PATCH] Disable SAK in DarManagerService
 
-UN1CA: this patch is not complete! Please check unica/mods/knoxpatch/customize.sh for more info.
+MonsterROM_REBORN: this patch is not complete! Please check unica/mods/knoxpatch/customize.sh for more info.
 ---
  .../server/enterprise/EDMProxyService.smali   | 16 -----
  .../certificate/CertificatePolicy.smali       | 14 ----

@@ -1,0 +1,5120 @@
+From 7e34298077baf5462a8e8fe755ff871a7da3b8c3 Mon Sep 17 00:00:00 2001
+From: ditternation <ditternation@outlook.com>
+Date: Thu, 11 Dec 2025 21:34:22 +0100
+Subject: [PATCH] 0001 Enable dynamic resolution control
+
+---
+ .../com/samsung/android/rune/CoreRune.smali   | 5101 +++++++++++++++++
+ 1 file changed, 5101 insertions(+)
+ create mode 100644 out/target/t2s/apktool/system/framework/framework.jar/smali_classes6/com/samsung/android/rune/CoreRune.smali
+
+diff --git a/out/target/t2s/apktool/system/framework/framework.jar/smali_classes6/com/samsung/android/rune/CoreRune.smali b/out/target/t2s/apktool/system/framework/framework.jar/smali_classes6/com/samsung/android/rune/CoreRune.smali
+new file mode 100644
+index 00000000..2883cb0c
+--- /dev/null
++++ b/out/target/t2s/apktool/system/framework/framework.jar/smali_classes6/com/samsung/android/rune/CoreRune.smali
+@@ -0,0 +1,5101 @@
++.class public Lcom/samsung/android/rune/CoreRune;
++.super Ljava/lang/Object;
++.source "CoreRune.java"
++
++
++# static fields
++.field public static final blacklist ALLIED_PROC_PROTECTION_LMKD:Z
++
++.field public static final blacklist AM:Z = true
++
++.field public static final blacklist APPCOMPACTOR_SYSTEM_FULL_COMPACTION_DISABLE:Z = true
++
++.field public static final blacklist APP_CREATED_SIGNAL_ENABLED:Z = true
++
++.field public static final blacklist BAIDU_CARLIFE:Z
++
++.field public static final blacklist BIXBY_TOUCH:Z
++
++.field public static final blacklist CARLIFE_DISPLAY_GROUP:Z
++
++.field public static final blacklist CARLIFE_NAVBAR:Z
++
++.field public static final blacklist CFMS_MONITOR_ISOLATED_UID_ENABLE:Z = true
++
++.field public static final blacklist CHIMERA_ENABLED:Z = true
++
++.field public static final blacklist COOLDOWN_ENABLED:Z = true
++
++.field private static final blacklist DEBUG_LEVEL:Ljava/lang/String;
++
++.field private static final blacklist DEBUG_LEVEL_HIGH:Ljava/lang/String; = "0x4948"
++
++.field private static final blacklist DEBUG_LEVEL_LOW:Ljava/lang/String; = "0x4f4c"
++
++.field private static final blacklist DEBUG_LEVEL_MID:Ljava/lang/String; = "0x494d"
++
++.field public static final blacklist DIRECT_WRITING:Z
++
++.field public static final blacklist DW:Z = true
++
++.field public static final blacklist DW_ALLOCATE_SECONDARY_GROUP_TO_OVERLAY_DISPLAY:Z
++
++.field public static final blacklist DW_BUG_FIX:Z = true
++
++.field public static final blacklist DW_COMPAT_DISPLAY_MOVE_POLICY:Z = true
++
++.field public static final blacklist DW_COMPAT_EXCLUDE_CAPTION_FROM_APP_BOUNDS:Z = true
++
++.field public static final blacklist DW_COMPAT_MODE:Z = true
++
++.field public static final blacklist DW_COMPAT_MODE_SWITCHING_POLICY:Z = true
++
++.field public static final blacklist DW_COMPAT_SIZE_COMPAT_MODE_POLICY:Z = true
++
++.field public static final blacklist DW_COMPAT_SIZE_COMPAT_MODE_POLICY_FOR_IMMERSIVE:Z = true
++
++.field public static final blacklist DW_COMPAT_WINDOWING_SCALED_RESIZING:Z = true
++
++.field public static final blacklist DW_CONNECTED_DISPLAY_SEPARATE_TIME_OUT:Z = true
++
++.field public static final blacklist DW_DEBUG_LOG:Z = true
++
++.field public static final blacklist DW_DESKTOP_DISABLED_DEFAULT_DISPLAY:Z = true
++
++.field public static final blacklist DW_DESKTOP_FULLSCREEN_CHILD_VISIBILITY:Z = true
++
++.field public static final blacklist DW_DESKTOP_RESPECT_LAUNCHING_APP_ORIENTATION:Z = true
++
++.field public static final blacklist DW_DESK_LABEL:Z = true
++
++.field public static final blacklist DW_DESK_ORGANIZER:Z = true
++
++.field public static final blacklist DW_DISABLE_DISPLAY_WINDOWING_MODE_SWITCHING:Z = true
++
++.field public static final blacklist DW_DISPLAY_EVENT_ORDERING:Z = true
++
++.field public static final blacklist DW_DISPLAY_PORT_POLICY:Z = true
++
++.field public static final blacklist DW_DND_BUG_FIX:Z = true
++
++.field public static final blacklist DW_DND_EXTERNAL_DISPLAY_POLICY:Z = true
++
++.field public static final blacklist DW_DND_GUI_POLICY:Z = true
++
++.field public static final blacklist DW_DND_LAUNCH_POLICY:Z = true
++
++.field public static final blacklist DW_DND_LAYER_ON_TOP:Z = true
++
++.field public static final blacklist DW_DO_NOT_TRIM_EMPTY_DESK:Z = true
++
++.field public static final blacklist DW_DRAG_RESTORE_MAXIMIZED_TASK:Z = true
++
++.field public static final blacklist DW_DRAG_TASK_ACROSS_DISPLAYS:Z = true
++
++.field public static final blacklist DW_DRAG_TO_DESKTOP_MAXIMIZED:Z = true
++
++.field public static final blacklist DW_EXTENDED_DESKTOP_MODE_LAUNCH_POLICY:Z = true
++
++.field public static final blacklist DW_EXTERNAL_DISPLAY_BUG_FIX:Z = true
++
++.field public static final blacklist DW_EXTERNAL_DISPLAY_CONFIG_MANAGEMENT:Z = true
++
++.field public static final blacklist DW_EXTERNAL_DISPLAY_POLICY:Z = true
++
++.field public static final blacklist DW_EXTERNAL_FORCE_DESK_LAUNCH:Z = true
++
++.field public static final blacklist DW_EXTERNAL_OVERLAY_DISPLAY:Z
++
++.field public static final blacklist DW_EXTERNAL_SUPPORT_DESKTOP_MODE:Z = true
++
++.field public static final blacklist DW_FONT_SIZE_FOR_EXTERNAL_DISPLAY:Z = true
++
++.field public static final blacklist DW_FREEFORM_BOUNDS_POLICY:Z = true
++
++.field public static final blacklist DW_FREEFORM_LAUNCH_POLICY:Z = true
++
++.field public static final blacklist DW_FREEFORM_MINIMIZE_ALL:Z = true
++
++.field public static final blacklist DW_FREEFORM_ORDER:Z = true
++
++.field public static final blacklist DW_FREEFORM_SYSTEMUI_VISIBILITY:Z = true
++
++.field public static final blacklist DW_HANDLE_USER_SWITCH:Z = true
++
++.field public static final blacklist DW_IME_BUG_FIX:Z = true
++
++.field public static final blacklist DW_IME_FOR_EXTERNAL_DESKTOP:Z = true
++
++.field public static final blacklist DW_KEEP_IN_RECENTS:Z = true
++
++.field public static final blacklist DW_KEYBOARD_SHORTCUT:Z = true
++
++.field public static final blacklist DW_KEYGUARD_OCCLUDED:Z = true
++
++.field public static final blacklist DW_LAUNCH_AT_DROP_POSITION:Z = true
++
++.field public static final blacklist DW_LEAK_BUG_FIX:Z = true
++
++.field public static final blacklist DW_MAX_ACTIVE_TASKS:Z = true
++
++.field public static final blacklist DW_MULTIPLE_DESKS:Z = true
++
++.field public static final blacklist DW_MULTI_FOLD_POLICY:Z
++
++.field public static final blacklist DW_MUM_BUG_FIX:Z = true
++
++.field public static final blacklist DW_NAVIGATION_BAR_INSET:Z = true
++
++.field public static final blacklist DW_ONE_UI_MODAL_LAUNCH_POLICY:Z = true
++
++.field public static final blacklist DW_OVERRIDE_CONFIG:Z = true
++
++.field public static final blacklist DW_PERSIST_BOUNDS:Z = true
++
++.field public static final blacklist DW_PERSIST_BOUNDS_LOG:Z
++
++.field public static final blacklist DW_PIP_ON_FREEFORM:Z = true
++
++.field public static final blacklist DW_POINTER_ICON:Z = true
++
++.field public static final blacklist DW_RECENTS_TRANSITION:Z = true
++
++.field public static final blacklist DW_REMOVE_DESK_WHEN_RETAIL_DEMO_RESET:Z = true
++
++.field public static final blacklist DW_REPOSITORY_BUG_FIX:Z = true
++
++.field public static final blacklist DW_REQUEST_FULLSCREEN_MODE:Z = true
++
++.field public static final blacklist DW_RESTORE_TABLET_TASK_STATE:Z = true
++
++.field public static final blacklist DW_SCREENSHOT_FOR_WIRELESS:Z = true
++
++.field public static final blacklist DW_SHELL_CHANGE_TRANSITION:Z
++
++.field public static final blacklist DW_SHELL_TRANSITION:Z = true
++
++.field public static final blacklist DW_SHOW_PREVIEW_WHEN_HOVERED_ON_MINIMIZE_ICON:Z = true
++
++.field public static final blacklist DW_SKIP_SYSTEM_MODAL_TRANSITION_IF_HOME_REMOTE_POSSIBLE:Z = true
++
++.field public static final blacklist DW_STATE_MANAGEMENT:Z = true
++
++.field public static final blacklist DW_SUPPORT_LOCK_THIS_APP:Z = true
++
++.field public static final blacklist DW_SUPPORT_REUSE_DESK:Z = true
++
++.field public static final blacklist DW_SUPPORT_SHARED_LIB_API:Z = true
++
++.field public static final blacklist DW_SYSTEM_MODAL_LAUNCH_POLICY:Z = true
++
++.field public static final blacklist DW_TASKBAR_APPEARANCE_POLICY:Z = true
++
++.field public static final blacklist DW_TASKBAR_FORCE_IMMERSIVE:Z = true
++
++.field public static final blacklist DW_TASK_SNAPSHOT_BLUR:Z
++
++.field public static final blacklist DW_TILE_HANDLE:Z = true
++
++.field public static final blacklist DW_TILE_ROTATION:Z = true
++
++.field public static final blacklist DW_TOGGLE_IMMERSIVE:Z = true
++
++.field public static final blacklist DW_TOUCH_PAD:Z = true
++
++.field public static final blacklist ENABLE_CTS_IN_PRIVATE_PROFILE:Z = true
++
++.field public static final blacklist ENABLE_EARLY_PHONE_START:Z = true
++
++.field public static final blacklist FAST_MADVISE_ENABLED:Z
++
++.field public static final blacklist FEATURE_SF_EFFECTS:Z = true
++
++.field public static final blacklist FGS_FILTER_ENABLED:Z = true
++
++.field public static final blacklist FW:Z = true
++
++.field public static final blacklist FW_ACTIVITY_CONTROLLER_EXTENSION:Z = true
++
++.field public static final blacklist FW_ACTIVITY_CONTROLLER_LOG:Z = true
++
++.field public static final blacklist FW_ADAPTIVE_DISPLAY:Z = true
++
++.field public static final blacklist FW_ADAPTIVE_DISPLAY_CUTOUT:Z = true
++
++.field public static final blacklist FW_ADAPTIVE_DISPLAY_ROUNDED_CORNER:Z = true
++
++.field public static final blacklist FW_ADD_PRODUCT_PROPERTY_IN_ANDROID_RUNTIME:Z = true
++
++.field public static final blacklist FW_ADJUST_MISMATCH_CUTOUT_HEIGHT:Z = true
++
++.field public static final blacklist FW_ALLOW_ALL_ROTATION:Z
++
++.field public static final blacklist FW_ALLOW_SET_HAS_OVERLAY_UI:Z = true
++
++.field public static final blacklist FW_ALLOW_TOUCH_TO_KEYGUARD_WALLPAPER:Z
++
++.field public static final blacklist FW_AMS_DEBUG_LOG:Z = true
++
++.field public static final blacklist FW_AMS_PROC_DEBUG_LOG:Z = true
++
++.field public static final blacklist FW_ANR_FORCE_DUMP_MP:Z = true
++
++.field public static final blacklist FW_AOD_FACE_WIDGET:Z
++
++.field public static final blacklist FW_APPCATEGORY_WITH_SCPM:Z = true
++
++.field public static final blacklist FW_APPCORE_LOGGING_TOOL:Z = false
++
++.field public static final blacklist FW_APPLOCK:Z
++
++.field public static final blacklist FW_APPLY_TINT_BUG_FIX:Z = true
++
++.field public static final blacklist FW_ARR_FLING_FLEXIBLE_FRAME_RATE:Z
++
++.field public static final blacklist FW_ARR_SUPPORT_DIRTY_HINT:Z
++
++.field public static final blacklist FW_AUDIO_SPEAKER_LR_SWITCHING:Z = true
++
++.field public static final blacklist FW_AVOID_DISPLAYING_STATUS_BAR_PANEL_FOR_ALL_USERS:Z = true
++
++.field public static final blacklist FW_BACKGROUND_DISPLAY:Z = false
++
++.field public static final blacklist FW_BLACK_SNAPSHOT_TRANSITION:Z
++
++.field public static final blacklist FW_BLOCK_RECENTS_TRIM_TASKS:Z = true
++
++.field public static final blacklist FW_BLOCK_TOO_MANY_CONNECTION_REQUESTS:Z = true
++
++.field public static final blacklist FW_BLOCK_UNINTENDED_PALM_MOTION:Z = true
++
++.field public static final blacklist FW_BOOST_SHELL_TRANSITION:Z = true
++
++.field public static final blacklist FW_BOOT_DELAY_REPORT:Z = true
++
++.field public static final blacklist FW_BOOT_PROGRESS_DIALOG:Z = true
++
++.field public static final blacklist FW_BOOT_PROGRESS_LOG:Z = true
++
++.field public static final blacklist FW_BROADCAST_LOGS:Z = true
++
++.field public static final blacklist FW_BROADCAST_LOGS_TO_DROPBOX:Z = false
++
++.field public static final blacklist FW_BR_ALLOW_LIST:Z = true
++
++.field public static final blacklist FW_BR_ALLOW_LIST_ENFORCE:Z = true
++
++.field public static final blacklist FW_BR_ALLOW_LIST_WITH_SCPM:Z = true
++
++.field public static final blacklist FW_BR_LAZY_BOOT_COMPLETE:Z = true
++
++.field public static final blacklist FW_BR_PROMOTE_SYSTEM_UID:Z = true
++
++.field public static final blacklist FW_BR_RECEIVER_AGENT:Z = true
++
++.field public static final blacklist FW_BUG_FIX:Z = true
++
++.field public static final blacklist FW_CAN_DISPATCH_UDC_CUTOUT:Z
++
++.field public static final blacklist FW_CAN_RECEIVE_INPUT:Z = true
++
++.field public static final blacklist FW_CAN_TURN_SCREEN_ON_WHEN_NONE_LOCK_SCREEN:Z = true
++
++.field public static final blacklist FW_CCM_BUG_FIX:Z
++
++.field public static final blacklist FW_CHANGE_DISPLAY_CUTOUT_MODE:Z
++
++.field public static final blacklist FW_CHECKING_VISIBLE_TRANSPARENT_ACTIVITY:Z = true
++
++.field public static final blacklist FW_CHECK_FROZEN_STATE:Z = true
++
++.field public static final blacklist FW_CHECK_PERMISSION_WITH_CALLING_PKG_THAN_UID:Z = true
++
++.field public static final blacklist FW_CHECK_SNAPSHOT_SIZE_MATCH:Z = true
++
++.field public static final blacklist FW_CHECK_THREAD_OF_SCHEDULETRAVERSALS:Z = true
++
++.field public static final blacklist FW_CHN_PREMIUM_WATCH:Z
++
++.field public static final blacklist FW_CLEANUP_DEFERRED_STARTING_WINDOW:Z = true
++
++.field public static final blacklist FW_CLEANUP_DISABLED_PROVIDER:Z = true
++
++.field public static final blacklist FW_CLEAR_CUTOUT_POLICY:Z = true
++
++.field public static final blacklist FW_COLLECT_COMPONENT_RECORDS:Z = true
++
++.field public static final blacklist FW_COMPUTER_CONTROL:Z
++
++.field public static final blacklist FW_COMPUTER_CONTROL_DEBUG_LOG:Z
++
++.field public static final blacklist FW_COMPUTER_CONTROL_NOTIFICATION:Z
++
++.field public static final blacklist FW_CONFIG_BUG_FIX:Z = true
++
++.field public static final blacklist FW_CONSECUTIVE_LAUNCH:Z = true
++
++.field public static final blacklist FW_CORE_SCPM:Z = true
++
++.field public static final blacklist FW_COVER_POLICY:Z = true
++
++.field public static final blacklist FW_COVER_VIEW_DISPLAY:Z = true
++
++.field public static final blacklist FW_CUSTOM_BASIC_ANIM:Z
++
++.field public static final blacklist FW_CUSTOM_BASIC_ANIM_BUG_FIX:Z = true
++
++.field public static final blacklist FW_CUSTOM_BUGREPORT_WRITER:Z = true
++
++.field public static final blacklist FW_CUSTOM_DISPLAY_CHANGE_ANIM:Z
++
++.field public static final blacklist FW_CUSTOM_LETTERBOX:Z
++
++.field public static final blacklist FW_DARK_MODE_MANAGER:Z = true
++
++.field public static final blacklist FW_DARK_THEME_SNAPSHOT:Z
++
++.field public static final blacklist FW_DEBUG_ACTIVITY_CONTROLLER_CALLER:Z = true
++
++.field public static final blacklist FW_DEDICATED_MEMORY:Z
++
++.field public static final blacklist FW_DEFAULT_LANDSCAPE_ROTATION:Z = false
++
++.field public static final blacklist FW_DELETE_USAGE_EVENT:Z = true
++
++.field public static final blacklist FW_DELETE_USAGE_FILE:Z = true
++
++.field public static final blacklist FW_DELETE_USAGE_STATS:Z = true
++
++.field public static final blacklist FW_DENSITY_CHANGE_INCOMPATIBLE_APP_LIST:Z = true
++
++.field public static final blacklist FW_DEVELOPMENT_DISABLE_STARTING_WINDOW:Z
++
++.field public static final blacklist FW_DIM_BUG_FIX:Z = true
++
++.field public static final blacklist FW_DISABLE_EXIT_SPLASH_WINDOW_ANIMATION:Z = true
++
++.field public static final blacklist FW_DISABLE_IMMERSIVE_CONFIRMATION:Z = true
++
++.field public static final blacklist FW_DISABLE_SNAPSHOT_STARTING_WINDOW_BY_METADATA:Z = true
++
++.field public static final blacklist FW_DISABLE_SPLASH_SCREEN:Z = true
++
++.field public static final blacklist FW_DISABLE_SUPER_HDR:Z = true
++
++.field public static final blacklist FW_DISPATCH_OCCLUDE_STATE_WHEN_KEYGUARD_CONNECTED:Z = true
++
++.field public static final blacklist FW_DISPLAY_CUTOUT_BG:Z = true
++
++.field public static final blacklist FW_DISPLAY_CUTOUT_CONTROL:Z = true
++
++.field public static final blacklist FW_DISPLAY_POLICY_RESOURCES_DEBUG:Z = true
++
++.field public static final blacklist FW_DO_NOT_SHOW_NFC_AID:Z = true
++
++.field public static final blacklist FW_DO_NOT_SHOW_SENSISTIVE_INFO:Z = true
++
++.field public static final blacklist FW_DO_NOT_SHOW_TRANSIENT_NAVBAR:Z = true
++
++.field public static final blacklist FW_DVFS_BOOSTER:Z = true
++
++.field public static final blacklist FW_DVRR_TOOLKIT_BUG_FIX:Z
++
++.field public static final blacklist FW_DVRR_TOOLKIT_POLICY:Z
++
++.field public static final blacklist FW_DVRR_TOOLKIT_PRIORITIZE_HIGH_HINT:Z
++
++.field public static final blacklist FW_DVRR_TOOLKIT_PROLONG_TOUCH_BOOST:Z
++
++.field public static final blacklist FW_DVRR_TOOLKIT_REQUESTED_REFRESH_RATE:Z
++
++.field public static final blacklist FW_DVRR_TOOLKIT_SUPPORT_HRR:Z
++
++.field public static final blacklist FW_DYNAMIC_RESOLUTION_CONTROL:Z
++
++.field public static final blacklist FW_EDGE_EXTENSION_ANIM_DEBUG:Z
++
++.field public static final blacklist FW_EDGE_EXTENSION_RESTRICTION:Z = true
++
++.field public static final blacklist FW_ENABLE_SCALING_CMD:Z = true
++
++.field public static final blacklist FW_ENCRYPT_ALLOW_BLOCK_LIST:Z = true
++
++.field public static final blacklist FW_EXEMPT_AUTHORITY_ENABLED:Z = true
++
++.field public static final blacklist FW_EXTRA_DIM_BUG_FIX:Z = true
++
++.field public static final blacklist FW_FACTORY_TEST:Z = true
++
++.field public static final blacklist FW_FADE_ANIMATION_FOR_NAVBAR_WHILE_ROTATION:Z = true
++
++.field public static final blacklist FW_FIX_FIXED_ROTATION:Z = true
++
++.field public static final blacklist FW_FIX_SYSTEM_UID_PROVIDER_ADJ:Z = true
++
++.field public static final blacklist FW_FIX_WMTEST_CASE:Z = true
++
++.field public static final blacklist FW_FLAG_TO_HEX_STRING:Z = true
++
++.field public static final blacklist FW_FLEXIBLE_BOOTING_POLICY:Z = false
++
++.field public static final blacklist FW_FLEXIBLE_BUG_FIX:Z = false
++
++.field public static final blacklist FW_FLEXIBLE_CONTROL_FOLDING_SENSOR:Z = false
++
++.field public static final blacklist FW_FLEXIBLE_DEVICE_STATE_CONFIG:Z = false
++
++.field public static final blacklist FW_FLEXIBLE_DISPLAY:Z = false
++
++.field public static final blacklist FW_FLEXIBLE_DUAL_MODE:Z = false
++
++.field public static final blacklist FW_FLEXIBLE_JETPACK_LIBRARY:Z = false
++
++.field public static final blacklist FW_FLEXIBLE_MULTI_DISPLAY_CUTOUT:Z = false
++
++.field public static final blacklist FW_FLEXIBLE_OVERRIDE_STATE_POLICY:Z = false
++
++.field public static final blacklist FW_FLEXIBLE_PERFORMANCE:Z = false
++
++.field public static final blacklist FW_FLEXIBLE_TABLE_MODE:Z = false
++
++.field public static final blacklist FW_FLEXIBLE_TENT_MODE:Z = false
++
++.field public static final blacklist FW_FLEX_MODE_APP_LIST:Z = false
++
++.field public static final blacklist FW_FLEX_PANEL:Z = false
++
++.field public static final blacklist FW_FLEX_PANEL_CONTROL:Z = false
++
++.field public static final blacklist FW_FLEX_PANEL_DEFAULT_LIST:Z = false
++
++.field public static final blacklist FW_FLIP:Z = false
++
++.field public static final blacklist FW_FLIP_ANDROID_APPS_ON_WINDOWS:Z = false
++
++.field public static final blacklist FW_FLIP_BUG_FIX:Z = false
++
++.field public static final blacklist FW_FLIP_CONFIG_MANAGEMENT:Z = false
++
++.field public static final blacklist FW_FLIP_FULL_COVER_SCREEN:Z
++
++.field public static final blacklist FW_FLIP_FULL_COVER_SCREEN_APPS_CUTOUT:Z
++
++.field public static final blacklist FW_FLIP_FULL_COVER_SCREEN_APP_COMPAT:Z
++
++.field public static final blacklist FW_FLIP_FULL_COVER_SCREEN_APP_COMPAT_ASPECT_RATIO_POLICY:Z
++
++.field public static final blacklist FW_FLIP_FULL_COVER_SCREEN_APP_COMPAT_CONFIGURATION:Z
++
++.field public static final blacklist FW_FLIP_FULL_COVER_SCREEN_APP_COMPAT_FLOATING_ICON:Z
++
++.field public static final blacklist FW_FLIP_FULL_COVER_SCREEN_APP_COMPAT_POSITIONING_POLICY:Z
++
++.field public static final blacklist FW_FLIP_FULL_COVER_SCREEN_APP_COMPAT_START_CONTROLLER:Z
++
++.field public static final blacklist FW_FLIP_FULL_COVER_SCREEN_APP_COMPAT_UI:Z
++
++.field public static final blacklist FW_FLIP_FULL_COVER_SCREEN_TENT_MODE_CUTOUT:Z
++
++.field public static final blacklist FW_FLIP_LARGE_COVER_SCREEN:Z = false
++
++.field public static final blacklist FW_FLIP_LARGE_COVER_SCREEN_SA_LOGGING:Z
++
++.field public static final blacklist FW_FLIP_LARGE_COVER_SCREEN_SIZE_COMPAT_MODE:Z = false
++
++.field public static final blacklist FW_FLIP_NO_SPLASH_FROM_COVER_SCREEN:Z = false
++
++.field public static final blacklist FW_FLIP_POLICY:Z = false
++
++.field public static final blacklist FW_FLIP_RESTORE_DEFAULT_DISPLAY_DENSITY_IN_BOOT:Z
++
++.field public static final blacklist FW_FLIP_TENT_MODE:Z = false
++
++.field public static final blacklist FW_FOCUSED_CAN_BE_NAV_COLOR_WIN:Z = true
++
++.field public static final blacklist FW_FOLD:Z = false
++
++.field public static final blacklist FW_FOLDABLE_PACKAGE_FEATURE:Z = true
++
++.field public static final blacklist FW_FOLDSTAR:Z = false
++
++.field public static final blacklist FW_FOLD_ADJUST_DISPLAY:Z = false
++
++.field public static final blacklist FW_FOLD_APP_CONTINUITY_MODE:Z = false
++
++.field public static final blacklist FW_FOLD_BUG_FIX:Z = false
++
++.field public static final blacklist FW_FOLD_CONFIG:Z = false
++
++.field public static final blacklist FW_FOLD_FOLDING_POLICY:Z = false
++
++.field public static final blacklist FW_FOLD_HIDE_CUTOUT:Z = false
++
++.field public static final blacklist FW_FOLD_NO_SPLASH_INSTEAD_OF_SNAPSHOT:Z = false
++
++.field public static final blacklist FW_FOLD_POLICY:Z = false
++
++.field public static final blacklist FW_FOLD_RESTART_APP_POLICY:Z = false
++
++.field public static final blacklist FW_FOLD_RESTORE_APP_POLICY:Z = false
++
++.field public static final blacklist FW_FOLD_RESTORE_DEFAULT_DISPLAY_SIZE_IN_BOOT:Z = false
++
++.field public static final blacklist FW_FOLD_RUNESTONE_LOGGING:Z = false
++
++.field public static final blacklist FW_FOLD_SA_LOGGING:Z
++
++.field public static final blacklist FW_FOLD_SWAP_DISPLAY_ANIM:Z = false
++
++.field public static final blacklist FW_FOLD_SWAP_DISPLAY_POLICY:Z = false
++
++.field public static final blacklist FW_FOLD_TASKBAR_FORCE_HIDE:Z = false
++
++.field public static final blacklist FW_FOLD_WALLPAPER_POLICY:Z
++
++.field public static final blacklist FW_FORCED_DISPLAY_SIZE_DENSITY:Z = true
++
++.field public static final blacklist FW_FORCE_ENABLE_LOG:Z = true
++
++.field public static final blacklist FW_FORCE_OPT_OUT_EDGE_TO_EDGE:Z
++
++.field public static final blacklist FW_FORCE_SCREEN_TIMEOUT_CONCEPT:Z = true
++
++.field public static final blacklist FW_FREEZE_TASK_DISPLAY_AREA:Z = true
++
++.field public static final blacklist FW_GAME_TOOLS_WINDOW_POLICY:Z = true
++
++.field public static final blacklist FW_GATE_MESSAGE_LOG:Z = true
++
++.field public static final blacklist FW_GESTURE_HINT:Z = true
++
++.field public static final blacklist FW_GET_META_DATA:Z = true
++
++.field public static final blacklist FW_GFX_INFO_DUMP_TEXTURE_CACHE:Z = true
++
++.field public static final blacklist FW_HIDE_APPINFO_IN_ERROR_DIALOG_BEFORE_PROVISIONED:Z = true
++
++.field public static final blacklist FW_HIDE_CUTOUT:Z = true
++
++.field public static final blacklist FW_HIDE_IME_ON_PRESSING_HOME:Z = true
++
++.field public static final blacklist FW_IGNORE_HIDE_NON_SYSTEM_OVERLAY_WINDOWS:Z = true
++
++.field public static final blacklist FW_IGNORE_NAVBAR_PARAMS:Z = true
++
++.field public static final blacklist FW_IGNORE_NOTIFY_FINISH_FOR_INSETS_ANIM_ALREADY_CANCELED:Z = true
++
++.field public static final blacklist FW_IGNORE_STARTSEQ_AT_SECOND_CHECK:Z = true
++
++.field public static final blacklist FW_IME_BUG_FIX:Z = true
++
++.field public static final blacklist FW_IMPROVED_MOVED_ANIMATION_FOR_IME:Z
++
++.field public static final blacklist FW_INSETS_BUG_FIX:Z = true
++
++.field public static final blacklist FW_INSETS_LOG:Z = true
++
++.field public static final blacklist FW_INSETS_LOG_DEBUG:Z
++
++.field public static final blacklist FW_INSET_ANIM:Z
++
++.field public static final blacklist FW_INTERNAL_PRESENTATION_ONLY:Z = true
++
++.field public static final blacklist FW_IS_CURRENT_ACTIVE_USER:Z = true
++
++.field public static final blacklist FW_KEEP_ALIVE_MOVED_BACKWARD_TASK:Z = true
++
++.field public static final blacklist FW_KEEP_SCREEN_ON_FIX:Z = true
++
++.field public static final blacklist FW_KILL_THREAD_GROUP_LEADER_ONLY:Z = true
++
++.field public static final blacklist FW_LABS:Z = true
++
++.field public static final blacklist FW_LARGE_FLIP_LAUNCHER_GEMINI_POLICY:Z
++
++.field public static final blacklist FW_LARGE_FLIP_LAUNCHER_POLICY:Z = false
++
++.field public static final blacklist FW_LARGE_FLIP_LAUNCHER_WIDGET:Z = false
++
++.field public static final blacklist FW_LARGE_FLIP_LAUNCHER_WIDGET_AVOID_START:Z = false
++
++.field public static final blacklist FW_LARGE_FLIP_LAUNCHER_WIDGET_INSETS:Z = false
++
++.field public static final blacklist FW_LARGE_FLIP_LAUNCHER_WIDGET_POLICY_CHN:Z
++
++.field public static final blacklist FW_LARGE_FLIP_LAUNCHER_WIDGET_RELAUNCH_WEBVIEW_ATTACHED_ACTIVITY:Z = false
++
++.field public static final blacklist FW_LARGE_FLIP_LAUNCHER_WIDGET_SUPPORT_CUSTOM_DENSITY:Z = false
++
++.field public static final blacklist FW_LARGE_FLIP_NAVBAR:Z = false
++
++.field public static final blacklist FW_LARGE_FLIP_PENDING_INTENT:Z = false
++
++.field public static final blacklist FW_LARGE_FLIP_POLICY:Z = false
++
++.field public static final blacklist FW_LARGE_FLIP_PREDICTIVE_BACK_ANIM:Z
++
++.field public static final blacklist FW_LARGE_FLIP_PREDICTIVE_BACK_ANIM_SYSTEM_ANIMATOR_OFF:Z
++
++.field public static final blacklist FW_LARGE_FLIP_RECENTS_TRANSITION:Z
++
++.field public static final blacklist FW_LARGE_FLIP_ROTATION_POLICY:Z = false
++
++.field public static final blacklist FW_LARGE_FLIP_SET_COVER_OCCLUDED:Z = false
++
++.field public static final blacklist FW_LARGE_FLIP_TRANSITION:Z
++
++.field public static final blacklist FW_LARGE_FLIP_USE_SYSTEM_USER_WHILE_LAUNCHING_SUBHOME:Z = false
++
++.field public static final blacklist FW_LETTERBOX_EXTENSION:Z = true
++
++.field public static final blacklist FW_LIGHT_SOURCE_GEOMETRY:Z = true
++
++.field public static final blacklist FW_LOCALE_CHANGED_HISTORY:Z = true
++
++.field public static final blacklist FW_LOCK_CURRENT_ROTATION:Z = true
++
++.field public static final blacklist FW_LOCK_TASK_MODE_BUG_FIX:Z = false
++
++.field public static final blacklist FW_LOCK_TASK_MODE_DISABLE_TRANSIENT_STATUS_BAR:Z = true
++
++.field public static final blacklist FW_LOCK_TASK_MODE_LOG:Z = true
++
++.field public static final blacklist FW_LONG_LIVE_THE_APP:Z = true
++
++.field public static final blacklist FW_LOW_POWER_LOCATION_REQUEST:Z = true
++
++.field public static final blacklist FW_LOW_RUNNING_TASK_SNAPSHOT_SCALE:Z = true
++
++.field public static final blacklist FW_LOW_TASK_SNAPSHOT_SCALE_FOR_TABLET:Z
++
++.field public static final blacklist FW_MAGNIFY_POLICY:Z = true
++
++.field public static final blacklist FW_MANAGE_AOD_POLICY:Z = true
++
++.field public static final blacklist FW_MANAGE_AOD_WALLPAPER_POLICY:Z = true
++
++.field public static final blacklist FW_MANAGE_UNKNOWN_APPS:Z = true
++
++.field public static final blacklist FW_MANAGE_VIEW_ON_AOD:Z = true
++
++.field public static final blacklist FW_MAX_BR_HISTORY_SIZE_ADJUST:Z = true
++
++.field public static final blacklist FW_METADATA_COLLECTOR:Z = true
++
++.field public static final blacklist FW_MINIMIZED_IME_INSET_ANIM:Z
++
++.field public static final blacklist FW_MULTI_BUILT_IN_DISPLAY:Z = true
++
++.field public static final blacklist FW_MULTI_DISPLAY_BUG_FIX:Z = true
++
++.field public static final blacklist FW_MULTI_FOLD:Z = false
++
++.field public static final blacklist FW_MULTI_FOLD_CONTINUITY_POLICY:Z = false
++
++.field public static final blacklist FW_MULTI_FOLD_GUIDE:Z = false
++
++.field public static final blacklist FW_MULTI_FOLD_HALF_CLOSE_CONTINUITY:Z
++
++.field public static final blacklist FW_MULTI_FOLD_IGNORE_RESOLUTION_VOTE:Z = false
++
++.field public static final blacklist FW_MULTI_FOLD_JIT_FOR_CONTINUITY:Z = false
++
++.field public static final blacklist FW_MULTI_FOLD_MAIN_SCALING:Z = false
++
++.field public static final blacklist FW_MULTI_FOLD_POLICY:Z = false
++
++.field public static final blacklist FW_MULTI_FOLD_REVERSE_FOLDING:Z = false
++
++.field public static final blacklist FW_MULTI_FOLD_ROTATION_POLICY:Z = false
++
++.field public static final blacklist FW_MULTI_FOLD_SUB_SCALING:Z = false
++
++.field public static final blacklist FW_MULTI_RESOLUTION_POLICY:Z
++
++.field public static final blacklist FW_NAVBAR_CUSTOM_COLOR:Z = true
++
++.field public static final blacklist FW_NAVBAR_DEFAULT_LIGHT:Z = true
++
++.field public static final blacklist FW_NAVBAR_GESTURE:Z = true
++
++.field public static final blacklist FW_NAVBAR_IGNORE_HWKEY_SYSTEM_PROPERTY:Z = true
++
++.field public static final blacklist FW_NAVBAR_MOVABLE_POLICY:Z
++
++.field public static final blacklist FW_NIGHT_DIM:Z = true
++
++.field public static final blacklist FW_NOTE_PROCSTATE_AFTER_CORE_UID_REMOVED:Z = true
++
++.field public static final blacklist FW_NOTIFY_TASKBAR_VISIBLE:Z
++
++.field public static final blacklist FW_ONE_HAND_OPERATION:Z = true
++
++.field public static final blacklist FW_ONE_HAND_OPERATION_SW_BLUELIGHT_FILTER:Z = false
++
++.field public static final blacklist FW_ORIENTATION_CONTROL:Z
++
++.field public static final blacklist FW_ORIENTATION_CONTROL_DEFAULT_ENABLED:Z
++
++.field public static final blacklist FW_ORIGIN_DISPLAY_ID_OF_RESOURCE:Z = false
++
++.field public static final blacklist FW_OVERLAPPING_WITH_CUTOUT_AS_DEFAULT:Z
++
++.field public static final blacklist FW_PACKAGE_FEATURE:Z = true
++
++.field public static final blacklist FW_PENDING_COMMANDED_BR_LOG:Z = true
++
++.field public static final blacklist FW_PERFORMANCE_BOOST_PRIORITY_WHILE_LAUNCHING:Z = true
++
++.field public static final blacklist FW_PERFORMANCE_UPDATE_SYSUI_FIRST:Z = true
++
++.field public static final blacklist FW_PERFORMANCE_WAKE_AND_UNLOCK:Z = true
++
++.field public static final blacklist FW_PER_APP_DARK_MODE:Z = true
++
++.field public static final blacklist FW_POINTERICON_CONCEPT:Z = true
++
++.field public static final blacklist FW_POLICY_CONTROL:Z = true
++
++.field public static final blacklist FW_POP_OVER:Z = true
++
++.field public static final blacklist FW_POP_OVER_ADJUST_ANIMATION:Z = true
++
++.field public static final blacklist FW_POP_OVER_DEPTH_ANIMATION:Z = false
++
++.field public static final blacklist FW_POP_OVER_OUTSIDE_TOUCH:Z = true
++
++.field public static final blacklist FW_POP_OVER_VIEW:Z = true
++
++.field public static final blacklist FW_POP_OVER_WINDOW_FOCUS_IN_TASK:Z = true
++
++.field public static final blacklist FW_PORTRAIT_SYSTEM_WINDOW:Z = true
++
++.field public static final blacklist FW_PORTRAIT_WALLPAPER:Z = true
++
++.field public static final blacklist FW_POWER_SAVING_DARK_MODE_SETTINGS:Z = true
++
++.field public static final blacklist FW_PREDICTIVE_BACK_ANIM:Z
++
++.field public static final blacklist FW_PREDICTIVE_BACK_ANIM_BUG_FIX:Z
++
++.field public static final blacklist FW_PREDICTIVE_BACK_ANIM_LOG:Z
++
++.field public static final blacklist FW_PRELOAD_SPLASH_SCREEN:Z = true
++
++.field public static final blacklist FW_PREVENT_ADB_KILL_FORCE_STOP:Z = true
++
++.field public static final blacklist FW_PREVENT_BOOT_FAILURE_BY_BROKEN_XML:Z = true
++
++.field public static final blacklist FW_PREVENT_CLEAN_UP_RECEIVERS:Z = true
++
++.field public static final blacklist FW_PREVENT_DOS_ATTACK:Z = true
++
++.field public static final blacklist FW_PREVENT_NPE_BUG_FIX:Z = true
++
++.field public static final blacklist FW_PREVENT_SOLID_RIPPLE_EXCEPTION:Z = true
++
++.field public static final blacklist FW_PRE_BOOT_COMPLETED:Z = true
++
++.field public static final blacklist FW_PRE_UPDATE_SYSTEM_UI_CONTEXT_RESOURCE:Z = true
++
++.field public static final blacklist FW_PRIVACY_DISPLAY:Z
++
++.field public static final blacklist FW_PRIVACY_DISPLAY_CONTEXT_ENGINE:Z
++
++.field public static final blacklist FW_PRIVACY_DISPLAY_SA_LOGGING:Z
++
++.field public static final blacklist FW_PRIVACY_DISPLAY_UT_LOGGING:Z
++
++.field public static final blacklist FW_PRIVACY_DISPLAY_VIEW:Z
++
++.field public static final blacklist FW_PRODUCT_DEVICE:Ljava/lang/String;
++
++.field public static final blacklist FW_PROVIDE_BARS_INFO_TO_EDGE:Z = true
++
++.field public static final blacklist FW_PROVIDE_PID_TO_SURFACE_FLINGER:Z = true
++
++.field public static final blacklist FW_PROVIDE_PKG_NAME_WHO_CONTROL_BRIGHTNESS:Z = true
++
++.field public static final blacklist FW_PROVIDE_PKG_NAME_WHO_WAKES_UP:Z = true
++
++.field public static final blacklist FW_PROVIDE_SAMSUNG_PAY_INFO_TO_NAVBAR:Z = true
++
++.field public static final blacklist FW_RECENTS_GESTURE_HINT_OFF:Z = true
++
++.field public static final blacklist FW_RECENT_TASKS_BUG_FIX:Z = true
++
++.field public static final blacklist FW_RECENT_TASK_DROP_REASON:Z = true
++
++.field public static final blacklist FW_RECONFIGURE_MONITOR_SURFACE:Z = true
++
++.field public static final blacklist FW_RECORDING_OVERLAY_BUG_FIX:Z = true
++
++.field public static final blacklist FW_REDUCE_STARTING_WINDOW_EXIT_DURATION:Z = true
++
++.field public static final blacklist FW_RELEASE_DVFS_LOCK_OF_OVERSCROLLER:Z = true
++
++.field public static final blacklist FW_REMOTE_WALLPAPER_ANIM:Z
++
++.field public static final blacklist FW_REPORT_ERROR_TO_SAMSUNG_MEMBERS:Z = true
++
++.field public static final blacklist FW_REPORT_SHUTDOWN_USAGE_EVENT:Z = true
++
++.field public static final blacklist FW_RESPECT_LIGHT_APPEARANCE_OF_BLURRING_WINDOW:Z = true
++
++.field public static final blacklist FW_RESTRICT_BROADCAST_FROM_ABNORMAL_APP:Z = true
++
++.field public static final blacklist FW_RIPPLE_CONCEPT:Z = true
++
++.field public static final blacklist FW_ROTATION_BUG_FIX:Z = true
++
++.field public static final blacklist FW_ROTATION_LOG:Z
++
++.field public static final blacklist FW_SAFETY_SYSTEM_SERVICE:Z = true
++
++.field public static final blacklist FW_SAFE_MODE:Z = true
++
++.field public static final blacklist FW_SAFE_MODE_ALLOW_LIST_WITH_SCPM:Z = true
++
++.field public static final blacklist FW_SA_LOGGING:Z
++
++.field public static final blacklist FW_SA_LOGGING_FOR_HALF_OPEN_MODE:Z
++
++.field public static final blacklist FW_SCREENSHOT:Z = true
++
++.field public static final blacklist FW_SCREENSHOT_BY_PALM_MOTION:Z = true
++
++.field public static final blacklist FW_SCREENSHOT_CONTAINS_BLUR_LAYERS:Z = true
++
++.field public static final blacklist FW_SCREENSHOT_CONTAINS_SECURE_LAYERS:Z = true
++
++.field public static final blacklist FW_SCREENSHOT_FOR_HDR:Z
++
++.field public static final blacklist FW_SCREENSHOT_FOR_REWIND:Z = true
++
++.field public static final blacklist FW_SCREENSHOT_FROM_BIXBY:Z = true
++
++.field public static final blacklist FW_SCREENSHOT_FROM_DEX:Z = true
++
++.field public static final blacklist FW_SCREENSHOT_FROM_FLEX_PANEL:Z = false
++
++.field public static final blacklist FW_SCREENSHOT_FROM_QUICK_PANEL:Z = true
++
++.field public static final blacklist FW_SCREENSHOT_PROVIDE_ASSIST_CONTENT:Z = true
++
++.field public static final blacklist FW_SCREENSHOT_SENSITIVE_CONTENT:Z = true
++
++.field public static final blacklist FW_SCREENSHOT_SHELL_COMMAND:Z = true
++
++.field public static final blacklist FW_SCREENSHOT_TARGET_WINDOW:Z = true
++
++.field public static final blacklist FW_SCREEN_DIM_DURATION:Z = true
++
++.field public static final blacklist FW_SCREEN_MODE_SETTING:Z
++
++.field public static final blacklist FW_SEPARATE_TOAST_TOKEN:Z = true
++
++.field public static final blacklist FW_SEP_LAYOUT:Z = true
++
++.field public static final blacklist FW_SEP_SURFACE_METADATA:Z = true
++
++.field public static final blacklist FW_SERVICE_BUG_FIX:Z = true
++
++.field public static final blacklist FW_SET_DEFAULT_CUTOUT_POLICY_TO_ALWAYS:Z
++
++.field public static final blacklist FW_SET_MAX_SNAPSHOT_CACHE:Z = true
++
++.field public static final blacklist FW_SET_SKIP_SCREENSHOT:Z = true
++
++.field public static final blacklist FW_SHARED_UID_ALLOW_LIST_WITH_SCPM:Z = true
++
++.field public static final blacklist FW_SHELL_DRAWER_BUG_FIX:Z = true
++
++.field public static final blacklist FW_SHELL_TRANSITION:Z
++
++.field public static final blacklist FW_SHELL_TRANSITION_BLACK_SNAPSHOT:Z
++
++.field public static final blacklist FW_SHELL_TRANSITION_BUG_FIX:Z
++
++.field public static final blacklist FW_SHELL_TRANSITION_DISPLAY_CHANGE:Z
++
++.field public static final blacklist FW_SHELL_TRANSITION_EXTENSION:Z
++
++.field public static final blacklist FW_SHELL_TRANSITION_EXTENSION_APP_BACKGROUND_LAYER:Z
++
++.field public static final blacklist FW_SHELL_TRANSITION_KEYGUARD_APPEARING:Z
++
++.field public static final blacklist FW_SHELL_TRANSITION_LOG:Z
++
++.field public static final blacklist FW_SHELL_TRANSITION_MERGE:Z
++
++.field public static final blacklist FW_SHELL_TRANSITION_MERGE_TRANSFER:Z
++
++.field public static final blacklist FW_SHELL_TRANSITION_RAPID_LAUNCH:Z
++
++.field public static final blacklist FW_SHELL_TRANSITION_RECENTS_BUG_FIX:Z
++
++.field public static final blacklist FW_SHELL_TRANSITION_RECENTS_DURING_KEYGUARD:Z
++
++.field public static final blacklist FW_SHELL_TRANSITION_REMOTE:Z
++
++.field public static final blacklist FW_SHELL_TRANSITION_RESUMED_AFFORDANCE:Z
++
++.field public static final blacklist FW_SHELL_TRANSITION_ROTATED_WALLPAPER_SNAPSHOT:Z
++
++.field public static final blacklist FW_SHELL_TRANSITION_SEPARATE_RECENTS:Z
++
++.field public static final blacklist FW_SHELL_TRANSITION_STARTING_SURFACE:Z
++
++.field public static final blacklist FW_SHELL_TRANSITION_TRANSIENT_LAUNCH_OVERLAY:Z
++
++.field public static final blacklist FW_SHELL_TRANSITION_WITH_DIM:Z
++
++.field public static final blacklist FW_SHOULD_DISABLE_ROTATION_SENSOR:Z = true
++
++.field public static final blacklist FW_SHOW_ALWAYS_ACTIVE_APP_LIST_POPUP:Z = true
++
++.field public static final blacklist FW_SIGNATURE_PERMISSION_ALLOW_LIST_WITH_SCPM:Z = true
++
++.field public static final blacklist FW_SKIP_FORCE_STOP_TMO_PKG:Z = true
++
++.field public static final blacklist FW_SPEN_HOVER:Z
++
++.field public static final blacklist FW_STACKED_BLUR_SUPPORTED:Z
++
++.field public static final blacklist FW_STARTING_WINDOW_BUG_FIX:Z = true
++
++.field public static final blacklist FW_STARTING_WINDOW_PERFORMANCE:Z = true
++
++.field public static final blacklist FW_START_ACTIVITY_DEBUG_LOG:Z = true
++
++.field public static final blacklist FW_SUPPORT_ADD_JANK_CUJ:Z = true
++
++.field public static final blacklist FW_SUPPORT_API_GET_REQUESTED_ORIENTATION_BY_TASKID:Z = true
++
++.field public static final blacklist FW_SUPPORT_API_GET_RESUMED_TASK_THUMBNAIL:Z = true
++
++.field public static final blacklist FW_SUPPORT_API_QUERY_REGISTERED_RECEIVER_PACKAGES:Z = true
++
++.field public static final blacklist FW_SUPPORT_APPLOCK:Z
++
++.field public static final blacklist FW_SUPPORT_BLUR_CLAMPING:Z = true
++
++.field public static final blacklist FW_SUPPORT_COMPANION_DEVICE_BATTERY_INFO:Z = true
++
++.field public static final blacklist FW_SUPPORT_CUSTOM_NO_KILL_DURATION:Z = true
++
++.field public static final blacklist FW_SUPPORT_DARK_THEME_ON_USER_SWITCHING_DIALOG:Z = true
++
++.field public static final blacklist FW_SUPPORT_DISMISS_USER_SWITCHING_DIALOG:Z = true
++
++.field public static final blacklist FW_SUPPORT_FORCE_TRUSTED_OVERLAY:Z = true
++
++.field public static final blacklist FW_SUPPORT_INSTALL_ISSUE_TRACKER_PROVIDER:Z = true
++
++.field public static final blacklist FW_SUPPORT_KILL_EMPTY_PROCESS_UNTIL_BOOT_COMPLETED:Z = true
++
++.field public static final blacklist FW_SUPPORT_LOCK_TASK_MODE_BROADCAST:Z
++
++.field public static final blacklist FW_SUPPORT_LOCK_TASK_MODE_CALLBACK:Z = true
++
++.field public static final blacklist FW_SUPPORT_LOCK_TASK_MODE_SHOW_KEYGUARD:Z = true
++
++.field public static final blacklist FW_SUPPORT_META_DATA_TO_ALLOW_SEAMLESS_ROTATION:Z = true
++
++.field public static final blacklist FW_SUPPORT_MULTI_DISPLAY:Z = true
++
++.field public static final blacklist FW_SUPPORT_MULTI_RESOLUTION:Z
++
++.field public static final blacklist FW_SUPPORT_NATIVE_AI:Z
++
++.field public static final blacklist FW_SUPPORT_NO_DELAY_BR_FOR_PERCEPTIBLE:Z = true
++
++.field public static final blacklist FW_SUPPORT_ONE_TOUCH:Z
++
++.field public static final blacklist FW_SUPPORT_PERSISTENT_DOWNLOADABLE:Z = true
++
++.field public static final blacklist FW_SUPPORT_PRUNE_METADATA_FOR_RECENT_TASKS:Z = true
++
++.field public static final blacklist FW_SUPPORT_RESCUE_PARTY_DIALOG:Z = true
++
++.field public static final blacklist FW_SUPPORT_SINGLE_SKU:Z = true
++
++.field public static final blacklist FW_SUPPORT_SPROTECT:Z = false
++
++.field public static final blacklist FW_SUPPORT_SURVIVAL_TICKET_IN_RESOLUTION_CHANGING:Z = true
++
++.field public static final blacklist FW_SUPPORT_SYSTEMUI_BOOTING_SPEED:Z = true
++
++.field public static final blacklist FW_SUPPORT_USER_SWITCHING_TOAST_TEXT:Z = true
++
++.field public static final blacklist FW_SUPPORT_VIEW_BLUR:Z = true
++
++.field public static final blacklist FW_SURFACEVIEW_BUG_FIX:Z = true
++
++.field public static final blacklist FW_SURFACE_CREATION_TIME:Z = true
++
++.field public static final blacklist FW_SURFACE_DEBUG:Z = true
++
++.field public static final blacklist FW_SURFACE_DEBUG_ALPHA:Z
++
++.field public static final blacklist FW_SURFACE_DEBUG_APPLY:Z
++
++.field public static final blacklist FW_SURFACE_DEBUG_CREATION:Z
++
++.field public static final blacklist FW_SURFACE_DEBUG_CROP:Z
++
++.field public static final blacklist FW_SURFACE_DEBUG_LAYER:Z
++
++.field public static final blacklist FW_SURFACE_DEBUG_REMOVE:Z
++
++.field public static final blacklist FW_SURFACE_DEBUG_REPARENT:Z
++
++.field public static final blacklist FW_SURFACE_DEBUG_TRANSFORM:Z
++
++.field public static final blacklist FW_SURFACE_DEBUG_VISIBILITY:Z
++
++.field public static final blacklist FW_SYSTEMUI_REVIVAL:Z = true
++
++.field public static final blacklist FW_SYSTEM_DUMP_WRITER:Z = true
++
++.field public static final blacklist FW_SYSTEM_TIMEOUT_ADJUST:Z = true
++
++.field public static final blacklist FW_SYSTEM_UI_AOD_SUPPORTED:Z
++
++.field public static final blacklist FW_TASKBAR:Z = true
++
++.field public static final blacklist FW_TASK_ORG_BUG_FIX:Z = true
++
++.field public static final blacklist FW_TASK_SNAPSHOT_DEFER_CACHE_CLEAR:Z = true
++
++.field public static final blacklist FW_TEMP_INSETS_BUG_FIX:Z
++
++.field public static final blacklist FW_TEMP_TOO_MANY_INSETS_LEASH_BUG_FIX:Z
++
++.field public static final blacklist FW_THEME_STARTING_WINDOW:Z = true
++
++.field public static final blacklist FW_TOUCHSLOP:Z = true
++
++.field public static final blacklist FW_TRANSACTION_DEBUG_LOG:Z = true
++
++.field public static final blacklist FW_TRANSIENT_LAUNCH_PERFORMANCE:Z
++
++.field public static final blacklist FW_TRANSIENT_LAUNCH_PERFORMANCE_BAL_BLOCK:Z
++
++.field public static final blacklist FW_TRANSIENT_LAUNCH_PERFORMANCE_PROC:Z
++
++.field public static final blacklist FW_TRIM_MEMORY_LOG:Z
++
++.field public static final blacklist FW_TSP_DEADZONE:Z
++
++.field public static final blacklist FW_TSP_DEADZONEHOLE_LAND:Z
++
++.field public static final blacklist FW_TSP_DEADZONE_LARGE_FLIP_COVER:Z
++
++.field public static final blacklist FW_TSP_DEADZONE_V3:Z
++
++.field public static final blacklist FW_TSP_NOTE_MODE:Z
++
++.field public static final blacklist FW_TSP_SIP_MODE:Z
++
++.field public static final blacklist FW_TSP_STATE_CONTROLLER:Z
++
++.field public static final blacklist FW_UDC_CUTOUT:Z = true
++
++.field public static final blacklist FW_UI_MODE_ANIMATION:Z
++
++.field public static final blacklist FW_UNLEASH_WATCHDOG_ON_PROCSTART:Z = true
++
++.field public static final blacklist FW_UPDATE_APPLICATION_INFO_OF_BR:Z = true
++
++.field public static final blacklist FW_UPDATE_CONFIG_FOR_ALL_CHILD_VIEW_ROOTS:Z = true
++
++.field public static final blacklist FW_UPDATE_HAS_NAVBAR:Z = true
++
++.field public static final blacklist FW_UPDATE_OVERLAY_PATHS_BUG_FIX:Z = true
++
++.field public static final blacklist FW_USAGE_BUG_FIX:Z = true
++
++.field public static final blacklist FW_USAGE_FROM_CURRENT_ACTIVITY:Z = true
++
++.field public static final blacklist FW_USAGE_STATS_DEBUG_LOGS:Z = true
++
++.field public static final blacklist FW_USAGE_STATS_WATCHER:Z = true
++
++.field public static final blacklist FW_USE_PENDING_INTENT_RUNNABLE_WHILE_TRANSITION:Z = true
++
++.field public static final blacklist FW_USE_SMALLER_GRIPZONE_ON_GAME:Z
++
++.field public static final blacklist FW_USE_UDC_CUTOUT_TO_SHOW_LETTERBOX:Z
++
++.field public static final blacklist FW_UT_LOGGING:Z = true
++
++.field public static final blacklist FW_VALIDATE_WAKE_LOCK_CALLER:Z = true
++
++.field public static final blacklist FW_VIEW_CONCEPT:Z = true
++
++.field public static final blacklist FW_VIEW_DEBUG_LOG:Z = true
++
++.field public static final blacklist FW_VIEW_ON_DEX:Z = true
++
++.field public static final blacklist FW_VIEW_SURFACE_CONTROLLER:Z = true
++
++.field public static final blacklist FW_VIVID_WCG_ON:Z
++
++.field public static final blacklist FW_VRR_BUG_FIX:Z = true
++
++.field public static final blacklist FW_VRR_DISCRETE:Z
++
++.field public static final blacklist FW_VRR_FIXED_REFRESH_RATE_PACKAGE:Z
++
++.field public static final blacklist FW_VRR_FLIP:Z
++
++.field public static final blacklist FW_VRR_FLIP_LARGE_COVER:Z
++
++.field public static final blacklist FW_VRR_FOLD:Z
++
++.field public static final blacklist FW_VRR_HIGH_REFRESH_RATE_BLOCK_LIST:Z
++
++.field public static final blacklist FW_VRR_HRR_CHINA_DELTA:Z
++
++.field public static final blacklist FW_VRR_IGNORE_RESTRICTED_RANGE:Z
++
++.field public static final blacklist FW_VRR_LOW_REFRESH_RATE_LIST:Z
++
++.field public static final blacklist FW_VRR_MULTI_DISPLAY:Z
++
++.field public static final blacklist FW_VRR_NAVIGATION_LOW_REFRESH_RATE:Z
++
++.field public static final blacklist FW_VRR_PERFORMANCE:Z
++
++.field public static final blacklist FW_VRR_POLICY:Z
++
++.field public static final blacklist FW_VRR_POWER_SAVING:Z = true
++
++.field public static final blacklist FW_VRR_REFRESH_RATE_MODE:Z
++
++.field public static final blacklist FW_VRR_REFRESH_RATE_TOKEN:Z
++
++.field public static final blacklist FW_VRR_RESOLUTION_POLICY:Z
++
++.field public static final blacklist FW_VRR_RESOLUTION_POLICY_FOR_SHELL_TRANSITION:Z
++
++.field public static final blacklist FW_VRR_SEAMLESS:Z
++
++.field public static final blacklist FW_VRR_SEAMLESS_OPTOUT_PASSIVE:Z
++
++.field public static final blacklist FW_VRR_SEND_TOUCH_HINT:Z
++
++.field public static final blacklist FW_VRR_SWITCHABLE:Z
++
++.field public static final blacklist FW_VRR_SYSTEM_HISTORY:Z
++
++.field public static final blacklist FW_WAIT_OCCLUDING:Z = true
++
++.field public static final blacklist FW_WAIT_TO_HANDLE_RESIZING_FROM_CLIENT:Z
++
++.field public static final blacklist FW_WALLPAPER_BUG_FIX:Z = true
++
++.field public static final blacklist FW_WALLPAPER_LOG:Z = true
++
++.field public static final blacklist FW_WINDOW_BLUR_SUPPORTED:Z
++
++.field public static final blacklist FW_WM_EVENTS_LOG:Z = true
++
++.field public static final blacklist FW_WM_FILE_LOGGING:Z = true
++
++.field public static final blacklist FW_WM_MIRRORING_FIX:Z = true
++
++.field public static final blacklist FW_WORKAROUND_LARGE_FLIP_REUSE_TASK:Z = false
++
++.field public static final blacklist FW_WORKAROUND_MAX_WINDOW_COUNT:Z = true
++
++.field public static final blacklist FW_WORKAROUND_PREDICTIVE_BACK_TIMEOUT_FALLBACK:Z
++
++.field public static final blacklist FW_WORKAROUND_PREVENT_RECORDING_SESSION_TERMINATION_BY_WFD:Z = true
++
++.field public static final blacklist FW_WORKAROUND_PREVENT_REPEAT_ADD_WINDOW:Z = true
++
++.field public static final blacklist GFW_DEBUG_DISABLE_HWRENDERING:Z
++
++.field public static final blacklist GRAPHICS_RENDERER:Z = true
++
++.field public static final blacklist GRAPHICS_RENDERER_CANVASBLUR_CAPTURE:Z
++
++.field public static final blacklist GRAPHICS_RENDERER_HCF:Z
++
++.field public static final blacklist GRAPHICS_RENDERER_IMAGEFILTER:Z
++
++.field public static final blacklist GRAPHICS_RENDERER_REIMAGEFILTER:Z
++
++.field public static final blacklist GRAPHICS_RENDER_ENGINE_POLICY:Z
++
++.field public static final blacklist GSC_ENABLED:Z = true
++
++.field public static final blacklist IS_DEBUG_LEVEL_HIGH:Z
++
++.field public static final blacklist IS_DEBUG_LEVEL_LOW:Z
++
++.field public static final blacklist IS_DEBUG_LEVEL_MID:Z
++
++.field public static final blacklist IS_FACTORY_BINARY:Z
++
++.field public static final blacklist IS_PREDICTIVE_BACK_ANIM_ENABLED:Z
++
++.field public static final blacklist IS_SHELL_TRANSITION_ENABLED:Z
++
++.field public static final blacklist IS_TABLET_DEVICE:Z = false
++
++.field public static final blacklist KILL_PROCESS_TIMEOUT_WHEN_DEX_EXIT:Z = false
++
++.field public static final blacklist KILL_TOO_MANY_VIEW_REQUEST:Z = true
++
++.field public static final blacklist KLMS_LICENSE_AGENT_DUMP_LOG:Z = true
++
++.field public static final blacklist KNOX_SUPPORT_CUSTOMIZATION_SDK:Z = true
++
++.field public static final blacklist KNOX_SUPPORT_DAR:Z = true
++
++.field public static final blacklist KNOX_SUPPORT_DAR_DUAL:Z = true
++
++.field public static final blacklist KNOX_SUPPORT_DAR_DUAL_DO:Z = true
++
++.field public static final blacklist KNOX_SUPPORT_DAR_SDP:Z = false
++
++.field public static final blacklist KNOX_SUPPORT_DUAL_APP:Z = true
++
++.field public static final blacklist KNOX_SUPPORT_ENDPOINT_MONITORING:Z = true
++
++.field public static final blacklist KNOX_SUPPORT_KEYGUARD:Z = true
++
++.field public static final blacklist KNOX_SUPPORT_MDM:Z = true
++
++.field public static final blacklist KNOX_SUPPORT_UCS:Z = true
++
++.field public static final blacklist KNOX_SUPPORT_VPN:Z = true
++
++.field public static final blacklist KNOX_SUPPORT_ZERO_TRUST:Z = true
++
++.field public static final blacklist KNOX_ZERO_TRUST:Z = true
++
++.field public static final blacklist MD:Z = true
++
++.field public static final blacklist MD_APP_CASTING:Z = true
++
++.field public static final blacklist MD_BUG_FIX:Z = true
++
++.field public static final blacklist MD_CLOSE_SYSTEM_DIALOGS:Z = true
++
++.field public static final blacklist MD_DEX_TOMBSTONE:Z = false
++
++.field public static final blacklist MD_DISPLAY_ORDERING:Z = true
++
++.field public static final blacklist MD_DISPLAY_TOKEN_FOR_LAYER_STACK:Z = true
++
++.field public static final blacklist MD_DND_POLICY:Z = true
++
++.field public static final blacklist MD_ENABLE_PIXEL_ANISOTROPY_CORRECTION:Z = false
++
++.field public static final blacklist MD_EXTERNAL_DISPLAY_POLICY:Z = true
++
++.field public static final blacklist MD_FIXED_APP_CONTEXT_DISPLAY:Z = true
++
++.field public static final blacklist MD_INDEPENDENT_DISPLAY_BACK:Z = true
++
++.field public static final blacklist MD_INPUT_DEVICES:Z = true
++
++.field public static final blacklist MD_KEY_POLICY:Z = true
++
++.field public static final blacklist MD_MULTI_DISPLAY_KEYGUARD:Z = true
++
++.field public static final blacklist MD_NOTIFY_SECURE_BASE_WINDOW_EVENT:Z = true
++
++.field public static final blacklist MD_REMOTE_APP:Z = true
++
++.field public static final blacklist MD_REMOTE_APP_DISPLAY_MANAGEMENT:Z = true
++
++.field public static final blacklist MD_REMOTE_APP_LAUNCH_POLICY:Z = true
++
++.field public static final blacklist MD_REMOTE_APP_WINDOW_POLICY:Z = true
++
++.field public static final blacklist MD_STATIC_DISPLAY_ID:Z = true
++
++.field public static final blacklist MD_TASK_CHANGE_LISTENER:Z = true
++
++.field public static final blacklist MD_VIRTUAL_DISPLAY_POLICY:Z = true
++
++.field public static final blacklist MD_WIFI_DISPLAY:Z = true
++
++.field public static final blacklist MNO_TMO_DEVICE_REPORTING:Z
++
++.field public static final blacklist MT:Z = true
++
++.field public static final blacklist MT_ADAPTIVE_APP_BY_DEFAULT:Z
++
++.field public static final blacklist MT_ADAPTIVE_APP_BY_DEFAULT_SA_LOGGING:Z = true
++
++.field public static final blacklist MT_API_MINIMIZE:Z = true
++
++.field public static final blacklist MT_APP_COMPAT:Z = true
++
++.field public static final blacklist MT_APP_COMPAT_ASPECT_RATIO_POLICY:Z
++
++.field public static final blacklist MT_APP_COMPAT_ASPECT_RATIO_SUPPORTED:Z
++
++.field public static final blacklist MT_APP_COMPAT_BUG_FIX:Z = true
++
++.field public static final blacklist MT_APP_COMPAT_CAMERA_POLICY:Z
++
++.field public static final blacklist MT_APP_COMPAT_CONFIGURATION:Z
++
++.field public static final blacklist MT_APP_COMPAT_DISPLAY_COMPAT_MODE:Z = false
++
++.field public static final blacklist MT_APP_COMPAT_LANDSCAPE_VIEW_FOR_PORTRAIT_APPS:Z
++
++.field public static final blacklist MT_APP_COMPAT_LARGE_SCREEN:Z
++
++.field public static final blacklist MT_APP_COMPAT_LETTERBOX_LEAK_BUG_FIX:Z = true
++
++.field public static final blacklist MT_APP_COMPAT_LETTERBOX_OCCLUDES_BUG_FIX:Z = true
++
++.field public static final blacklist MT_APP_COMPAT_LETTERBOX_TRANSITION_BUG_FIX:Z = true
++
++.field public static final blacklist MT_APP_COMPAT_MULTI_FOLD_CAMERA_POLICY:Z
++
++.field public static final blacklist MT_APP_COMPAT_ORIENTATION_POLICY:Z
++
++.field public static final blacklist MT_APP_COMPAT_ORIENTATION_POLICY_DEFAULT_ENABLED:Z
++
++.field public static final blacklist MT_APP_COMPAT_ORIENTATION_RESPECTED_WITH_PARENT_BOUNDS:Z = true
++
++.field public static final blacklist MT_APP_COMPAT_POSITIONING_POLICY:Z = true
++
++.field public static final blacklist MT_APP_COMPAT_REFACTORING_FLAG_ENABLED:Z
++
++.field public static final blacklist MT_APP_COMPAT_RESTART_POLICY:Z = true
++
++.field public static final blacklist MT_APP_COMPAT_ROTATION_ASPECT_RATIO_SUPPORTED:Z
++
++.field public static final blacklist MT_APP_COMPAT_ROTATION_COMPAT_MODE:Z
++
++.field public static final blacklist MT_APP_COMPAT_SENSOR_AXIS_REMAP:Z
++
++.field public static final blacklist MT_APP_COMPAT_SIZE_COMPAT_MODE_POLICY:Z = true
++
++.field public static final blacklist MT_APP_COMPAT_STATUS_LOGGING:Z
++
++.field public static final blacklist MT_APP_COMPAT_UI:Z = true
++
++.field public static final blacklist MT_APP_COMPAT_UI_LARGE_SCREEN_POLICY:Z
++
++.field public static final blacklist MT_APP_COMPAT_UI_POLICY:Z
++
++.field public static final blacklist MT_APP_COMPAT_USE_DISPLAY_LANDSCAPE_ORIENTATION:Z
++
++.field public static final blacklist MT_COMPAT_SANDBOX_POLICY:Z = true
++
++.field public static final blacklist MT_DECOR_ROUNDED_CORNER_FOR_FLIP_COVER:Z = false
++
++.field public static final blacklist MT_DECOR_ROUNDED_CORNER_FOR_LETTERBOX:Z = true
++
++.field public static final blacklist MT_DND_ANIMATION:Z
++
++.field public static final blacklist MT_DND_DISABLE_CANCEL_ANIMATION:Z
++
++.field public static final blacklist MT_DND_OBJECT_CAPTURE:Z
++
++.field public static final blacklist MT_DND_SEAMLESS_ANIMATION:Z
++
++.field public static final blacklist MT_DUMPSYS:Z = true
++
++.field public static final blacklist MT_FORCED_SNAPSHOT:Z = true
++
++.field public static final blacklist MT_FULL_SCREEN_APPS_SUPPORT_MODE:Z = true
++
++.field public static final blacklist MT_FULL_SCREEN_APPS_SUPPORT_MODE_HID:Z
++
++.field public static final blacklist MT_LAUNCH_POLICY:Z = true
++
++.field public static final blacklist MT_MINIMIZE:Z = true
++
++.field public static final blacklist MT_MULTI_USER:Z = true
++
++.field public static final blacklist MT_NOT_SUPPORT_WALLPAPER:Z = true
++
++.field public static final blacklist MT_SIZE_COMPAT_POLICY:Z = false
++
++.field public static final blacklist MT_VIEW_ROUNDED_CORNER:Z = true
++
++.field public static final blacklist MW:Z = true
++
++.field public static final blacklist MW_ACCESSIBILITY_KEYBOARD_REGION_MAGNIFICATION:Z = true
++
++.field public static final blacklist MW_AFFORDANCE_ANIM:Z = true
++
++.field public static final blacklist MW_ALIAS_ACTIVITY:Z = true
++
++.field public static final blacklist MW_API_VISIBLE_TASKS:Z = true
++
++.field public static final blacklist MW_ASYNC_TRANSACTION:Z = true
++
++.field public static final blacklist MW_BIXBY:Z = true
++
++.field public static final blacklist MW_BIXBY_SUPPORT_API:Z = true
++
++.field public static final blacklist MW_BUBBLE_BUG_FIX:Z = true
++
++.field public static final blacklist MW_BUG_FIX:Z = true
++
++.field public static final blacklist MW_CAPTION:Z
++
++.field public static final blacklist MW_CAPTION_BUG_FIX:Z
++
++.field public static final blacklist MW_CAPTION_CUTOUT:Z
++
++.field public static final blacklist MW_CAPTION_DESKTOP:Z
++
++.field public static final blacklist MW_CAPTION_DESKTOP_DIMMING:Z
++
++.field public static final blacklist MW_CAPTION_DESKTOP_DISABLED:Z
++
++.field public static final blacklist MW_CAPTION_DESKTOP_IMMERSIVE:Z
++
++.field public static final blacklist MW_CAPTION_DESKTOP_RESTART:Z
++
++.field public static final blacklist MW_CAPTION_FLIP_FOLDING_POLICY:Z
++
++.field public static final blacklist MW_CAPTION_FREEFORM:Z
++
++.field public static final blacklist MW_CAPTION_FREEFORM_MOTION:Z
++
++.field public static final blacklist MW_CAPTION_FREEFORM_RESIZE_GESTURE:Z
++
++.field public static final blacklist MW_CAPTION_FREEFORM_RESIZE_GESTURE_SA_LOGGING:Z
++
++.field public static final blacklist MW_CAPTION_FREEFORM_RESIZE_GUIDE:Z
++
++.field public static final blacklist MW_CAPTION_FREEFORM_STASH:Z
++
++.field public static final blacklist MW_CAPTION_FREEFORM_TYPE:Z
++
++.field public static final blacklist MW_CAPTION_FULL_SCREEN:Z
++
++.field public static final blacklist MW_CAPTION_FULL_SCREEN_CUTOUT:Z
++
++.field public static final blacklist MW_CAPTION_HANDLE:Z
++
++.field public static final blacklist MW_CAPTION_HANDLE_ANIM:Z
++
++.field public static final blacklist MW_CAPTION_HANDLE_AUTO_HIDE_FOR_SPLIT_SCREEN:Z
++
++.field public static final blacklist MW_CAPTION_HANDLE_KEEP_SCREEN_ON:Z
++
++.field public static final blacklist MW_CAPTION_HANDLE_SYSTEM_INPUT:Z
++
++.field public static final blacklist MW_CAPTION_HELP_POPUP:Z
++
++.field public static final blacklist MW_CAPTION_INSETS:Z
++
++.field public static final blacklist MW_CAPTION_KEYGUARD:Z
++
++.field public static final blacklist MW_CAPTION_POPUP:Z
++
++.field public static final blacklist MW_CAPTION_SETTINGS:Z
++
++.field public static final blacklist MW_CAPTION_SPLIT_IMMERSIVE:Z
++
++.field public static final blacklist MW_CAPTION_SPLIT_PARALLEL:Z
++
++.field public static final blacklist MW_CAPTION_THEME:Z
++
++.field public static final blacklist MW_CAPTION_TOOLTIP:Z
++
++.field public static final blacklist MW_CAPTION_TYPE:Z
++
++.field public static final blacklist MW_COMPAT_POLICY:Z = true
++
++.field public static final blacklist MW_CORE_STATE:Z = true
++
++.field public static final blacklist MW_DEBUG_LOG:Z = true
++
++.field public static final blacklist MW_DISPLAY_IME_DEBUG:Z
++
++.field public static final blacklist MW_DISPLAY_IME_LAYOUT:Z = true
++
++.field public static final blacklist MW_DND:Z = true
++
++.field public static final blacklist MW_DND_BUG_FIX:Z = true
++
++.field public static final blacklist MW_DND_CONTENTS_TO_WINDOW:Z = true
++
++.field public static final blacklist MW_DND_CONTENTS_TO_WINDOW_PASS_CALLER_INFO:Z = true
++
++.field public static final blacklist MW_DND_CONTENTS_TO_WINDOW_SMART_TIP:Z = true
++
++.field public static final blacklist MW_DND_CUSTOM_DROP_TARGET:Z = true
++
++.field public static final blacklist MW_DND_DISMISS_VIEW:Z = true
++
++.field public static final blacklist MW_DND_DRAG_AND_DROP_CONTROLLER_PROXY:Z = true
++
++.field public static final blacklist MW_DND_DRAG_ANIMATION:Z = true
++
++.field public static final blacklist MW_DND_FREEFORM_DISMISS_VIEW:Z
++
++.field public static final blacklist MW_DND_FROM_RECENT:Z = true
++
++.field public static final blacklist MW_DND_HAPTIC:Z = true
++
++.field public static final blacklist MW_DND_HIDE_SHELL_DROP_TARGET_FROM_EXTERNAL:Z = true
++
++.field public static final blacklist MW_DND_LAUNCH_MULTI_WINDOW_MODE:Z = true
++
++.field public static final blacklist MW_DND_MULTI_SPLIT_DROP_TARGET:Z
++
++.field public static final blacklist MW_DND_MULTI_WINDOW_FOR_ALL_APPS_IN_LABS:Z = true
++
++.field public static final blacklist MW_DND_ON_TRANSPARENT_FULLSCREEN:Z = true
++
++.field public static final blacklist MW_DND_PIP2_DISMISS_VIEW:Z
++
++.field public static final blacklist MW_DND_PIP_DISMISS_VIEW:Z
++
++.field public static final blacklist MW_DND_POINTERICON_CONCEPT:Z = true
++
++.field public static final blacklist MW_DND_SA_LOGGING:Z
++
++.field public static final blacklist MW_DND_SHELL_DROP_TARGET_VISIBILITY:Z = true
++
++.field public static final blacklist MW_DND_SPLIT_ON_HOMESCREEN:Z = true
++
++.field public static final blacklist MW_DND_TWO_HANDED:Z = true
++
++.field public static final blacklist MW_DND_UNHANDLED_DRAG:Z = true
++
++.field public static final blacklist MW_DYNAMIC_ENABLED:Z = true
++
++.field public static final blacklist MW_EMBED_ACTIVITY:Z
++
++.field public static final blacklist MW_EMBED_ACTIVITY_ANIMATION:Z
++
++.field public static final blacklist MW_EMBED_ACTIVITY_DEBUG_LOG:Z
++
++.field public static final blacklist MW_EMBED_ACTIVITY_DEVICE_ENABLED:Z
++
++.field public static final blacklist MW_EMBED_ACTIVITY_DIVIDER:Z
++
++.field public static final blacklist MW_EMBED_ACTIVITY_MODE:Z
++
++.field public static final blacklist MW_EMBED_ACTIVITY_PACKAGE_ENABLED:Z
++
++.field public static final blacklist MW_EMBED_ACTIVITY_PERFORMANCE:Z
++
++.field public static final blacklist MW_EMBED_ACTIVITY_SYSTEM_BAR_POLICY:Z
++
++.field public static final blacklist MW_EVENT_CALLBACK:Z = true
++
++.field public static final blacklist MW_EVENT_LOG:Z = true
++
++.field public static final blacklist MW_FIXED_ROTATION_POLICY:Z = true
++
++.field public static final blacklist MW_FORCED_RESIZABLE_INFO:Z = true
++
++.field public static final blacklist MW_FORCE_LAUNCH_WINDOWING_MODE:Z = true
++
++.field public static final blacklist MW_FREEFORM:Z = true
++
++.field public static final blacklist MW_FREEFORM_API:Z
++
++.field public static final blacklist MW_FREEFORM_BOUNDS_POLICY:Z = true
++
++.field public static final blacklist MW_FREEFORM_BUG_FIX:Z = true
++
++.field public static final blacklist MW_FREEFORM_CORNER_GESTURE:Z = true
++
++.field public static final blacklist MW_FREEFORM_CORNER_GESTURE_CUSTOM:Z = true
++
++.field public static final blacklist MW_FREEFORM_CORNER_GESTURE_SA_LOGGING:Z
++
++.field public static final blacklist MW_FREEFORM_DISABLE_INPUT_SINK:Z = true
++
++.field public static final blacklist MW_FREEFORM_FLIP_FOLDING_POLICY:Z = false
++
++.field public static final blacklist MW_FREEFORM_FOLD_BOUNDS_POLICY:Z
++
++.field public static final blacklist MW_FREEFORM_FOLD_FOLDING_POLICY:Z = false
++
++.field public static final blacklist MW_FREEFORM_FORCE_HIDING:Z = true
++
++.field public static final blacklist MW_FREEFORM_FORCE_HIDING_TRANSITION:Z
++
++.field public static final blacklist MW_FREEFORM_HEADER_TYPE:Z = true
++
++.field public static final blacklist MW_FREEFORM_HEADER_TYPE_SA_LOGGING:Z
++
++.field public static final blacklist MW_FREEFORM_IME:Z = true
++
++.field public static final blacklist MW_FREEFORM_LARGE_SCREEN_BOUNDS_POLICY:Z
++
++.field public static final blacklist MW_FREEFORM_LAUNCH_POLICY:Z = true
++
++.field public static final blacklist MW_FREEFORM_LAYOUT:Z = true
++
++.field public static final blacklist MW_FREEFORM_MINIMIZE:Z = true
++
++.field public static final blacklist MW_FREEFORM_MINIMIZED_PREVIEW:Z
++
++.field public static final blacklist MW_FREEFORM_MINIMIZE_CONTAINER:Z
++
++.field public static final blacklist MW_FREEFORM_MINIMIZE_CONTAINER_BINDER:Z = true
++
++.field public static final blacklist MW_FREEFORM_MINIMIZE_CONTAINER_CALLBACK:Z = true
++
++.field public static final blacklist MW_FREEFORM_MINIMIZE_CONTAINER_MULTIINSTANCE_PREVIEW:Z
++
++.field public static final blacklist MW_FREEFORM_MINIMIZE_SA_LOGGING:Z
++
++.field public static final blacklist MW_FREEFORM_MINIMIZE_SHELL_TRANSITION:Z
++
++.field public static final blacklist MW_FREEFORM_MULTI_FOLD_BOUNDS_POLICY:Z
++
++.field public static final blacklist MW_FREEFORM_NAV_POLICY:Z = true
++
++.field public static final blacklist MW_FREEFORM_ORDER:Z = true
++
++.field public static final blacklist MW_FREEFORM_PERSIST_BOUNDS:Z = true
++
++.field public static final blacklist MW_FREEFORM_PREVENT_HOME_FROM_MOVING_FORWARD:Z = true
++
++.field public static final blacklist MW_FREEFORM_REMAIN_IN_RECENTS:Z = true
++
++.field public static final blacklist MW_FREEFORM_RESIZE_TOUCHABLE_REGION:Z = true
++
++.field public static final blacklist MW_FREEFORM_RESIZE_UI:Z = true
++
++.field public static final blacklist MW_FREEFORM_SHELL_TRANSITION:Z
++
++.field public static final blacklist MW_FREEFORM_SMART_POPUP_VIEW:Z
++
++.field public static final blacklist MW_FREEFORM_SMART_POPUP_VIEW_SA_LOGGING:Z
++
++.field public static final blacklist MW_FREEFORM_SUPPORT_GROUPED_TASK_INFO:Z = true
++
++.field public static final blacklist MW_FREEFORM_SYSTEMUI_VISIBILITY:Z = true
++
++.field public static final blacklist MW_FREEFORM_TOUCH_REGION:Z = true
++
++.field public static final blacklist MW_FREEFORM_TRUSTED_OVERLAY:Z = true
++
++.field public static final blacklist MW_GEMINI_POLICY:Z = true
++
++.field public static final blacklist MW_LAUNCH_OVER_TARGET_TASK:Z = true
++
++.field public static final blacklist MW_LOW_SPEC_REFRESH_RATE_POLICY:Z
++
++.field public static final blacklist MW_MULTISTAR:Z = true
++
++.field public static final blacklist MW_MULTISTAR_BLOCKED_MINIMIZE_FREEFORM:Z = true
++
++.field public static final blacklist MW_MULTISTAR_ENSURE_LAUNCH_SPLIT:Z = true
++
++.field public static final blacklist MW_MULTISTAR_LONG_PRESS:Z = true
++
++.field public static final blacklist MW_MULTISTAR_SPLIT_GUIDE_VIEW:Z = true
++
++.field public static final blacklist MW_MULTISTAR_SUPPORT_CUSTOM_DENSITY:Z = true
++
++.field public static final blacklist MW_MULTISTAR_SUPPORT_STAY_FOCUS_ACTIVITY:Z = true
++
++.field public static final blacklist MW_MULTI_FOLD_SPLIT_FOLDING_POLICY:Z
++
++.field public static final blacklist MW_MULTI_SPLIT:Z
++
++.field public static final blacklist MW_MULTI_SPLIT_ACCESSIBILITY:Z
++
++.field public static final blacklist MW_MULTI_SPLIT_ADJUST_FOR_IME:Z
++
++.field public static final blacklist MW_MULTI_SPLIT_APP_PAIR:Z
++
++.field public static final blacklist MW_MULTI_SPLIT_BACKGROUND:Z
++
++.field public static final blacklist MW_MULTI_SPLIT_BOUNDS_POLICY:Z
++
++.field public static final blacklist MW_MULTI_SPLIT_BOUNDS_POLICY_IGNORING_CUTOUT:Z
++
++.field public static final blacklist MW_MULTI_SPLIT_CELL_DIVIDER:Z
++
++.field private static final blacklist MW_MULTI_SPLIT_COUNT_STR:Ljava/lang/String; = "0"
++
++.field public static final blacklist MW_MULTI_SPLIT_CREATE_MODE:Z
++
++.field public static final blacklist MW_MULTI_SPLIT_DIVIDER:Z
++
++.field public static final blacklist MW_MULTI_SPLIT_DIVIDER_SIZE_FOLD:Z
++
++.field public static final blacklist MW_MULTI_SPLIT_ENSURE_APP_SIZE:Z
++
++.field public static final blacklist MW_MULTI_SPLIT_FOLDING_POLICY:Z
++
++.field public static final blacklist MW_MULTI_SPLIT_FOR_COVER_DISPLAY:Z
++
++.field public static final blacklist MW_MULTI_SPLIT_FREEFORM_FOLDING_POLICY:Z
++
++.field public static final blacklist MW_MULTI_SPLIT_FREE_POSITION:Z
++
++.field public static final blacklist MW_MULTI_SPLIT_FREE_POSITION_SA_LOGGING:Z
++
++.field public static final blacklist MW_MULTI_SPLIT_FULL_TO_SPLIT_BY_GESTURE:Z
++
++.field public static final blacklist MW_MULTI_SPLIT_LAUNCH_ADJACENT:Z
++
++.field public static final blacklist MW_MULTI_SPLIT_NATURAL_RESIZING:Z
++
++.field public static final blacklist MW_MULTI_SPLIT_NOT_SUPPORT_FOR_COVER_DISPLAY:Z
++
++.field public static final blacklist MW_MULTI_SPLIT_RECENT_TASKS:Z
++
++.field public static final blacklist MW_MULTI_SPLIT_ROUNDED_CORNER:Z
++
++.field public static final blacklist MW_MULTI_SPLIT_SHELL_DUMP:Z
++
++.field public static final blacklist MW_MULTI_SPLIT_SHELL_TRANSITION:Z
++
++.field public static final blacklist MW_MULTI_SPLIT_SHOW_INCALL_WHEN_FOLDING:Z
++
++.field public static final blacklist MW_MULTI_SPLIT_SNAP_ALGORITHM:Z
++
++.field public static final blacklist MW_MULTI_SPLIT_TASK_ORGANIZER:Z
++
++.field public static final blacklist MW_MULTI_SPLIT_TASK_VISIBILITY:Z
++
++.field public static final blacklist MW_NATURAL_SWITCHING:Z = true
++
++.field public static final blacklist MW_NATURAL_SWITCHING_ANIM:Z = true
++
++.field public static final blacklist MW_NATURAL_SWITCHING_FULLSCREEN:Z
++
++.field public static final blacklist MW_NATURAL_SWITCHING_MULTI_SPLIT:Z
++
++.field public static final blacklist MW_NATURAL_SWITCHING_PIP:Z
++
++.field public static final blacklist MW_NATURAL_SWITCHING_PIP2:Z
++
++.field public static final blacklist MW_NATURAL_SWITCHING_SA_LOGGING:Z
++
++.field public static final blacklist MW_NAVISTAR_IMMERSIVE_SPLIT_MODE:Z = true
++
++.field public static final blacklist MW_NON_RESIZABLE_POLICY:Z = true
++
++.field public static final blacklist MW_NOT_SUPPORT_WALLPAPER:Z = true
++
++.field public static final blacklist MW_OUTSIDE_FOCUS_POLICY:Z = true
++
++.field public static final blacklist MW_OVERHEAT_POLICY:Z = true
++
++.field public static final blacklist MW_PACKAGE_DISPLAY_METRICS:Z = true
++
++.field public static final blacklist MW_PARALLEL_MULTI_SPLIT:Z
++
++.field public static final blacklist MW_PARALLEL_MULTI_SPLIT_SA_LOGGING:Z
++
++.field public static final blacklist MW_PARALLEL_MULTI_SPLIT_SUPPORT_RESIZE:Z
++
++.field public static final blacklist MW_PIP:Z
++
++.field public static final blacklist MW_PIP2:Z
++
++.field public static final blacklist MW_PIP2_BUG_FIX:Z
++
++.field public static final blacklist MW_PIP2_DISABLE_ROUNDED_CORNER:Z
++
++.field public static final blacklist MW_PIP2_DISPLAY_POLICY:Z
++
++.field public static final blacklist MW_PIP2_FLIP_FOLDING_POLICY:Z
++
++.field public static final blacklist MW_PIP2_FOLD_FOLDING_POLICY:Z
++
++.field public static final blacklist MW_PIP2_FORCE_ENABLE_LOG:Z
++
++.field public static final blacklist MW_PIP2_GUI:Z
++
++.field public static final blacklist MW_PIP2_LAUNCH_POLICY:Z
++
++.field public static final blacklist MW_PIP2_MENU_API:Z
++
++.field public static final blacklist MW_PIP2_NAVI_ALPHA:Z
++
++.field public static final blacklist MW_PIP2_REMOTE_TRANSITION:Z
++
++.field public static final blacklist MW_PIP2_RESIZE:Z
++
++.field public static final blacklist MW_PIP2_ROTATION_BUG_FIX:Z
++
++.field public static final blacklist MW_PIP2_SHELL_TRANSITION:Z
++
++.field public static final blacklist MW_PIP2_STASH:Z
++
++.field public static final blacklist MW_PIP2_TO_SPLIT:Z
++
++.field public static final blacklist MW_PIP2_TRANSIENT_LAUNCH_PERFORMANCE_BAL_BLOCK:Z
++
++.field public static final blacklist MW_PIP_ANIM_BUG_FIX:Z
++
++.field public static final blacklist MW_PIP_BUG_FIX:Z
++
++.field public static final blacklist MW_PIP_DISABLE_ROUNDED_CORNER:Z
++
++.field public static final blacklist MW_PIP_DISPLAY_POLICY:Z
++
++.field public static final blacklist MW_PIP_FLIP_FOLDING_POLICY:Z
++
++.field public static final blacklist MW_PIP_FOLD_FOLDING_POLICY:Z
++
++.field public static final blacklist MW_PIP_FORCE_ENABLE_LOG:Z
++
++.field public static final blacklist MW_PIP_GUI:Z
++
++.field public static final blacklist MW_PIP_LAUNCH_POLICY:Z
++
++.field public static final blacklist MW_PIP_MENU_API:Z
++
++.field public static final blacklist MW_PIP_MENU_BUG_FIX:Z
++
++.field public static final blacklist MW_PIP_NAVI_ALPHA:Z
++
++.field public static final blacklist MW_PIP_REMOTE_TRANSITION:Z
++
++.field public static final blacklist MW_PIP_RESIZE:Z
++
++.field public static final blacklist MW_PIP_ROTATION_BUG_FIX:Z
++
++.field public static final blacklist MW_PIP_SA_LOGGING:Z
++
++.field public static final blacklist MW_PIP_SECURE_FOLDER_POLICY:Z
++
++.field public static final blacklist MW_PIP_SHELL_TRANSITION:Z
++
++.field public static final blacklist MW_PIP_STASH:Z
++
++.field public static final blacklist MW_PIP_SYNC_DRAW_HANDLER:Z
++
++.field public static final blacklist MW_PIP_TO_SPLIT:Z
++
++.field public static final blacklist MW_PRESERVE_WINDOW_BUG_FIX:Z = true
++
++.field public static final blacklist MW_RESUMED_AFFORDANCE_SHELL_TRANSITION:Z
++
++.field public static final blacklist MW_ROUNDED_CORNER_BUG_FIX:Z = true
++
++.field public static final blacklist MW_ROUNDED_CORNER_FOR_FLEXIBLE_DISPLAY:Z = false
++
++.field public static final blacklist MW_SA_LOGGING:Z
++
++.field public static final blacklist MW_SA_RUNESTONE_LOGGING:Z
++
++.field public static final blacklist MW_SEP_API:Z = true
++
++.field public static final blacklist MW_SHELL_CHANGE_TRANSITION:Z
++
++.field public static final blacklist MW_SHELL_COMMAND:Z = true
++
++.field public static final blacklist MW_SHELL_DISPLAY_CHANGE_TRANSITION:Z
++
++.field public static final blacklist MW_SHELL_KEYBOARD_SHORTCUT:Z = true
++
++.field public static final blacklist MW_SHELL_KEYBOARD_SHORTCUT_SA_LOGGING:Z
++
++.field public static final blacklist MW_SHELL_TASK_VIEW_TRANSITION:Z = true
++
++.field public static final blacklist MW_SHELL_TRANSITION:Z
++
++.field public static final blacklist MW_SHELL_TRANSITION_BUG_FIX:Z
++
++.field public static final blacklist MW_SHELL_TRANSITION_LOG:Z
++
++.field public static final blacklist MW_SHELL_TRANSITION_TIMEOUT:Z
++
++.field public static final blacklist MW_SINGLE_INSTANCE_PER_TASK_LAUNCH_POLICY:Z = true
++
++.field public static final blacklist MW_SPLIT:Z = true
++
++.field public static final blacklist MW_SPLIT_ACCESSIBILITY:Z = true
++
++.field public static final blacklist MW_SPLIT_ACTIVITY:Z = false
++
++.field public static final blacklist MW_SPLIT_ACTIVITY_ALLOW_LIST:Z = false
++
++.field public static final blacklist MW_SPLIT_ACTIVITY_PACKAGE_ENABLED:Z = false
++
++.field public static final blacklist MW_SPLIT_ADJUST_LAUNCH_ROOT_TASK:Z = true
++
++.field public static final blacklist MW_SPLIT_API:Z = true
++
++.field public static final blacklist MW_SPLIT_API_FOR_CHANGE_APP:Z = true
++
++.field public static final blacklist MW_SPLIT_API_LAUNCH_ADJACENT_EXTENSION:Z = true
++
++.field public static final blacklist MW_SPLIT_API_TO_HORIZONTAL_FLEX_MODE:Z = true
++
++.field public static final blacklist MW_SPLIT_APP_PAIR:Z = true
++
++.field public static final blacklist MW_SPLIT_APP_PAIR_SA_LOGGING:Z
++
++.field public static final blacklist MW_SPLIT_BACKGROUND:Z = true
++
++.field public static final blacklist MW_SPLIT_BOUNDS_POLICY:Z = true
++
++.field public static final blacklist MW_SPLIT_BUG_FIX:Z = true
++
++.field public static final blacklist MW_SPLIT_CHANGE_FOCUS_BY_TAB_KEY:Z = true
++
++.field public static final blacklist MW_SPLIT_CONTINUITY_MODE:Z
++
++.field public static final blacklist MW_SPLIT_DISMISS_SNAPSHOT:Z = true
++
++.field public static final blacklist MW_SPLIT_DIVIDER:Z = true
++
++.field public static final blacklist MW_SPLIT_DIVIDER_HANDLE:Z = true
++
++.field public static final blacklist MW_SPLIT_DIVIDER_HANDLE_MOUSE_OVER:Z = true
++
++.field public static final blacklist MW_SPLIT_DIVIDER_PANEL:Z = true
++
++.field public static final blacklist MW_SPLIT_DIVIDER_PANEL_FIRST_AUTO_OPEN:Z = true
++
++.field public static final blacklist MW_SPLIT_DIVIDER_SA_LOGGING:Z
++
++.field public static final blacklist MW_SPLIT_ENSURE_DOCK:Z = true
++
++.field public static final blacklist MW_SPLIT_FLEXIBLE_SNAP_ALGORITHM:Z = true
++
++.field public static final blacklist MW_SPLIT_FLEX_MODE_SA_LOGGING:Z = false
++
++.field public static final blacklist MW_SPLIT_FLEX_PANEL_FLOATING_ICON:Z = false
++
++.field public static final blacklist MW_SPLIT_FLEX_PANEL_FLOATING_ICON_MOVABLE:Z = false
++
++.field public static final blacklist MW_SPLIT_FLEX_PANEL_LAUNCH_POLICY:Z = false
++
++.field public static final blacklist MW_SPLIT_FLEX_PANEL_MEDIA_IMMERSIVE_MODE:Z = false
++
++.field public static final blacklist MW_SPLIT_FLEX_PANEL_MODE:Z = false
++
++.field public static final blacklist MW_SPLIT_FLEX_PANEL_MODE_SA_LOGGING:Z
++
++.field public static final blacklist MW_SPLIT_FLEX_PANEL_ORIENTATION_POLICY:Z = false
++
++.field public static final blacklist MW_SPLIT_FLEX_PANEL_SYSTEMUI_VISIBILITY:Z = false
++
++.field public static final blacklist MW_SPLIT_FLIP_FLEX_PANEL_MODE:Z = false
++
++.field public static final blacklist MW_SPLIT_FLIP_FOLDING_POLICY:Z = false
++
++.field public static final blacklist MW_SPLIT_FOCUS_ADJUSTMENT:Z = true
++
++.field public static final blacklist MW_SPLIT_FULL_TO_SPLIT_BY_GESTURE:Z = true
++
++.field public static final blacklist MW_SPLIT_FULL_TO_SPLIT_BY_GESTURE_SA_LOGGING:Z
++
++.field public static final blacklist MW_SPLIT_IME_ANIMATION:Z = true
++
++.field public static final blacklist MW_SPLIT_IMMERSIVE_MODE:Z = true
++
++.field public static final blacklist MW_SPLIT_IS_FLEX_SCROLL_WHEEL:Z = false
++
++.field public static final blacklist MW_SPLIT_LARGE_SCREEN_BOUNDS_POLICY:Z
++
++.field public static final blacklist MW_SPLIT_LAUNCH_ADJACENT:Z = true
++
++.field public static final blacklist MW_SPLIT_LAUNCH_ADJACENT_SA_LOGGING:Z
++
++.field public static final blacklist MW_SPLIT_LAYOUT:Z = true
++
++.field public static final blacklist MW_SPLIT_LAYOUT_CHANGED:Z = true
++
++.field public static final blacklist MW_SPLIT_NATURAL_RESIZING:Z = true
++
++.field public static final blacklist MW_SPLIT_RECENT_TASKS:Z = true
++
++.field public static final blacklist MW_SPLIT_RECENT_TASKS_SA_LOGGING:Z
++
++.field public static final blacklist MW_SPLIT_REMOTE_APP_TRANSITION_LISTENER:Z = true
++
++.field public static final blacklist MW_SPLIT_REMOTE_SERVICE:Z = true
++
++.field public static final blacklist MW_SPLIT_RESTORE_SPLIT_RATIO:Z = true
++
++.field public static final blacklist MW_SPLIT_ROUNDED_CORNER:Z = true
++
++.field public static final blacklist MW_SPLIT_SHELL_MANAGE_CHILD_IN_LIST:Z = true
++
++.field public static final blacklist MW_SPLIT_SHELL_TRANSITION:Z
++
++.field public static final blacklist MW_SPLIT_SIP_ORDERING:Z = true
++
++.field public static final blacklist MW_SPLIT_STACKING:Z
++
++.field public static final blacklist MW_SPLIT_START_EDGE_ALL_APPS:Z = true
++
++.field public static final blacklist MW_SPLIT_START_EDGE_ALL_APPS_SA_LOGGING:Z
++
++.field public static final blacklist MW_SPLIT_STASH:Z = true
++
++.field public static final blacklist MW_SPLIT_STATE_SEND_INFO:Z = true
++
++.field public static final blacklist MW_SPLIT_SUPPORT_POSITION_TOP_AND_RIGHT:Z = true
++
++.field public static final blacklist MW_SPLIT_SYSTEMUI_VISIBILITY:Z = true
++
++.field public static final blacklist MW_SPLIT_SYSTEM_BAR_OPACITY_POLICY:Z = true
++
++.field public static final blacklist MW_SPLIT_SYSTEM_BAR_POLICY:Z = true
++
++.field public static final blacklist MW_SPLIT_TASK_SNAPSHOT_CACHE_POLICY:Z = true
++
++.field public static final blacklist MW_SPLIT_TASK_VISIBILITY:Z = true
++
++.field public static final blacklist MW_SPLIT_TRANSPARENT_NAVIGATION_BAR:Z
++
++.field public static final blacklist MW_SPLIT_WINDOW_CONFIG:Z = true
++
++.field private static final blacklist MW_SUPPORT_3D_SURFACE_TRANSITION_FLAG:Z
++
++.field public static final blacklist MW_SUPPORT_ASSISTANT_HOT_KEY:Z = true
++
++.field public static final blacklist MW_SUPPORT_DRAG_AND_DROP_CAPTURED_BLUR:Z
++
++.field public static final blacklist MW_SUPPORT_DRAG_AND_DROP_PARTIAL_BLUR:Z
++
++.field public static final blacklist MW_SUPPORT_DRAG_AND_DROP_REAL_TIME_BLUR:Z
++
++.field public static final blacklist MW_SUPPORT_GAIN_FOCUS_TIME:Z = true
++
++.field public static final blacklist MW_SUPPORT_POLICY:Z = true
++
++.field public static final blacklist MW_SWITCH_DEVICE_WHEN_FOLD:Z = false
++
++.field public static final blacklist MW_TASK_INFO_HAS_CONFIG_CHANGE:Z = true
++
++.field public static final blacklist MW_TASK_SNAPSHOT_CONTROL:Z = true
++
++.field public static final blacklist MW_TASK_VIEW_BUG_FIX:Z = true
++
++.field public static final blacklist MW_TASK_VIEW_DISABLE_INPUT_SINK:Z = true
++
++.field public static final blacklist MW_UPDATE_CONFIG_BASED_ON_TOP_TASK:Z = true
++
++.field public static final blacklist MW_WINDOWING_MODE_CHANGED_CALLBACK:Z = true
++
++.field public static final blacklist MW_WINDOWLESS_WINDOW_BUG_FIX:Z = true
++
++.field public static final blacklist MW_WINDOWLESS_WINDOW_UI_AUTOMATION:Z = true
++
++.field public static final blacklist ONE_UI_4_1:Z
++
++.field public static final blacklist ONE_UI_4_1_1:Z
++
++.field public static final blacklist ONE_UI_5_1:Z
++
++.field public static final blacklist ONE_UI_5_1_1:Z
++
++.field public static final blacklist ONE_UI_6_1:Z
++
++.field public static final blacklist ONE_UI_6_1_1:Z
++
++.field public static final blacklist ONE_UI_AI_VER_2025:Z
++
++.field public static final blacklist ONE_UI_AI_VER_2026:Z
++
++.field public static final blacklist PAGEBOOST_ENABLED:Z = true
++
++.field public static final blacklist PERSIST_SYS_EMERGENCY_RESET:Ljava/lang/String; = "persist.sys.emergency_reset"
++
++.field public static final blacklist PMM_ENABLED:Z = true
++
++.field public static final blacklist POWER_SAVING_SERVICE_RESET_ON_USER_SWITCH:Z
++
++.field public static final blacklist PPNANDSWAP_ENABLED:Z = true
++
++.field public static final blacklist RESCUE_PARTY_EMERGENCY:Ljava/lang/String; = "emergency"
++
++.field public static final blacklist SAFE_DEBUG:Z = false
++
++.field public static final blacklist SAMSUNG_DEX:Z = false
++
++.field public static final blacklist SAMSUNG_DEX_SUPPORT_SYSTEMUI_FEATURE:Z = false
++
++.field private static final blacklist SAMSUNG_LOG_PROP_NAME:Ljava/lang/String; = "persist.log.semlevel"
++
++.field private static final blacklist SAMSUNG_LOG_PROP_VALUE_DEFAULT:Ljava/lang/String; = "0"
++
++.field private static final blacklist SAMSUNG_LOG_PROP_VALUE_ON:Ljava/lang/String; = "0xFFFFFFFF"
++
++.field public static final blacklist SECONDARY_LAUNCHER_ACTIVITY_SUPPORT_FOR_DEX:Z
++
++.field public static final blacklist SEM_DYNAMIC_FEATURE:Z = false
++
++.field public static final blacklist SEP:Z = true
++
++.field public static final blacklist SLOWDOWN_ENABLED:Z = true
++
++.field public static final blacklist SUPPORT_ACTUAL_GPS:Z = true
++
++.field public static final blacklist SUPPORT_APP_CRASH_ANR_HISTORY:Z = true
++
++.field public static final blacklist SUPPORT_APP_JUMP_BLOCK:Z
++
++.field public static final blacklist SUPPORT_BINDER_CACHING:Z = true
++
++.field public static final blacklist SUPPORT_ESCROW_VAULT:Z = true
++
++.field public static final blacklist SUPPORT_IAFD:Z = true
++
++.field public static final blacklist SUPPORT_IQI:Z
++
++.field public static final blacklist SUPPORT_JDM_MODEL_MANAGED_PROFILE_SCREENSHOT:Z = false
++
++.field public static final blacklist SUPPORT_KNOX:Z = true
++
++.field public static final blacklist SUPPORT_MARS:Z = true
++
++.field public static final blacklist SUPPORT_OLAF:Z = true
++
++.field public static final blacklist SUPPORT_PDS:Z = true
++
++.field public static final blacklist SUPPORT_RLL:Z = false
++
++.field public static final blacklist SUPPORT_SMARTMANAGER_CN:Z
++
++.field public static final blacklist SUPPORT_SMART_CLIP:Z = true
++
++.field public static final blacklist SUPPORT_TRAFFIC_MANAGER:Z
++
++.field public static final blacklist SYSFW_ANR_PREDUMP_ENABLE:Z = true
++
++.field public static final blacklist SYSFW_APP_SPEG:Z
++
++.field public static final blacklist SYSFW_BINDERCALLS_STATS_PER_PACKAGE:Z = true
++
++.field public static final blacklist SYSFW_OOM_HEAPDUMP_ENABLE:Z = true
++
++.field public static final blacklist SYSHT_CONVERT_HIDDEN_TO_EMPTY:Z = true
++
++.field public static final blacklist SYSHT_SUPPORT_LMKD:Z = true
++
++.field public static blacklist SYSPERF_ACTIVE_APP_ADCP_ENABLE:Z = false
++
++.field public static final blacklist SYSPERF_ACTIVE_APP_ADCP_WEBVIEW_PRELOAD_ENABLE:Z = true
++
++.field public static final blacklist SYSPERF_ACTIVE_APP_BBA_ENABLE:Z = true
++
++.field public static final blacklist SYSPERF_ACTIVE_APP_GVS_ENABLE:Z = true
++
++.field public static final blacklist SYSPERF_ACTIVE_APP_LAUNCH:Z = true
++
++.field public static final blacklist SYSPERF_ACTIVE_APP_RECORD_RECENTKILL_ENABLE:Z = true
++
++.field public static final blacklist SYSPERF_ACTIVE_IAFD_APP_FLUENCY_HWUI:Z = false
++
++.field public static final blacklist SYSPERF_ACTIVE_READAHEAD:Z
++
++.field public static final blacklist SYSPERF_ACTIVITY_MANAGER_PERFORMANCE:Z = true
++
++.field public static final blacklist SYSPERF_ACTIVITY_MANAGER_SLUGGISH:Z = true
++
++.field public static final blacklist SYSPERF_ADVANCED_ACTIVE_APP_LAUNCH:Z = true
++
++.field public static final blacklist SYSPERF_ALWAYS_PRINT_SWAPPSS:Z = true
++
++.field public static final blacklist SYSPERF_ATLAS_ENABLE:Z
++
++.field public static final blacklist SYSPERF_ATLAS_ENABLED_DEVICES:Z
++
++.field public static final blacklist SYSPERF_BACKGROUND_ACTIVITY_LAUNCH_NOTIFIER:Z = true
++
++.field public static final blacklist SYSPERF_BIGDATA_SLUGGISH_SLUG_REPORT:Z = true
++
++.field public static final blacklist SYSPERF_BIGDATA_SLUGGISH_TTLS_REPORT:Z = true
++
++.field public static final blacklist SYSPERF_BOOST_DISABLE_WHEN_FOLDED:Z
++
++.field public static final blacklist SYSPERF_BOOST_OPT:Z
++
++.field public static final blacklist SYSPERF_BROADCAST_DELAY_ENABLE:Z = true
++
++.field public static final blacklist SYSPERF_DYNAMIC_BOOST:Z
++
++.field public static final blacklist SYSPERF_ENABLE_APP_TRANSITION_LOG:Z = true
++
++.field public static final blacklist SYSPERF_JDM_MODEL:Z
++
++.field public static final blacklist SYSPERF_LAUNCHER_PROMOTION:Z
++
++.field public static final blacklist SYSPERF_PRODUCT_DEVICE:Ljava/lang/String;
++
++.field public static final blacklist SYSPERF_QC_CHIPSET:Z
++
++.field public static final blacklist SYSPERF_QC_IOP_V3_ENABLE:Z
++
++.field public static final blacklist SYSPERF_QC_TASK_BOOST_ENABLE:Z
++
++.field public static final blacklist SYSPERF_SAMSUNG_BOOST_ENBALE:Z = true
++
++.field public static final blacklist SYSPERF_SDHMS_SEND_CMD:Z = true
++
++.field public static final blacklist SYSPERF_SUPPORT_AM_CMD_BOOSTER:Z = true
++
++.field public static final blacklist SYSPERF_SUPPORT_SET_SURFACE:Z = true
++
++.field public static final blacklist SYSPERF_SYSTEM_MAIN_THREAD_MONITOR_ENABLE:Z = true
++
++.field public static final blacklist SYSPERF_TASKSNAPSHOT_HWBUFFER_CLEAR:Z = true
++
++.field public static final blacklist SYSPERF_VI_BOOST:Z
++
++.field public static final blacklist SYSTEM_AIMEMBOOST_ACCELERATE_USING_FCA_QUEUE:Z = true
++
++.field public static final blacklist SYSTEM_FCA_FOR_GENIE:Z = true
++
++.field public static final blacklist SYSTEM_FCA_ON_FREEZE:Z = true
++
++.field public static final blacklist SYSTEM_MEMORY_GENIE_ENABLED:Z = true
++
++.field public static final blacklist SYSTEM_MEMORY_GENIE_UNLOAD_POLICY:Z = true
++
++.field public static final blacklist SYSTEM_REORDER_DUMPSYS_MEMINFO:Z = true
++
++.field public static final blacklist SYSUI_GRADLE_BUILD:Z
++
++.field public static final blacklist UMR_ENABLED:Z = true
++
++.field private static blacklist mCachedSamsungLogPropValue:Ljava/lang/String;
++
++.field private static blacklist sInstance:Lcom/samsung/android/rune/CoreRune;
++
++
++# direct methods
++.method static constructor blacklist <clinit>()V
++    .locals 19
++
++    const-string/jumbo v0, "ro.boot.debug_level"
++
++    invoke-static {v0}, Landroid/os/SystemProperties;->get(Ljava/lang/String;)Ljava/lang/String;
++
++    move-result-object v0
++
++    sput-object v0, Lcom/samsung/android/rune/CoreRune;->DEBUG_LEVEL:Ljava/lang/String;
++
++    const-string v1, "0x4f4c"
++
++    invoke-virtual {v1, v0}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
++
++    move-result v1
++
++    sput-boolean v1, Lcom/samsung/android/rune/CoreRune;->IS_DEBUG_LEVEL_LOW:Z
++
++    const-string v1, "0x494d"
++
++    invoke-virtual {v1, v0}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
++
++    move-result v1
++
++    sput-boolean v1, Lcom/samsung/android/rune/CoreRune;->IS_DEBUG_LEVEL_MID:Z
++
++    const-string v1, "0x4948"
++
++    invoke-virtual {v1, v0}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
++
++    move-result v0
++
++    sput-boolean v0, Lcom/samsung/android/rune/CoreRune;->IS_DEBUG_LEVEL_HIGH:Z
++
++    invoke-static {}, Landroid/os/FactoryTest;->isFactoryMode()Z
++
++    move-result v0
++
++    sput-boolean v0, Lcom/samsung/android/rune/CoreRune;->IS_FACTORY_BINARY:Z
++
++    sget v1, Landroid/os/Build$VERSION;->SEM_PLATFORM_INT:I
++
++    const v2, 0x1fc34
++
++    const/4 v3, 0x1
++
++    const/4 v4, 0x0
++
++    if-lt v1, v2, :cond_0
++
++    move v1, v3
++
++    goto :goto_0
++
++    :cond_0
++    move v1, v4
++
++    :goto_0
++    sput-boolean v1, Lcom/samsung/android/rune/CoreRune;->ONE_UI_4_1:Z
++
++    sget v1, Landroid/os/Build$VERSION;->SEM_PLATFORM_INT:I
++
++    const v2, 0x1fdc4
++
++    if-lt v1, v2, :cond_1
++
++    move v1, v3
++
++    goto :goto_1
++
++    :cond_1
++    move v1, v4
++
++    :goto_1
++    sput-boolean v1, Lcom/samsung/android/rune/CoreRune;->ONE_UI_4_1_1:Z
++
++    sget v1, Landroid/os/Build$VERSION;->SEM_PLATFORM_INT:I
++
++    const v2, 0x22344
++
++    if-lt v1, v2, :cond_2
++
++    move v1, v3
++
++    goto :goto_2
++
++    :cond_2
++    move v1, v4
++
++    :goto_2
++    sput-boolean v1, Lcom/samsung/android/rune/CoreRune;->ONE_UI_5_1:Z
++
++    sget v1, Landroid/os/Build$VERSION;->SEM_PLATFORM_INT:I
++
++    const v2, 0x224d4
++
++    if-lt v1, v2, :cond_3
++
++    move v1, v3
++
++    goto :goto_3
++
++    :cond_3
++    move v1, v4
++
++    :goto_3
++    sput-boolean v1, Lcom/samsung/android/rune/CoreRune;->ONE_UI_5_1_1:Z
++
++    sget v1, Landroid/os/Build$VERSION;->SEM_PLATFORM_INT:I
++
++    const v2, 0x24a54
++
++    if-lt v1, v2, :cond_4
++
++    move v1, v3
++
++    goto :goto_4
++
++    :cond_4
++    move v1, v4
++
++    :goto_4
++    sput-boolean v1, Lcom/samsung/android/rune/CoreRune;->ONE_UI_6_1:Z
++
++    sget v1, Landroid/os/Build$VERSION;->SEM_PLATFORM_INT:I
++
++    const v2, 0x24be4
++
++    if-lt v1, v2, :cond_5
++
++    move v1, v3
++
++    goto :goto_5
++
++    :cond_5
++    move v1, v4
++
++    :goto_5
++    sput-boolean v1, Lcom/samsung/android/rune/CoreRune;->ONE_UI_6_1_1:Z
++
++    const-string/jumbo v1, "persist.wm.debug.shell_transit"
++
++    invoke-static {v1, v3}, Landroid/os/SystemProperties;->getBoolean(Ljava/lang/String;Z)Z
++
++    move-result v1
++
++    sput-boolean v1, Lcom/samsung/android/rune/CoreRune;->IS_SHELL_TRANSITION_ENABLED:Z
++
++    const-string/jumbo v2, "persist.wm.debug.predictive_back_anim"
++
++    invoke-static {v2, v3}, Landroid/os/SystemProperties;->getBoolean(Ljava/lang/String;Z)Z
++
++    move-result v2
++
++    sput-boolean v2, Lcom/samsung/android/rune/CoreRune;->IS_PREDICTIVE_BACK_ANIM_ENABLED:Z
++
++    invoke-static {}, Lcom/samsung/android/feature/SemFloatingFeature;->getInstance()Lcom/samsung/android/feature/SemFloatingFeature;
++
++    move-result-object v2
++
++    const-string/jumbo v5, "SEC_FLOATING_FEATURE_CONTEXTSERVICE_ENABLE_SURVEY_MODE"
++
++    invoke-virtual {v2, v5}, Lcom/samsung/android/feature/SemFloatingFeature;->getBoolean(Ljava/lang/String;)Z
++
++    move-result v2
++
++    sput-boolean v2, Lcom/samsung/android/rune/CoreRune;->FW_SA_LOGGING:Z
++
++    sput-boolean v2, Lcom/samsung/android/rune/CoreRune;->FW_ROTATION_LOG:Z
++
++    const-string/jumbo v2, "persist.debug.surface.creation"
++
++    invoke-static {v2, v4}, Landroid/os/SystemProperties;->getBoolean(Ljava/lang/String;Z)Z
++
++    move-result v2
++
++    sput-boolean v2, Lcom/samsung/android/rune/CoreRune;->FW_SURFACE_DEBUG_CREATION:Z
++
++    const-string/jumbo v2, "persist.debug.surface.remove"
++
++    invoke-static {v2, v4}, Landroid/os/SystemProperties;->getBoolean(Ljava/lang/String;Z)Z
++
++    move-result v2
++
++    sput-boolean v2, Lcom/samsung/android/rune/CoreRune;->FW_SURFACE_DEBUG_REMOVE:Z
++
++    const-string/jumbo v2, "persist.debug.surface.reparent"
++
++    invoke-static {v2, v4}, Landroid/os/SystemProperties;->getBoolean(Ljava/lang/String;Z)Z
++
++    move-result v2
++
++    sput-boolean v2, Lcom/samsung/android/rune/CoreRune;->FW_SURFACE_DEBUG_REPARENT:Z
++
++    const-string/jumbo v2, "persist.debug.surface.alpha"
++
++    invoke-static {v2, v4}, Landroid/os/SystemProperties;->getBoolean(Ljava/lang/String;Z)Z
++
++    move-result v2
++
++    sput-boolean v2, Lcom/samsung/android/rune/CoreRune;->FW_SURFACE_DEBUG_ALPHA:Z
++
++    const-string/jumbo v2, "persist.debug.surface.visibility"
++
++    invoke-static {v2, v4}, Landroid/os/SystemProperties;->getBoolean(Ljava/lang/String;Z)Z
++
++    move-result v2
++
++    sput-boolean v2, Lcom/samsung/android/rune/CoreRune;->FW_SURFACE_DEBUG_VISIBILITY:Z
++
++    const-string/jumbo v2, "persist.debug.surface.transform"
++
++    invoke-static {v2, v4}, Landroid/os/SystemProperties;->getBoolean(Ljava/lang/String;Z)Z
++
++    move-result v2
++
++    sput-boolean v2, Lcom/samsung/android/rune/CoreRune;->FW_SURFACE_DEBUG_TRANSFORM:Z
++
++    const-string/jumbo v2, "persist.debug.surface.layer"
++
++    invoke-static {v2, v4}, Landroid/os/SystemProperties;->getBoolean(Ljava/lang/String;Z)Z
++
++    move-result v2
++
++    sput-boolean v2, Lcom/samsung/android/rune/CoreRune;->FW_SURFACE_DEBUG_LAYER:Z
++
++    const-string/jumbo v2, "persist.debug.surface.crop"
++
++    invoke-static {v2, v4}, Landroid/os/SystemProperties;->getBoolean(Ljava/lang/String;Z)Z
++
++    move-result v2
++
++    sput-boolean v2, Lcom/samsung/android/rune/CoreRune;->FW_SURFACE_DEBUG_CROP:Z
++
++    const-string/jumbo v2, "persist.debug.surface.apply"
++
++    invoke-static {v2, v3}, Landroid/os/SystemProperties;->getBoolean(Ljava/lang/String;Z)Z
++
++    move-result v2
++
++    sput-boolean v2, Lcom/samsung/android/rune/CoreRune;->FW_SURFACE_DEBUG_APPLY:Z
++
++    const-string/jumbo v2, "persist.wm.temp.insets.bug_fix"
++
++    invoke-static {v2, v3}, Landroid/os/SystemProperties;->getBoolean(Ljava/lang/String;Z)Z
++
++    move-result v2
++
++    sput-boolean v2, Lcom/samsung/android/rune/CoreRune;->FW_TEMP_INSETS_BUG_FIX:Z
++
++    sput-boolean v4, Lcom/samsung/android/rune/CoreRune;->FW_TEMP_TOO_MANY_INSETS_LEASH_BUG_FIX:Z
++
++    sput-boolean v1, Lcom/samsung/android/rune/CoreRune;->FW_WAIT_TO_HANDLE_RESIZING_FROM_CLIENT:Z
++
++    const-string/jumbo v1, "ro.product.vendor.device"
++
++    invoke-static {v1}, Landroid/os/SystemProperties;->get(Ljava/lang/String;)Ljava/lang/String;
++
++    move-result-object v2
++
++    sput-object v2, Lcom/samsung/android/rune/CoreRune;->FW_PRODUCT_DEVICE:Ljava/lang/String;
++
++    sput-boolean v4, Lcom/samsung/android/rune/CoreRune;->FW_FLIP_FULL_COVER_SCREEN:Z
++
++    sput-boolean v4, Lcom/samsung/android/rune/CoreRune;->FW_SA_LOGGING_FOR_HALF_OPEN_MODE:Z
++
++    sput-boolean v4, Lcom/samsung/android/rune/CoreRune;->FW_FOLD_SA_LOGGING:Z
++
++    sput-boolean v4, Lcom/samsung/android/rune/CoreRune;->FW_FOLD_WALLPAPER_POLICY:Z
++
++    invoke-static {}, Lcom/samsung/android/feature/SemFloatingFeature;->getInstance()Lcom/samsung/android/feature/SemFloatingFeature;
++
++    move-result-object v2
++
++    const-string/jumbo v5, "SEC_FLOATING_FEATURE_CLOCK_SUPPORT_PREMIUM_WATCH"
++
++    invoke-virtual {v2, v5}, Lcom/samsung/android/feature/SemFloatingFeature;->getBoolean(Ljava/lang/String;)Z
++
++    move-result v2
++
++    sput-boolean v2, Lcom/samsung/android/rune/CoreRune;->FW_CHN_PREMIUM_WATCH:Z
++
++    sput-boolean v4, Lcom/samsung/android/rune/CoreRune;->FW_MULTI_FOLD_HALF_CLOSE_CONTINUITY:Z
++
++    sput-boolean v4, Lcom/samsung/android/rune/CoreRune;->FW_FLIP_RESTORE_DEFAULT_DISPLAY_DENSITY_IN_BOOT:Z
++
++    sput-boolean v4, Lcom/samsung/android/rune/CoreRune;->FW_LARGE_FLIP_TRANSITION:Z
++
++    sput-boolean v4, Lcom/samsung/android/rune/CoreRune;->FW_LARGE_FLIP_RECENTS_TRANSITION:Z
++
++    sput-boolean v4, Lcom/samsung/android/rune/CoreRune;->FW_LARGE_FLIP_PREDICTIVE_BACK_ANIM:Z
++
++    sput-boolean v4, Lcom/samsung/android/rune/CoreRune;->FW_LARGE_FLIP_PREDICTIVE_BACK_ANIM_SYSTEM_ANIMATOR_OFF:Z
++
++    sput-boolean v4, Lcom/samsung/android/rune/CoreRune;->FW_LARGE_FLIP_LAUNCHER_WIDGET_POLICY_CHN:Z
++
++    sput-boolean v4, Lcom/samsung/android/rune/CoreRune;->FW_LARGE_FLIP_LAUNCHER_GEMINI_POLICY:Z
++
++    sput-boolean v4, Lcom/samsung/android/rune/CoreRune;->FW_FLIP_FULL_COVER_SCREEN_APPS_CUTOUT:Z
++
++    sput-boolean v4, Lcom/samsung/android/rune/CoreRune;->FW_FLIP_FULL_COVER_SCREEN_TENT_MODE_CUTOUT:Z
++
++    sput-boolean v4, Lcom/samsung/android/rune/CoreRune;->FW_FLIP_FULL_COVER_SCREEN_APP_COMPAT:Z
++
++    sput-boolean v4, Lcom/samsung/android/rune/CoreRune;->FW_FLIP_FULL_COVER_SCREEN_APP_COMPAT_ASPECT_RATIO_POLICY:Z
++
++    sput-boolean v4, Lcom/samsung/android/rune/CoreRune;->FW_FLIP_FULL_COVER_SCREEN_APP_COMPAT_UI:Z
++
++    sput-boolean v4, Lcom/samsung/android/rune/CoreRune;->FW_FLIP_FULL_COVER_SCREEN_APP_COMPAT_CONFIGURATION:Z
++
++    sput-boolean v4, Lcom/samsung/android/rune/CoreRune;->FW_FLIP_FULL_COVER_SCREEN_APP_COMPAT_POSITIONING_POLICY:Z
++
++    sput-boolean v4, Lcom/samsung/android/rune/CoreRune;->FW_FLIP_FULL_COVER_SCREEN_APP_COMPAT_START_CONTROLLER:Z
++
++    sput-boolean v4, Lcom/samsung/android/rune/CoreRune;->FW_FLIP_FULL_COVER_SCREEN_APP_COMPAT_FLOATING_ICON:Z
++
++    sput-boolean v4, Lcom/samsung/android/rune/CoreRune;->FW_FLIP_LARGE_COVER_SCREEN_SA_LOGGING:Z
++
++    xor-int/lit8 v2, v0, 0x1
++
++    sput-boolean v2, Lcom/samsung/android/rune/CoreRune;->FW_TSP_STATE_CONTROLLER:Z
++
++    sput-boolean v2, Lcom/samsung/android/rune/CoreRune;->FW_TSP_SIP_MODE:Z
++
++    const-string/jumbo v5, "SEC_FLOATING_FEATURE_FRAMEWORK_SUPPORT_TSP_STATE_MANAGER"
++
++    if-nez v0, :cond_6
++
++    invoke-static {}, Lcom/samsung/android/feature/SemFloatingFeature;->getInstance()Lcom/samsung/android/feature/SemFloatingFeature;
++
++    move-result-object v6
++
++    invoke-virtual {v6, v5}, Lcom/samsung/android/feature/SemFloatingFeature;->getString(Ljava/lang/String;)Ljava/lang/String;
++
++    move-result-object v6
++
++    const-string/jumbo v7, "deadzone"
++
++    invoke-virtual {v6, v7}, Ljava/lang/String;->contains(Ljava/lang/CharSequence;)Z
++
++    move-result v6
++
++    if-eqz v6, :cond_6
++
++    move v6, v3
++
++    goto :goto_6
++
++    :cond_6
++    move v6, v4
++
++    :goto_6
++    sput-boolean v6, Lcom/samsung/android/rune/CoreRune;->FW_TSP_DEADZONE:Z
++
++    sput-boolean v2, Lcom/samsung/android/rune/CoreRune;->FW_TSP_NOTE_MODE:Z
++
++    if-nez v0, :cond_7
++
++    invoke-static {}, Lcom/samsung/android/feature/SemFloatingFeature;->getInstance()Lcom/samsung/android/feature/SemFloatingFeature;
++
++    move-result-object v2
++
++    invoke-virtual {v2, v5}, Lcom/samsung/android/feature/SemFloatingFeature;->getString(Ljava/lang/String;)Ljava/lang/String;
++
++    move-result-object v2
++
++    const-string/jumbo v7, "deadzone_v3"
++
++    invoke-virtual {v2, v7}, Ljava/lang/String;->contains(Ljava/lang/CharSequence;)Z
++
++    move-result v2
++
++    if-eqz v2, :cond_7
++
++    move v2, v3
++
++    goto :goto_7
++
++    :cond_7
++    move v2, v4
++
++    :goto_7
++    sput-boolean v2, Lcom/samsung/android/rune/CoreRune;->FW_TSP_DEADZONE_V3:Z
++
++    if-nez v0, :cond_8
++
++    sget-boolean v0, Lcom/samsung/android/rune/CoreRune;->IS_TABLET_DEVICE:Z
++
++    if-nez v0, :cond_8
++
++    move v0, v3
++
++    goto :goto_8
++
++    :cond_8
++    move v0, v4
++
++    :goto_8
++    sput-boolean v0, Lcom/samsung/android/rune/CoreRune;->FW_USE_SMALLER_GRIPZONE_ON_GAME:Z
++
++    if-eqz v6, :cond_9
++
++    const-string/jumbo v0, "ro.com.google.cdb.spa1"
++
++    invoke-static {v0}, Landroid/os/SystemProperties;->get(Ljava/lang/String;)Ljava/lang/String;
++
++    move-result-object v0
++
++    const-string/jumbo v2, "bsxasm1"
++
++    invoke-virtual {v2, v0}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
++
++    move-result v0
++
++    if-eqz v0, :cond_9
++
++    move v0, v3
++
++    goto :goto_9
++
++    :cond_9
++    move v0, v4
++
++    :goto_9
++    sput-boolean v0, Lcom/samsung/android/rune/CoreRune;->FW_TSP_DEADZONEHOLE_LAND:Z
++
++    if-eqz v6, :cond_a
++
++    invoke-static {}, Lcom/samsung/android/feature/SemFloatingFeature;->getInstance()Lcom/samsung/android/feature/SemFloatingFeature;
++
++    move-result-object v0
++
++    invoke-virtual {v0, v5}, Lcom/samsung/android/feature/SemFloatingFeature;->getString(Ljava/lang/String;)Ljava/lang/String;
++
++    move-result-object v0
++
++    const-string/jumbo v2, "flip_cover"
++
++    invoke-virtual {v0, v2}, Ljava/lang/String;->contains(Ljava/lang/CharSequence;)Z
++
++    move-result v0
++
++    if-eqz v0, :cond_a
++
++    move v0, v3
++
++    goto :goto_a
++
++    :cond_a
++    move v0, v4
++
++    :goto_a
++    sput-boolean v0, Lcom/samsung/android/rune/CoreRune;->FW_TSP_DEADZONE_LARGE_FLIP_COVER:Z
++
++    sput-boolean v3, Lcom/samsung/android/rune/CoreRune;->FW_SUPPORT_MULTI_RESOLUTION:Z
++
++    sput-boolean v3, Lcom/samsung/android/rune/CoreRune;->FW_MULTI_RESOLUTION_POLICY:Z
++
++    sput-boolean v4, Lcom/samsung/android/rune/CoreRune;->FW_DYNAMIC_RESOLUTION_CONTROL:Z
++
++    const-string v0, "3"
++
++    invoke-static {v0}, Ljava/lang/Integer;->parseInt(Ljava/lang/String;)I
++
++    move-result v2
++
++    if-lez v2, :cond_b
++
++    move v2, v3
++
++    goto :goto_b
++
++    :cond_b
++    move v2, v4
++
++    :goto_b
++    sput-boolean v2, Lcom/samsung/android/rune/CoreRune;->FW_VRR_POLICY:Z
++
++    invoke-static {v0}, Ljava/lang/Integer;->parseInt(Ljava/lang/String;)I
++
++    move-result v5
++
++    if-ne v5, v3, :cond_c
++
++    move v5, v3
++
++    goto :goto_c
++
++    :cond_c
++    move v5, v4
++
++    :goto_c
++    sput-boolean v5, Lcom/samsung/android/rune/CoreRune;->FW_VRR_SWITCHABLE:Z
++
++    if-eqz v2, :cond_d
++
++    sget-boolean v5, Lcom/samsung/android/rune/CoreRune;->IS_FACTORY_BINARY:Z
++
++    if-nez v5, :cond_d
++
++    invoke-static {v0}, Ljava/lang/Integer;->parseInt(Ljava/lang/String;)I
++
++    move-result v5
++
++    if-le v5, v3, :cond_d
++
++    move v5, v3
++
++    goto :goto_d
++
++    :cond_d
++    move v5, v4
++
++    :goto_d
++    sput-boolean v5, Lcom/samsung/android/rune/CoreRune;->FW_VRR_SEAMLESS:Z
++
++    if-eqz v2, :cond_f
++
++    sget-boolean v6, Lcom/samsung/android/rune/CoreRune;->IS_FACTORY_BINARY:Z
++
++    if-nez v6, :cond_f
++
++    invoke-static {v0}, Ljava/lang/Integer;->parseInt(Ljava/lang/String;)I
++
++    move-result v6
++
++    const/16 v7, 0x14
++
++    if-eq v6, v7, :cond_e
++
++    const-string/jumbo v6, "persist.debug.seamless_optout_passive"
++
++    invoke-static {v6, v4}, Landroid/os/SystemProperties;->getBoolean(Ljava/lang/String;Z)Z
++
++    move-result v6
++
++    if-eqz v6, :cond_f
++
++    :cond_e
++    move v6, v3
++
++    goto :goto_e
++
++    :cond_f
++    move v6, v4
++
++    :goto_e
++    sput-boolean v6, Lcom/samsung/android/rune/CoreRune;->FW_VRR_SEAMLESS_OPTOUT_PASSIVE:Z
++
++    invoke-static {v0}, Ljava/lang/Integer;->parseInt(Ljava/lang/String;)I
++
++    move-result v6
++
++    const/4 v7, 0x4
++
++    if-ne v6, v7, :cond_10
++
++    move v6, v3
++
++    goto :goto_f
++
++    :cond_10
++    move v6, v4
++
++    :goto_f
++    sput-boolean v6, Lcom/samsung/android/rune/CoreRune;->FW_VRR_DISCRETE:Z
++
++    sput-boolean v2, Lcom/samsung/android/rune/CoreRune;->FW_VRR_REFRESH_RATE_MODE:Z
++
++    sput-boolean v4, Lcom/samsung/android/rune/CoreRune;->FW_VRR_RESOLUTION_POLICY:Z
++
++    sput-boolean v4, Lcom/samsung/android/rune/CoreRune;->FW_VRR_RESOLUTION_POLICY_FOR_SHELL_TRANSITION:Z
++
++    sput-boolean v2, Lcom/samsung/android/rune/CoreRune;->FW_VRR_FIXED_REFRESH_RATE_PACKAGE:Z
++
++    sput-boolean v2, Lcom/samsung/android/rune/CoreRune;->FW_VRR_REFRESH_RATE_TOKEN:Z
++
++    sput-boolean v2, Lcom/samsung/android/rune/CoreRune;->FW_VRR_SYSTEM_HISTORY:Z
++
++    if-eqz v5, :cond_11
++
++    const-string/jumbo v5, "persist.debug.hrr.block.enabled"
++
++    invoke-static {v5, v3}, Landroid/os/SystemProperties;->getBoolean(Ljava/lang/String;Z)Z
++
++    move-result v5
++
++    if-eqz v5, :cond_11
++
++    move v5, v3
++
++    goto :goto_10
++
++    :cond_11
++    move v5, v4
++
++    :goto_10
++    sput-boolean v5, Lcom/samsung/android/rune/CoreRune;->FW_VRR_HIGH_REFRESH_RATE_BLOCK_LIST:Z
++
++    const-string/jumbo v7, "ro.csc.country_code"
++
++    const-string v8, "CHINA"
++
++    if-eqz v5, :cond_12
++
++    invoke-static {v7}, Landroid/os/SystemProperties;->get(Ljava/lang/String;)Ljava/lang/String;
++
++    move-result-object v9
++
++    invoke-virtual {v8, v9}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
++
++    move-result v9
++
++    if-eqz v9, :cond_12
++
++    move v9, v3
++
++    goto :goto_11
++
++    :cond_12
++    move v9, v4
++
++    :goto_11
++    sput-boolean v9, Lcom/samsung/android/rune/CoreRune;->FW_VRR_HRR_CHINA_DELTA:Z
++
++    if-eqz v2, :cond_13
++
++    const-string/jumbo v9, "persist.debug.lrr.enabled"
++
++    invoke-static {v9, v3}, Landroid/os/SystemProperties;->getBoolean(Ljava/lang/String;Z)Z
++
++    move-result v9
++
++    if-eqz v9, :cond_13
++
++    move v9, v3
++
++    goto :goto_12
++
++    :cond_13
++    move v9, v4
++
++    :goto_12
++    sput-boolean v9, Lcom/samsung/android/rune/CoreRune;->FW_VRR_LOW_REFRESH_RATE_LIST:Z
++
++    if-eqz v2, :cond_14
++
++    sget-boolean v9, Lcom/samsung/android/rune/CoreRune;->IS_TABLET_DEVICE:Z
++
++    if-nez v9, :cond_14
++
++    invoke-static {v0}, Ljava/lang/Integer;->parseInt(Ljava/lang/String;)I
++
++    move-result v0
++
++    if-ne v0, v3, :cond_14
++
++    const-string/jumbo v0, "persist.debug.lrr_navi.enabled"
++
++    invoke-static {v0, v3}, Landroid/os/SystemProperties;->getBoolean(Ljava/lang/String;Z)Z
++
++    move-result v0
++
++    if-eqz v0, :cond_14
++
++    move v0, v3
++
++    goto :goto_13
++
++    :cond_14
++    move v0, v4
++
++    :goto_13
++    sput-boolean v0, Lcom/samsung/android/rune/CoreRune;->FW_VRR_NAVIGATION_LOW_REFRESH_RATE:Z
++
++    const-string v0, "0"
++
++    if-eqz v2, :cond_15
++
++    invoke-static {v0}, Ljava/lang/Integer;->parseInt(Ljava/lang/String;)I
++
++    move-result v9
++
++    if-lez v9, :cond_15
++
++    move v9, v3
++
++    goto :goto_14
++
++    :cond_15
++    move v9, v4
++
++    :goto_14
++    sput-boolean v9, Lcom/samsung/android/rune/CoreRune;->FW_VRR_MULTI_DISPLAY:Z
++
++    sput-boolean v4, Lcom/samsung/android/rune/CoreRune;->FW_VRR_FOLD:Z
++
++    sput-boolean v4, Lcom/samsung/android/rune/CoreRune;->FW_VRR_FLIP:Z
++
++    sput-boolean v4, Lcom/samsung/android/rune/CoreRune;->FW_VRR_FLIP_LARGE_COVER:Z
++
++    sput-boolean v2, Lcom/samsung/android/rune/CoreRune;->FW_VRR_IGNORE_RESTRICTED_RANGE:Z
++
++    sput-boolean v2, Lcom/samsung/android/rune/CoreRune;->FW_VRR_PERFORMANCE:Z
++
++    xor-int/lit8 v2, v6, 0x1
++
++    sput-boolean v2, Lcom/samsung/android/rune/CoreRune;->FW_VRR_SEND_TOUCH_HINT:Z
++
++    sput-boolean v6, Lcom/samsung/android/rune/CoreRune;->FW_DVRR_TOOLKIT_POLICY:Z
++
++    sput-boolean v6, Lcom/samsung/android/rune/CoreRune;->FW_DVRR_TOOLKIT_REQUESTED_REFRESH_RATE:Z
++
++    sput-boolean v6, Lcom/samsung/android/rune/CoreRune;->FW_ARR_SUPPORT_DIRTY_HINT:Z
++
++    if-eqz v6, :cond_16
++
++    if-eqz v5, :cond_16
++
++    move v2, v3
++
++    goto :goto_15
++
++    :cond_16
++    move v2, v4
++
++    :goto_15
++    sput-boolean v2, Lcom/samsung/android/rune/CoreRune;->FW_DVRR_TOOLKIT_SUPPORT_HRR:Z
++
++    sput-boolean v6, Lcom/samsung/android/rune/CoreRune;->FW_DVRR_TOOLKIT_PRIORITIZE_HIGH_HINT:Z
++
++    sput-boolean v6, Lcom/samsung/android/rune/CoreRune;->FW_DVRR_TOOLKIT_PROLONG_TOUCH_BOOST:Z
++
++    sput-boolean v6, Lcom/samsung/android/rune/CoreRune;->FW_ARR_FLING_FLEXIBLE_FRAME_RATE:Z
++
++    sput-boolean v6, Lcom/samsung/android/rune/CoreRune;->FW_DVRR_TOOLKIT_BUG_FIX:Z
++
++    invoke-static {}, Lcom/samsung/android/feature/SemCscFeature;->getInstance()Lcom/samsung/android/feature/SemCscFeature;
++
++    move-result-object v2
++
++    const-string v5, "CscFeature_Framework_SupportBroadcastScreenPinning"
++
++    invoke-virtual {v2, v5, v4}, Lcom/samsung/android/feature/SemCscFeature;->getBoolean(Ljava/lang/String;Z)Z
++
++    move-result v2
++
++    sput-boolean v2, Lcom/samsung/android/rune/CoreRune;->FW_SUPPORT_LOCK_TASK_MODE_BROADCAST:Z
++
++    sget-boolean v2, Lcom/samsung/android/rune/CoreRune;->ONE_UI_6_1:Z
++
++    sput-boolean v2, Lcom/samsung/android/rune/CoreRune;->FW_ALLOW_TOUCH_TO_KEYGUARD_WALLPAPER:Z
++
++    sget-boolean v2, Lcom/samsung/android/rune/CoreRune;->IS_TABLET_DEVICE:Z
++
++    sput-boolean v2, Lcom/samsung/android/rune/CoreRune;->FW_NAVBAR_MOVABLE_POLICY:Z
++
++    sget-boolean v5, Lcom/samsung/android/rune/CoreRune;->ONE_UI_4_1_1:Z
++
++    sput-boolean v5, Lcom/samsung/android/rune/CoreRune;->FW_NOTIFY_TASKBAR_VISIBLE:Z
++
++    const-string/jumbo v5, "persist.wm.enable.insets_debug"
++
++    invoke-static {v5, v4}, Landroid/os/SystemProperties;->getBoolean(Ljava/lang/String;Z)Z
++
++    move-result v5
++
++    sput-boolean v5, Lcom/samsung/android/rune/CoreRune;->FW_INSETS_LOG_DEBUG:Z
++
++    sput-boolean v4, Lcom/samsung/android/rune/CoreRune;->FW_CHANGE_DISPLAY_CUTOUT_MODE:Z
++
++    sput-boolean v4, Lcom/samsung/android/rune/CoreRune;->FW_SET_DEFAULT_CUTOUT_POLICY_TO_ALWAYS:Z
++
++    sput-boolean v4, Lcom/samsung/android/rune/CoreRune;->FW_USE_UDC_CUTOUT_TO_SHOW_LETTERBOX:Z
++
++    sput-boolean v4, Lcom/samsung/android/rune/CoreRune;->FW_CAN_DISPATCH_UDC_CUTOUT:Z
++
++    const-string/jumbo v5, "persist.wm.debug.force.opt_out_edge_to_edge"
++
++    invoke-static {v5, v3}, Landroid/os/SystemProperties;->getBoolean(Ljava/lang/String;Z)Z
++
++    move-result v5
++
++    sput-boolean v5, Lcom/samsung/android/rune/CoreRune;->FW_FORCE_OPT_OUT_EDGE_TO_EDGE:Z
++
++    invoke-static {}, Lcom/samsung/android/feature/SemFloatingFeature;->getInstance()Lcom/samsung/android/feature/SemFloatingFeature;
++
++    move-result-object v5
++
++    const-string/jumbo v6, "SEC_FLOATING_FEATURE_MMFW_SUPPORT_PHOTOHDR"
++
++    invoke-virtual {v5, v6}, Lcom/samsung/android/feature/SemFloatingFeature;->getBoolean(Ljava/lang/String;)Z
++
++    move-result v5
++
++    sput-boolean v5, Lcom/samsung/android/rune/CoreRune;->FW_SCREENSHOT_FOR_HDR:Z
++
++    const-string/jumbo v5, "persist.wm.enable.custom.anim"
++
++    invoke-static {v5, v3}, Landroid/os/SystemProperties;->getBoolean(Ljava/lang/String;Z)Z
++
++    move-result v5
++
++    sput-boolean v5, Lcom/samsung/android/rune/CoreRune;->FW_CUSTOM_BASIC_ANIM:Z
++
++    sput-boolean v5, Lcom/samsung/android/rune/CoreRune;->FW_INSET_ANIM:Z
++
++    if-eqz v5, :cond_17
++
++    const-string/jumbo v6, "persist.wm.enable.minimized_ime.anim"
++
++    invoke-static {v6, v4}, Landroid/os/SystemProperties;->getBoolean(Ljava/lang/String;Z)Z
++
++    move-result v6
++
++    if-eqz v6, :cond_17
++
++    move v6, v3
++
++    goto :goto_16
++
++    :cond_17
++    move v6, v4
++
++    :goto_16
++    sput-boolean v6, Lcom/samsung/android/rune/CoreRune;->FW_MINIMIZED_IME_INSET_ANIM:Z
++
++    sput-boolean v5, Lcom/samsung/android/rune/CoreRune;->FW_CUSTOM_DISPLAY_CHANGE_ANIM:Z
++
++    sput-boolean v5, Lcom/samsung/android/rune/CoreRune;->FW_UI_MODE_ANIMATION:Z
++
++    sput-boolean v5, Lcom/samsung/android/rune/CoreRune;->FW_BLACK_SNAPSHOT_TRANSITION:Z
++
++    sput-boolean v5, Lcom/samsung/android/rune/CoreRune;->FW_REMOTE_WALLPAPER_ANIM:Z
++
++    const-string/jumbo v6, "persist.wm.edge.extension.debug"
++
++    invoke-static {v6, v4}, Landroid/os/SystemProperties;->getBoolean(Ljava/lang/String;Z)Z
++
++    move-result v6
++
++    sput-boolean v6, Lcom/samsung/android/rune/CoreRune;->FW_EDGE_EXTENSION_ANIM_DEBUG:Z
++
++    if-eqz v5, :cond_18
++
++    sget-boolean v6, Lcom/samsung/android/rune/CoreRune;->IS_PREDICTIVE_BACK_ANIM_ENABLED:Z
++
++    if-eqz v6, :cond_18
++
++    move v6, v3
++
++    goto :goto_17
++
++    :cond_18
++    move v6, v4
++
++    :goto_17
++    sput-boolean v6, Lcom/samsung/android/rune/CoreRune;->FW_PREDICTIVE_BACK_ANIM:Z
++
++    sput-boolean v6, Lcom/samsung/android/rune/CoreRune;->FW_PREDICTIVE_BACK_ANIM_BUG_FIX:Z
++
++    sput-boolean v6, Lcom/samsung/android/rune/CoreRune;->FW_PREDICTIVE_BACK_ANIM_LOG:Z
++
++    sput-boolean v6, Lcom/samsung/android/rune/CoreRune;->FW_WORKAROUND_PREDICTIVE_BACK_TIMEOUT_FALLBACK:Z
++
++    if-eqz v5, :cond_19
++
++    sget-boolean v6, Lcom/samsung/android/rune/CoreRune;->IS_SHELL_TRANSITION_ENABLED:Z
++
++    if-eqz v6, :cond_19
++
++    move v6, v3
++
++    goto :goto_18
++
++    :cond_19
++    move v6, v4
++
++    :goto_18
++    sput-boolean v6, Lcom/samsung/android/rune/CoreRune;->FW_SHELL_TRANSITION:Z
++
++    sput-boolean v6, Lcom/samsung/android/rune/CoreRune;->FW_SHELL_TRANSITION_WITH_DIM:Z
++
++    if-eqz v6, :cond_1a
++
++    if-eqz v5, :cond_1a
++
++    move v9, v3
++
++    goto :goto_19
++
++    :cond_1a
++    move v9, v4
++
++    :goto_19
++    sput-boolean v9, Lcom/samsung/android/rune/CoreRune;->FW_SHELL_TRANSITION_DISPLAY_CHANGE:Z
++
++    sput-boolean v6, Lcom/samsung/android/rune/CoreRune;->FW_SHELL_TRANSITION_RESUMED_AFFORDANCE:Z
++
++    if-eqz v6, :cond_1b
++
++    if-eqz v5, :cond_1b
++
++    move v5, v3
++
++    goto :goto_1a
++
++    :cond_1b
++    move v5, v4
++
++    :goto_1a
++    sput-boolean v5, Lcom/samsung/android/rune/CoreRune;->FW_SHELL_TRANSITION_BLACK_SNAPSHOT:Z
++
++    sput-boolean v6, Lcom/samsung/android/rune/CoreRune;->FW_SHELL_TRANSITION_REMOTE:Z
++
++    if-eqz v6, :cond_1c
++
++    const-string/jumbo v5, "persist.wm.enable.merge.transit"
++
++    invoke-static {v5, v3}, Landroid/os/SystemProperties;->getBoolean(Ljava/lang/String;Z)Z
++
++    move-result v5
++
++    if-eqz v5, :cond_1c
++
++    move v5, v3
++
++    goto :goto_1b
++
++    :cond_1c
++    move v5, v4
++
++    :goto_1b
++    sput-boolean v5, Lcom/samsung/android/rune/CoreRune;->FW_SHELL_TRANSITION_MERGE:Z
++
++    if-eqz v5, :cond_1d
++
++    const-string/jumbo v9, "persist.wm.enable.merge_transfer.transit"
++
++    invoke-static {v9, v3}, Landroid/os/SystemProperties;->getBoolean(Ljava/lang/String;Z)Z
++
++    move-result v9
++
++    if-eqz v9, :cond_1d
++
++    move v9, v3
++
++    goto :goto_1c
++
++    :cond_1d
++    move v9, v4
++
++    :goto_1c
++    sput-boolean v9, Lcom/samsung/android/rune/CoreRune;->FW_SHELL_TRANSITION_MERGE_TRANSFER:Z
++
++    sput-boolean v6, Lcom/samsung/android/rune/CoreRune;->FW_SHELL_TRANSITION_SEPARATE_RECENTS:Z
++
++    if-eqz v6, :cond_1e
++
++    const-string/jumbo v9, "persist.wm.transient_launch.overlay"
++
++    invoke-static {v9, v3}, Landroid/os/SystemProperties;->getBoolean(Ljava/lang/String;Z)Z
++
++    move-result v9
++
++    if-eqz v9, :cond_1e
++
++    move v9, v3
++
++    goto :goto_1d
++
++    :cond_1e
++    move v9, v4
++
++    :goto_1d
++    sput-boolean v9, Lcom/samsung/android/rune/CoreRune;->FW_SHELL_TRANSITION_TRANSIENT_LAUNCH_OVERLAY:Z
++
++    sput-boolean v6, Lcom/samsung/android/rune/CoreRune;->FW_SHELL_TRANSITION_RECENTS_DURING_KEYGUARD:Z
++
++    sput-boolean v6, Lcom/samsung/android/rune/CoreRune;->FW_SHELL_TRANSITION_KEYGUARD_APPEARING:Z
++
++    if-eqz v5, :cond_1f
++
++    const-string/jumbo v5, "persist.wm.transient_launch.performance"
++
++    invoke-static {v5, v3}, Landroid/os/SystemProperties;->getBoolean(Ljava/lang/String;Z)Z
++
++    move-result v5
++
++    if-eqz v5, :cond_1f
++
++    move v5, v3
++
++    goto :goto_1e
++
++    :cond_1f
++    move v5, v4
++
++    :goto_1e
++    sput-boolean v5, Lcom/samsung/android/rune/CoreRune;->FW_TRANSIENT_LAUNCH_PERFORMANCE:Z
++
++    if-eqz v5, :cond_20
++
++    const-string/jumbo v9, "persist.wm.transient_launch.performance.proc"
++
++    invoke-static {v9, v3}, Landroid/os/SystemProperties;->getBoolean(Ljava/lang/String;Z)Z
++
++    move-result v9
++
++    if-eqz v9, :cond_20
++
++    move v9, v3
++
++    goto :goto_1f
++
++    :cond_20
++    move v9, v4
++
++    :goto_1f
++    sput-boolean v9, Lcom/samsung/android/rune/CoreRune;->FW_TRANSIENT_LAUNCH_PERFORMANCE_PROC:Z
++
++    if-eqz v5, :cond_21
++
++    const-string/jumbo v5, "persist.wm.transient_launch.performance.bal_block"
++
++    invoke-static {v5, v3}, Landroid/os/SystemProperties;->getBoolean(Ljava/lang/String;Z)Z
++
++    move-result v5
++
++    if-eqz v5, :cond_21
++
++    move v5, v3
++
++    goto :goto_20
++
++    :cond_21
++    move v5, v4
++
++    :goto_20
++    sput-boolean v5, Lcom/samsung/android/rune/CoreRune;->FW_TRANSIENT_LAUNCH_PERFORMANCE_BAL_BLOCK:Z
++
++    if-eqz v6, :cond_22
++
++    const-string/jumbo v5, "persist.wm.enable.rapid_launch"
++
++    invoke-static {v5, v3}, Landroid/os/SystemProperties;->getBoolean(Ljava/lang/String;Z)Z
++
++    move-result v5
++
++    if-eqz v5, :cond_22
++
++    move v5, v3
++
++    goto :goto_21
++
++    :cond_22
++    move v5, v4
++
++    :goto_21
++    sput-boolean v5, Lcom/samsung/android/rune/CoreRune;->FW_SHELL_TRANSITION_RAPID_LAUNCH:Z
++
++    sput-boolean v5, Lcom/samsung/android/rune/CoreRune;->FW_SHELL_TRANSITION_STARTING_SURFACE:Z
++
++    sput-boolean v6, Lcom/samsung/android/rune/CoreRune;->FW_SHELL_TRANSITION_LOG:Z
++
++    sput-boolean v6, Lcom/samsung/android/rune/CoreRune;->FW_SHELL_TRANSITION_BUG_FIX:Z
++
++    sput-boolean v6, Lcom/samsung/android/rune/CoreRune;->FW_SHELL_TRANSITION_EXTENSION:Z
++
++    sput-boolean v6, Lcom/samsung/android/rune/CoreRune;->FW_SHELL_TRANSITION_EXTENSION_APP_BACKGROUND_LAYER:Z
++
++    if-eqz v6, :cond_23
++
++    if-eqz v6, :cond_23
++
++    move v5, v3
++
++    goto :goto_22
++
++    :cond_23
++    move v5, v4
++
++    :goto_22
++    sput-boolean v5, Lcom/samsung/android/rune/CoreRune;->FW_SHELL_TRANSITION_RECENTS_BUG_FIX:Z
++
++    sput-boolean v6, Lcom/samsung/android/rune/CoreRune;->FW_SHELL_TRANSITION_ROTATED_WALLPAPER_SNAPSHOT:Z
++
++    sput-boolean v2, Lcom/samsung/android/rune/CoreRune;->FW_LOW_TASK_SNAPSHOT_SCALE_FOR_TABLET:Z
++
++    const-string/jumbo v5, "persist.debug.disable.starting_window"
++
++    invoke-static {v5, v4}, Landroid/os/SystemProperties;->getBoolean(Ljava/lang/String;Z)Z
++
++    move-result v5
++
++    sput-boolean v5, Lcom/samsung/android/rune/CoreRune;->FW_DEVELOPMENT_DISABLE_STARTING_WINDOW:Z
++
++    const-string/jumbo v5, "persist.wm.dark_theme.snapshot"
++
++    invoke-static {v5, v3}, Landroid/os/SystemProperties;->getBoolean(Ljava/lang/String;Z)Z
++
++    move-result v5
++
++    sput-boolean v5, Lcom/samsung/android/rune/CoreRune;->FW_DARK_THEME_SNAPSHOT:Z
++
++    sput-boolean v2, Lcom/samsung/android/rune/CoreRune;->FW_ALLOW_ALL_ROTATION:Z
++
++    invoke-static {}, Lcom/samsung/android/feature/SemFloatingFeature;->getInstance()Lcom/samsung/android/feature/SemFloatingFeature;
++
++    move-result-object v2
++
++    const-string/jumbo v5, "SEC_FLOATING_FEATURE_FRAMEWORK_CONFIG_AOD_ITEM"
++
++    invoke-virtual {v2, v5}, Lcom/samsung/android/feature/SemFloatingFeature;->getString(Ljava/lang/String;)Ljava/lang/String;
++
++    move-result-object v2
++
++    const-string/jumbo v5, "aodversion"
++
++    invoke-virtual {v2, v5}, Ljava/lang/String;->contains(Ljava/lang/CharSequence;)Z
++
++    move-result v2
++
++    sput-boolean v2, Lcom/samsung/android/rune/CoreRune;->FW_SYSTEM_UI_AOD_SUPPORTED:Z
++
++    sput-boolean v2, Lcom/samsung/android/rune/CoreRune;->FW_AOD_FACE_WIDGET:Z
++
++    sget-boolean v2, Lcom/samsung/android/rune/CoreRune;->ONE_UI_4_1:Z
++
++    sput-boolean v2, Lcom/samsung/android/rune/CoreRune;->MT_DND_ANIMATION:Z
++
++    sput-boolean v2, Lcom/samsung/android/rune/CoreRune;->MT_DND_DISABLE_CANCEL_ANIMATION:Z
++
++    sput-boolean v2, Lcom/samsung/android/rune/CoreRune;->MT_DND_SEAMLESS_ANIMATION:Z
++
++    sput-boolean v2, Lcom/samsung/android/rune/CoreRune;->MT_DND_OBJECT_CAPTURE:Z
++
++    const-string/jumbo v2, "persist.debug.improved.move.anim"
++
++    invoke-static {v2, v3}, Landroid/os/SystemProperties;->getBoolean(Ljava/lang/String;Z)Z
++
++    move-result v2
++
++    sput-boolean v2, Lcom/samsung/android/rune/CoreRune;->FW_IMPROVED_MOVED_ANIMATION_FOR_IME:Z
++
++    invoke-static {}, Lcom/samsung/android/feature/SemFloatingFeature;->getInstance()Lcom/samsung/android/feature/SemFloatingFeature;
++
++    move-result-object v2
++
++    const/4 v5, -0x1
++
++    const-string/jumbo v6, "SEC_FLOATING_FEATURE_FRAMEWORK_CONFIG_SPEN_VERSION"
++
++    invoke-virtual {v2, v6, v5}, Lcom/samsung/android/feature/SemFloatingFeature;->getInt(Ljava/lang/String;I)I
++
++    move-result v2
++
++    if-lez v2, :cond_24
++
++    move v2, v3
++
++    goto :goto_23
++
++    :cond_24
++    move v2, v4
++
++    :goto_23
++    sput-boolean v2, Lcom/samsung/android/rune/CoreRune;->FW_SPEN_HOVER:Z
++
++    invoke-static {}, Lcom/samsung/android/feature/SemFloatingFeature;->getInstance()Lcom/samsung/android/feature/SemFloatingFeature;
++
++    move-result-object v2
++
++    const-string/jumbo v5, "SEC_FLOATING_FEATURE_SMARTMANAGER_CONFIG_PACKAGE_NAME"
++
++    invoke-virtual {v2, v5}, Lcom/samsung/android/feature/SemFloatingFeature;->getString(Ljava/lang/String;)Ljava/lang/String;
++
++    move-result-object v2
++
++    const-string/jumbo v9, "com.samsung.android.sm_cn"
++
++    invoke-virtual {v2, v9}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
++
++    move-result v2
++
++    sput-boolean v2, Lcom/samsung/android/rune/CoreRune;->FW_SUPPORT_APPLOCK:Z
++
++    sput-boolean v2, Lcom/samsung/android/rune/CoreRune;->FW_APPLOCK:Z
++
++    invoke-static {}, Lcom/samsung/android/feature/SemFloatingFeature;->getInstance()Lcom/samsung/android/feature/SemFloatingFeature;
++
++    move-result-object v2
++
++    const-string/jumbo v10, "SEC_FLOATING_FEATURE_LCD_SUPPORT_WIDE_COLOR_GAMUT"
++
++    invoke-virtual {v2, v10}, Lcom/samsung/android/feature/SemFloatingFeature;->getBoolean(Ljava/lang/String;)Z
++
++    move-result v2
++
++    if-nez v2, :cond_26
++
++    invoke-static {}, Lcom/samsung/android/feature/SemFloatingFeature;->getInstance()Lcom/samsung/android/feature/SemFloatingFeature;
++
++    move-result-object v2
++
++    const-string/jumbo v10, "SEC_FLOATING_FEATURE_LCD_SUPPORT_NATURAL_SCREEN_MODE"
++
++    invoke-virtual {v2, v10}, Lcom/samsung/android/feature/SemFloatingFeature;->getBoolean(Ljava/lang/String;)Z
++
++    move-result v2
++
++    if-eqz v2, :cond_25
++
++    goto :goto_24
++
++    :cond_25
++    move v2, v4
++
++    goto :goto_25
++
++    :cond_26
++    :goto_24
++    move v2, v3
++
++    :goto_25
++    sput-boolean v2, Lcom/samsung/android/rune/CoreRune;->FW_SCREEN_MODE_SETTING:Z
++
++    const-string v2, "1"
++
++    invoke-static {v2}, Ljava/lang/Integer;->parseInt(Ljava/lang/String;)I
++
++    move-result v10
++
++    if-lez v10, :cond_27
++
++    move v10, v3
++
++    goto :goto_26
++
++    :cond_27
++    move v10, v4
++
++    :goto_26
++    sput-boolean v10, Lcom/samsung/android/rune/CoreRune;->FW_VIVID_WCG_ON:Z
++
++    invoke-static {}, Lcom/samsung/android/feature/SemFloatingFeature;->getInstance()Lcom/samsung/android/feature/SemFloatingFeature;
++
++    move-result-object v10
++
++    const-string/jumbo v11, "SEC_FLOATING_FEATURE_COMMON_DISABLE_NATIVE_AI"
++
++    invoke-virtual {v10, v11}, Lcom/samsung/android/feature/SemFloatingFeature;->getBoolean(Ljava/lang/String;)Z
++
++    move-result v10
++
++    xor-int/2addr v10, v3
++
++    sput-boolean v10, Lcom/samsung/android/rune/CoreRune;->FW_SUPPORT_NATIVE_AI:Z
++
++    sput-boolean v10, Lcom/samsung/android/rune/CoreRune;->FW_CCM_BUG_FIX:Z
++
++    const-string/jumbo v10, "persist.debug.privacy_display"
++
++    invoke-static {v10, v4}, Landroid/os/SystemProperties;->getBoolean(Ljava/lang/String;Z)Z
++
++    move-result v10
++
++    sput-boolean v10, Lcom/samsung/android/rune/CoreRune;->FW_PRIVACY_DISPLAY:Z
++
++    sput-boolean v10, Lcom/samsung/android/rune/CoreRune;->FW_PRIVACY_DISPLAY_VIEW:Z
++
++    if-eqz v10, :cond_28
++
++    const-string/jumbo v11, "persist.debug.privacy_display.ce"
++
++    invoke-static {v11, v3}, Landroid/os/SystemProperties;->getBoolean(Ljava/lang/String;Z)Z
++
++    move-result v11
++
++    if-eqz v11, :cond_28
++
++    move v11, v3
++
++    goto :goto_27
++
++    :cond_28
++    move v11, v4
++
++    :goto_27
++    sput-boolean v11, Lcom/samsung/android/rune/CoreRune;->FW_PRIVACY_DISPLAY_CONTEXT_ENGINE:Z
++
++    sput-boolean v10, Lcom/samsung/android/rune/CoreRune;->FW_PRIVACY_DISPLAY_UT_LOGGING:Z
++
++    if-eqz v10, :cond_29
++
++    sget-boolean v10, Lcom/samsung/android/rune/CoreRune;->FW_SA_LOGGING:Z
++
++    if-eqz v10, :cond_29
++
++    move v10, v3
++
++    goto :goto_28
++
++    :cond_29
++    move v10, v4
++
++    :goto_28
++    sput-boolean v10, Lcom/samsung/android/rune/CoreRune;->FW_PRIVACY_DISPLAY_SA_LOGGING:Z
++
++    invoke-static {}, Lcom/samsung/android/rune/CoreRune;->getAIVersion()I
++
++    move-result v10
++
++    const/16 v11, 0x4f1b
++
++    if-lt v10, v11, :cond_2a
++
++    move v10, v3
++
++    goto :goto_29
++
++    :cond_2a
++    move v10, v4
++
++    :goto_29
++    sput-boolean v10, Lcom/samsung/android/rune/CoreRune;->ONE_UI_AI_VER_2025:Z
++
++    invoke-static {}, Lcom/samsung/android/rune/CoreRune;->getAIVersion()I
++
++    move-result v10
++
++    const/16 v11, 0x4f25
++
++    if-lt v10, v11, :cond_2b
++
++    move v10, v3
++
++    goto :goto_2a
++
++    :cond_2b
++    move v10, v4
++
++    :goto_2a
++    sput-boolean v10, Lcom/samsung/android/rune/CoreRune;->ONE_UI_AI_VER_2026:Z
++
++    const-string/jumbo v10, "persist.debug.computer_control"
++
++    invoke-static {v10, v4}, Landroid/os/SystemProperties;->getBoolean(Ljava/lang/String;Z)Z
++
++    move-result v10
++
++    sput-boolean v10, Lcom/samsung/android/rune/CoreRune;->FW_COMPUTER_CONTROL:Z
++
++    sput-boolean v10, Lcom/samsung/android/rune/CoreRune;->FW_COMPUTER_CONTROL_NOTIFICATION:Z
++
++    sput-boolean v10, Lcom/samsung/android/rune/CoreRune;->FW_COMPUTER_CONTROL_DEBUG_LOG:Z
++
++    const-string/jumbo v10, "persist.debug.mw.ime"
++
++    invoke-static {v10, v4}, Landroid/os/SystemProperties;->getBoolean(Ljava/lang/String;Z)Z
++
++    move-result v10
++
++    sput-boolean v10, Lcom/samsung/android/rune/CoreRune;->MW_DISPLAY_IME_DEBUG:Z
++
++    sget-boolean v10, Lcom/samsung/android/rune/CoreRune;->FW_SA_LOGGING:Z
++
++    sput-boolean v10, Lcom/samsung/android/rune/CoreRune;->MW_SA_LOGGING:Z
++
++    sget-boolean v11, Lcom/samsung/android/rune/CoreRune;->IS_SHELL_TRANSITION_ENABLED:Z
++
++    sput-boolean v11, Lcom/samsung/android/rune/CoreRune;->MW_SHELL_TRANSITION:Z
++
++    sput-boolean v11, Lcom/samsung/android/rune/CoreRune;->MW_SHELL_TRANSITION_BUG_FIX:Z
++
++    sput-boolean v11, Lcom/samsung/android/rune/CoreRune;->MW_SHELL_TRANSITION_TIMEOUT:Z
++
++    sput-boolean v11, Lcom/samsung/android/rune/CoreRune;->MW_SHELL_TRANSITION_LOG:Z
++
++    sput-boolean v11, Lcom/samsung/android/rune/CoreRune;->MW_SHELL_CHANGE_TRANSITION:Z
++
++    sput-boolean v11, Lcom/samsung/android/rune/CoreRune;->MW_SHELL_DISPLAY_CHANGE_TRANSITION:Z
++
++    sput-boolean v10, Lcom/samsung/android/rune/CoreRune;->MW_SHELL_KEYBOARD_SHORTCUT_SA_LOGGING:Z
++
++    invoke-static {}, Lcom/samsung/android/feature/SemFloatingFeature;->getInstance()Lcom/samsung/android/feature/SemFloatingFeature;
++
++    move-result-object v12
++
++    const-string/jumbo v13, "SEC_FLOATING_FEATURE_GRAPHICS_SUPPORT_3D_SURFACE_TRANSITION_FLAG"
++
++    invoke-virtual {v12, v13}, Lcom/samsung/android/feature/SemFloatingFeature;->getBoolean(Ljava/lang/String;)Z
++
++    move-result v12
++
++    sput-boolean v12, Lcom/samsung/android/rune/CoreRune;->MW_SUPPORT_3D_SURFACE_TRANSITION_FLAG:Z
++
++    invoke-static {}, Lcom/samsung/android/feature/SemFloatingFeature;->getInstance()Lcom/samsung/android/feature/SemFloatingFeature;
++
++    move-result-object v14
++
++    const-string/jumbo v15, "SEC_FLOATING_FEATURE_GRAPHICS_SUPPORT_PARTIAL_BLUR"
++
++    invoke-virtual {v14, v15}, Lcom/samsung/android/feature/SemFloatingFeature;->getBoolean(Ljava/lang/String;)Z
++
++    move-result v14
++
++    sput-boolean v14, Lcom/samsung/android/rune/CoreRune;->MW_SUPPORT_DRAG_AND_DROP_PARTIAL_BLUR:Z
++
++    if-eqz v12, :cond_2c
++
++    if-eqz v14, :cond_2c
++
++    move v15, v3
++
++    goto :goto_2b
++
++    :cond_2c
++    move v15, v4
++
++    :goto_2b
++    sput-boolean v15, Lcom/samsung/android/rune/CoreRune;->MW_SUPPORT_DRAG_AND_DROP_REAL_TIME_BLUR:Z
++
++    if-nez v12, :cond_2d
++
++    if-eqz v14, :cond_2d
++
++    invoke-static {}, Lcom/samsung/android/feature/SemFloatingFeature;->getInstance()Lcom/samsung/android/feature/SemFloatingFeature;
++
++    move-result-object v12
++
++    const-string/jumbo v14, "SEC_FLOATING_FEATURE_GRAPHICS_SUPPORT_CAPTURED_BLUR"
++
++    invoke-virtual {v12, v14}, Lcom/samsung/android/feature/SemFloatingFeature;->getBoolean(Ljava/lang/String;)Z
++
++    move-result v12
++
++    if-eqz v12, :cond_2d
++
++    move v12, v3
++
++    goto :goto_2c
++
++    :cond_2d
++    move v12, v4
++
++    :goto_2c
++    sput-boolean v12, Lcom/samsung/android/rune/CoreRune;->MW_SUPPORT_DRAG_AND_DROP_CAPTURED_BLUR:Z
++
++    const-string/jumbo v12, "None"
++
++    const-string/jumbo v14, "ro.product.vendor.model"
++
++    invoke-static {v14, v12}, Landroid/os/SystemProperties;->get(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
++
++    move-result-object v12
++
++    const-string/jumbo v15, "SM-A07"
++
++    invoke-virtual {v12, v15}, Ljava/lang/String;->startsWith(Ljava/lang/String;)Z
++
++    move-result v12
++
++    sput-boolean v12, Lcom/samsung/android/rune/CoreRune;->MW_LOW_SPEC_REFRESH_RATE_POLICY:Z
++
++    sput-boolean v4, Lcom/samsung/android/rune/CoreRune;->MW_MULTI_SPLIT:Z
++
++    sput-boolean v4, Lcom/samsung/android/rune/CoreRune;->MW_MULTI_SPLIT_ROUNDED_CORNER:Z
++
++    sput-boolean v10, Lcom/samsung/android/rune/CoreRune;->MW_SPLIT_FULL_TO_SPLIT_BY_GESTURE_SA_LOGGING:Z
++
++    sput-boolean v11, Lcom/samsung/android/rune/CoreRune;->MW_SPLIT_SHELL_TRANSITION:Z
++
++    sput-boolean v11, Lcom/samsung/android/rune/CoreRune;->MW_SPLIT_STACKING:Z
++
++    sput-boolean v10, Lcom/samsung/android/rune/CoreRune;->MW_SA_RUNESTONE_LOGGING:Z
++
++    sput-boolean v10, Lcom/samsung/android/rune/CoreRune;->MW_SPLIT_APP_PAIR_SA_LOGGING:Z
++
++    sput-boolean v10, Lcom/samsung/android/rune/CoreRune;->MW_SPLIT_RECENT_TASKS_SA_LOGGING:Z
++
++    sput-boolean v10, Lcom/samsung/android/rune/CoreRune;->MW_SPLIT_LAUNCH_ADJACENT_SA_LOGGING:Z
++
++    sput-boolean v10, Lcom/samsung/android/rune/CoreRune;->MW_SPLIT_DIVIDER_SA_LOGGING:Z
++
++    sput-boolean v4, Lcom/samsung/android/rune/CoreRune;->MW_SPLIT_FLEX_PANEL_MODE_SA_LOGGING:Z
++
++    sput-boolean v3, Lcom/samsung/android/rune/CoreRune;->MW_SPLIT_TRANSPARENT_NAVIGATION_BAR:Z
++
++    sget-boolean v11, Lcom/samsung/android/rune/CoreRune;->IS_TABLET_DEVICE:Z
++
++    sput-boolean v11, Lcom/samsung/android/rune/CoreRune;->MW_SPLIT_LARGE_SCREEN_BOUNDS_POLICY:Z
++
++    sput-boolean v10, Lcom/samsung/android/rune/CoreRune;->MW_SPLIT_START_EDGE_ALL_APPS_SA_LOGGING:Z
++
++    sput-boolean v4, Lcom/samsung/android/rune/CoreRune;->MW_MULTI_SPLIT_SNAP_ALGORITHM:Z
++
++    sput-boolean v4, Lcom/samsung/android/rune/CoreRune;->MW_MULTI_SPLIT_NOT_SUPPORT_FOR_COVER_DISPLAY:Z
++
++    sput-boolean v4, Lcom/samsung/android/rune/CoreRune;->MW_MULTI_SPLIT_FOR_COVER_DISPLAY:Z
++
++    sput-boolean v4, Lcom/samsung/android/rune/CoreRune;->MW_MULTI_SPLIT_SHELL_TRANSITION:Z
++
++    sput-boolean v4, Lcom/samsung/android/rune/CoreRune;->MW_MULTI_SPLIT_CREATE_MODE:Z
++
++    sput-boolean v4, Lcom/samsung/android/rune/CoreRune;->MW_MULTI_SPLIT_FREE_POSITION:Z
++
++    sput-boolean v4, Lcom/samsung/android/rune/CoreRune;->MW_MULTI_SPLIT_FREE_POSITION_SA_LOGGING:Z
++
++    sput-boolean v4, Lcom/samsung/android/rune/CoreRune;->MW_MULTI_SPLIT_FULL_TO_SPLIT_BY_GESTURE:Z
++
++    sput-boolean v4, Lcom/samsung/android/rune/CoreRune;->MW_MULTI_SPLIT_BOUNDS_POLICY:Z
++
++    sput-boolean v4, Lcom/samsung/android/rune/CoreRune;->MW_MULTI_SPLIT_BOUNDS_POLICY_IGNORING_CUTOUT:Z
++
++    sput-boolean v4, Lcom/samsung/android/rune/CoreRune;->MW_MULTI_SPLIT_BACKGROUND:Z
++
++    sput-boolean v4, Lcom/samsung/android/rune/CoreRune;->MW_MULTI_SPLIT_TASK_ORGANIZER:Z
++
++    sput-boolean v4, Lcom/samsung/android/rune/CoreRune;->MW_MULTI_SPLIT_TASK_VISIBILITY:Z
++
++    sput-boolean v4, Lcom/samsung/android/rune/CoreRune;->MW_MULTI_SPLIT_APP_PAIR:Z
++
++    sput-boolean v4, Lcom/samsung/android/rune/CoreRune;->MW_MULTI_SPLIT_DIVIDER:Z
++
++    sput-boolean v4, Lcom/samsung/android/rune/CoreRune;->MW_MULTI_SPLIT_DIVIDER_SIZE_FOLD:Z
++
++    sput-boolean v4, Lcom/samsung/android/rune/CoreRune;->MW_MULTI_SPLIT_CELL_DIVIDER:Z
++
++    sput-boolean v4, Lcom/samsung/android/rune/CoreRune;->MW_MULTI_SPLIT_NATURAL_RESIZING:Z
++
++    sput-boolean v4, Lcom/samsung/android/rune/CoreRune;->MW_MULTI_SPLIT_RECENT_TASKS:Z
++
++    sput-boolean v4, Lcom/samsung/android/rune/CoreRune;->MW_MULTI_SPLIT_SHELL_DUMP:Z
++
++    sput-boolean v4, Lcom/samsung/android/rune/CoreRune;->MW_MULTI_SPLIT_FOLDING_POLICY:Z
++
++    sput-boolean v4, Lcom/samsung/android/rune/CoreRune;->MW_MULTI_FOLD_SPLIT_FOLDING_POLICY:Z
++
++    sput-boolean v4, Lcom/samsung/android/rune/CoreRune;->MW_MULTI_SPLIT_SHOW_INCALL_WHEN_FOLDING:Z
++
++    sput-boolean v4, Lcom/samsung/android/rune/CoreRune;->MW_MULTI_SPLIT_ENSURE_APP_SIZE:Z
++
++    sput-boolean v4, Lcom/samsung/android/rune/CoreRune;->MW_MULTI_SPLIT_ADJUST_FOR_IME:Z
++
++    sput-boolean v4, Lcom/samsung/android/rune/CoreRune;->MW_MULTI_SPLIT_ACCESSIBILITY:Z
++
++    sput-boolean v4, Lcom/samsung/android/rune/CoreRune;->MW_MULTI_SPLIT_LAUNCH_ADJACENT:Z
++
++    sput-boolean v4, Lcom/samsung/android/rune/CoreRune;->MW_MULTI_SPLIT_FREEFORM_FOLDING_POLICY:Z
++
++    sput-boolean v4, Lcom/samsung/android/rune/CoreRune;->MW_PARALLEL_MULTI_SPLIT:Z
++
++    sput-boolean v4, Lcom/samsung/android/rune/CoreRune;->MW_PARALLEL_MULTI_SPLIT_SUPPORT_RESIZE:Z
++
++    sput-boolean v4, Lcom/samsung/android/rune/CoreRune;->MW_PARALLEL_MULTI_SPLIT_SA_LOGGING:Z
++
++    sget-boolean v10, Lcom/samsung/android/rune/CoreRune;->FW_SHELL_TRANSITION_RESUMED_AFFORDANCE:Z
++
++    sput-boolean v10, Lcom/samsung/android/rune/CoreRune;->MW_RESUMED_AFFORDANCE_SHELL_TRANSITION:Z
++
++    sput-boolean v4, Lcom/samsung/android/rune/CoreRune;->MW_SPLIT_CONTINUITY_MODE:Z
++
++    const-string/jumbo v10, "persist.wm.debug.freeform_api"
++
++    invoke-static {v10, v4}, Landroid/os/SystemProperties;->getBoolean(Ljava/lang/String;Z)Z
++
++    move-result v10
++
++    sput-boolean v10, Lcom/samsung/android/rune/CoreRune;->MW_FREEFORM_API:Z
++
++    const-string/jumbo v10, "captiononshell.debug"
++
++    invoke-static {v10, v3}, Landroid/os/SystemProperties;->getBoolean(Ljava/lang/String;Z)Z
++
++    move-result v10
++
++    sput-boolean v10, Lcom/samsung/android/rune/CoreRune;->MW_CAPTION:Z
++
++    sput-boolean v10, Lcom/samsung/android/rune/CoreRune;->MW_CAPTION_TYPE:Z
++
++    sput-boolean v10, Lcom/samsung/android/rune/CoreRune;->MW_CAPTION_HANDLE:Z
++
++    sput-boolean v10, Lcom/samsung/android/rune/CoreRune;->MW_CAPTION_HANDLE_SYSTEM_INPUT:Z
++
++    sput-boolean v10, Lcom/samsung/android/rune/CoreRune;->MW_CAPTION_HANDLE_KEEP_SCREEN_ON:Z
++
++    sput-boolean v10, Lcom/samsung/android/rune/CoreRune;->MW_CAPTION_HANDLE_ANIM:Z
++
++    sput-boolean v10, Lcom/samsung/android/rune/CoreRune;->MW_CAPTION_POPUP:Z
++
++    sput-boolean v10, Lcom/samsung/android/rune/CoreRune;->MW_CAPTION_DESKTOP:Z
++
++    sput-boolean v10, Lcom/samsung/android/rune/CoreRune;->MW_CAPTION_DESKTOP_IMMERSIVE:Z
++
++    sput-boolean v10, Lcom/samsung/android/rune/CoreRune;->MW_CAPTION_DESKTOP_DISABLED:Z
++
++    sput-boolean v10, Lcom/samsung/android/rune/CoreRune;->MW_CAPTION_DESKTOP_RESTART:Z
++
++    sput-boolean v10, Lcom/samsung/android/rune/CoreRune;->MW_CAPTION_DESKTOP_DIMMING:Z
++
++    sput-boolean v10, Lcom/samsung/android/rune/CoreRune;->MW_CAPTION_INSETS:Z
++
++    sput-boolean v10, Lcom/samsung/android/rune/CoreRune;->MW_CAPTION_SETTINGS:Z
++
++    sput-boolean v10, Lcom/samsung/android/rune/CoreRune;->MW_CAPTION_THEME:Z
++
++    sput-boolean v10, Lcom/samsung/android/rune/CoreRune;->MW_CAPTION_CUTOUT:Z
++
++    sput-boolean v10, Lcom/samsung/android/rune/CoreRune;->MW_CAPTION_BUG_FIX:Z
++
++    sput-boolean v10, Lcom/samsung/android/rune/CoreRune;->MW_CAPTION_KEYGUARD:Z
++
++    if-eqz v10, :cond_2f
++
++    sget-boolean v11, Lcom/samsung/android/rune/CoreRune;->IS_TABLET_DEVICE:Z
++
++    if-nez v11, :cond_2e
++
++    goto :goto_2d
++
++    :cond_2e
++    move v11, v3
++
++    goto :goto_2e
++
++    :cond_2f
++    :goto_2d
++    move v11, v4
++
++    :goto_2e
++    sput-boolean v11, Lcom/samsung/android/rune/CoreRune;->MW_CAPTION_FULL_SCREEN:Z
++
++    sput-boolean v11, Lcom/samsung/android/rune/CoreRune;->MW_CAPTION_FULL_SCREEN_CUTOUT:Z
++
++    sput-boolean v10, Lcom/samsung/android/rune/CoreRune;->MW_CAPTION_SPLIT_IMMERSIVE:Z
++
++    sput-boolean v10, Lcom/samsung/android/rune/CoreRune;->MW_CAPTION_SPLIT_PARALLEL:Z
++
++    sput-boolean v10, Lcom/samsung/android/rune/CoreRune;->MW_CAPTION_FREEFORM:Z
++
++    if-eqz v10, :cond_30
++
++    if-eqz v10, :cond_30
++
++    move v11, v3
++
++    goto :goto_2f
++
++    :cond_30
++    move v11, v4
++
++    :goto_2f
++    sput-boolean v11, Lcom/samsung/android/rune/CoreRune;->MW_CAPTION_FREEFORM_TYPE:Z
++
++    sput-boolean v10, Lcom/samsung/android/rune/CoreRune;->MW_CAPTION_FREEFORM_MOTION:Z
++
++    sput-boolean v10, Lcom/samsung/android/rune/CoreRune;->MW_CAPTION_FREEFORM_STASH:Z
++
++    sput-boolean v10, Lcom/samsung/android/rune/CoreRune;->MW_CAPTION_FREEFORM_RESIZE_GUIDE:Z
++
++    sput-boolean v10, Lcom/samsung/android/rune/CoreRune;->MW_CAPTION_FREEFORM_RESIZE_GESTURE:Z
++
++    if-eqz v10, :cond_31
++
++    sget-boolean v11, Lcom/samsung/android/rune/CoreRune;->MW_SA_LOGGING:Z
++
++    if-eqz v11, :cond_31
++
++    move v11, v3
++
++    goto :goto_30
++
++    :cond_31
++    move v11, v4
++
++    :goto_30
++    sput-boolean v11, Lcom/samsung/android/rune/CoreRune;->MW_CAPTION_FREEFORM_RESIZE_GESTURE_SA_LOGGING:Z
++
++    sput-boolean v10, Lcom/samsung/android/rune/CoreRune;->MW_CAPTION_HANDLE_AUTO_HIDE_FOR_SPLIT_SCREEN:Z
++
++    sput-boolean v10, Lcom/samsung/android/rune/CoreRune;->MW_CAPTION_HELP_POPUP:Z
++
++    sput-boolean v10, Lcom/samsung/android/rune/CoreRune;->MW_CAPTION_TOOLTIP:Z
++
++    sput-boolean v4, Lcom/samsung/android/rune/CoreRune;->MW_CAPTION_FLIP_FOLDING_POLICY:Z
++
++    sget-boolean v10, Lcom/samsung/android/rune/CoreRune;->MW_SA_LOGGING:Z
++
++    sput-boolean v10, Lcom/samsung/android/rune/CoreRune;->MW_FREEFORM_HEADER_TYPE_SA_LOGGING:Z
++
++    sget-boolean v11, Lcom/samsung/android/rune/CoreRune;->MW_SHELL_TRANSITION:Z
++
++    sput-boolean v11, Lcom/samsung/android/rune/CoreRune;->MW_FREEFORM_SHELL_TRANSITION:Z
++
++    sput-boolean v10, Lcom/samsung/android/rune/CoreRune;->MW_FREEFORM_MINIMIZE_SA_LOGGING:Z
++
++    sput-boolean v11, Lcom/samsung/android/rune/CoreRune;->MW_FREEFORM_MINIMIZE_SHELL_TRANSITION:Z
++
++    sput-boolean v11, Lcom/samsung/android/rune/CoreRune;->MW_FREEFORM_MINIMIZE_CONTAINER:Z
++
++    sput-boolean v11, Lcom/samsung/android/rune/CoreRune;->MW_FREEFORM_MINIMIZE_CONTAINER_MULTIINSTANCE_PREVIEW:Z
++
++    sput-boolean v11, Lcom/samsung/android/rune/CoreRune;->MW_FREEFORM_SMART_POPUP_VIEW:Z
++
++    if-eqz v11, :cond_32
++
++    if-eqz v10, :cond_32
++
++    move v12, v3
++
++    goto :goto_31
++
++    :cond_32
++    move v12, v4
++
++    :goto_31
++    sput-boolean v12, Lcom/samsung/android/rune/CoreRune;->MW_FREEFORM_SMART_POPUP_VIEW_SA_LOGGING:Z
++
++    sput-boolean v11, Lcom/samsung/android/rune/CoreRune;->MW_DND_FREEFORM_DISMISS_VIEW:Z
++
++    sput-boolean v11, Lcom/samsung/android/rune/CoreRune;->MW_FREEFORM_MINIMIZED_PREVIEW:Z
++
++    sput-boolean v11, Lcom/samsung/android/rune/CoreRune;->MW_FREEFORM_FORCE_HIDING_TRANSITION:Z
++
++    sget-boolean v12, Lcom/samsung/android/rune/CoreRune;->IS_TABLET_DEVICE:Z
++
++    sput-boolean v12, Lcom/samsung/android/rune/CoreRune;->MW_FREEFORM_LARGE_SCREEN_BOUNDS_POLICY:Z
++
++    sput-boolean v4, Lcom/samsung/android/rune/CoreRune;->MW_FREEFORM_FOLD_BOUNDS_POLICY:Z
++
++    sput-boolean v4, Lcom/samsung/android/rune/CoreRune;->MW_FREEFORM_MULTI_FOLD_BOUNDS_POLICY:Z
++
++    sput-boolean v10, Lcom/samsung/android/rune/CoreRune;->MW_FREEFORM_CORNER_GESTURE_SA_LOGGING:Z
++
++    const-string/jumbo v10, "persist.wm.debug.force_disable_pip2"
++
++    invoke-static {v10, v4}, Landroid/os/SystemProperties;->getBoolean(Ljava/lang/String;Z)Z
++
++    move-result v10
++
++    xor-int/lit8 v12, v10, 0x1
++
++    sput-boolean v12, Lcom/samsung/android/rune/CoreRune;->MW_PIP2:Z
++
++    sput-boolean v12, Lcom/samsung/android/rune/CoreRune;->MW_PIP2_GUI:Z
++
++    sput-boolean v12, Lcom/samsung/android/rune/CoreRune;->MW_PIP2_NAVI_ALPHA:Z
++
++    sput-boolean v12, Lcom/samsung/android/rune/CoreRune;->MW_PIP2_RESIZE:Z
++
++    sput-boolean v12, Lcom/samsung/android/rune/CoreRune;->MW_PIP2_MENU_API:Z
++
++    sput-boolean v12, Lcom/samsung/android/rune/CoreRune;->MW_DND_PIP2_DISMISS_VIEW:Z
++
++    const-string/jumbo v15, "true"
++
++    move/from16 v16, v4
++
++    const-string v4, ""
++
++    move/from16 v17, v3
++
++    const-string/jumbo v3, "ro.surface_flinger.protected_contents"
++
++    move-object/from16 v18, v1
++
++    if-nez v10, :cond_33
++
++    invoke-static {v3, v4}, Landroid/os/SystemProperties;->get(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
++
++    move-result-object v1
++
++    invoke-virtual {v1, v15}, Ljava/lang/String;->contains(Ljava/lang/CharSequence;)Z
++
++    move-result v1
++
++    if-nez v1, :cond_33
++
++    invoke-static {v3, v4}, Landroid/os/SystemProperties;->get(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
++
++    move-result-object v1
++
++    invoke-virtual {v1, v2}, Ljava/lang/String;->contains(Ljava/lang/CharSequence;)Z
++
++    move-result v1
++
++    if-nez v1, :cond_33
++
++    move/from16 v1, v17
++
++    goto :goto_32
++
++    :cond_33
++    move/from16 v1, v16
++
++    :goto_32
++    sput-boolean v1, Lcom/samsung/android/rune/CoreRune;->MW_PIP2_DISABLE_ROUNDED_CORNER:Z
++
++    sput-boolean v12, Lcom/samsung/android/rune/CoreRune;->MW_PIP2_LAUNCH_POLICY:Z
++
++    sput-boolean v12, Lcom/samsung/android/rune/CoreRune;->MW_PIP2_DISPLAY_POLICY:Z
++
++    sput-boolean v12, Lcom/samsung/android/rune/CoreRune;->MW_PIP2_STASH:Z
++
++    sput-boolean v12, Lcom/samsung/android/rune/CoreRune;->MW_PIP2_TO_SPLIT:Z
++
++    sput-boolean v12, Lcom/samsung/android/rune/CoreRune;->MW_PIP2_BUG_FIX:Z
++
++    if-nez v10, :cond_34
++
++    sget-boolean v1, Lcom/samsung/android/rune/CoreRune;->FW_TRANSIENT_LAUNCH_PERFORMANCE_BAL_BLOCK:Z
++
++    if-eqz v1, :cond_34
++
++    move/from16 v1, v17
++
++    goto :goto_33
++
++    :cond_34
++    move/from16 v1, v16
++
++    :goto_33
++    sput-boolean v1, Lcom/samsung/android/rune/CoreRune;->MW_PIP2_TRANSIENT_LAUNCH_PERFORMANCE_BAL_BLOCK:Z
++
++    if-nez v10, :cond_35
++
++    sget-boolean v1, Lcom/samsung/android/rune/CoreRune;->MW_MULTI_SPLIT_FREEFORM_FOLDING_POLICY:Z
++
++    if-eqz v1, :cond_35
++
++    move/from16 v1, v17
++
++    goto :goto_34
++
++    :cond_35
++    move/from16 v1, v16
++
++    :goto_34
++    sput-boolean v1, Lcom/samsung/android/rune/CoreRune;->MW_PIP2_FOLD_FOLDING_POLICY:Z
++
++    sput-boolean v16, Lcom/samsung/android/rune/CoreRune;->MW_PIP2_FLIP_FOLDING_POLICY:Z
++
++    sput-boolean v12, Lcom/samsung/android/rune/CoreRune;->MW_PIP2_ROTATION_BUG_FIX:Z
++
++    sput-boolean v12, Lcom/samsung/android/rune/CoreRune;->MW_PIP2_FORCE_ENABLE_LOG:Z
++
++    sput-boolean v12, Lcom/samsung/android/rune/CoreRune;->MW_PIP2_REMOTE_TRANSITION:Z
++
++    if-nez v10, :cond_36
++
++    if-eqz v11, :cond_36
++
++    move/from16 v1, v17
++
++    goto :goto_35
++
++    :cond_36
++    move/from16 v1, v16
++
++    :goto_35
++    sput-boolean v1, Lcom/samsung/android/rune/CoreRune;->MW_PIP2_SHELL_TRANSITION:Z
++
++    sput-boolean v10, Lcom/samsung/android/rune/CoreRune;->MW_PIP:Z
++
++    sput-boolean v10, Lcom/samsung/android/rune/CoreRune;->MW_PIP_NAVI_ALPHA:Z
++
++    sput-boolean v10, Lcom/samsung/android/rune/CoreRune;->MW_DND_PIP_DISMISS_VIEW:Z
++
++    sput-boolean v10, Lcom/samsung/android/rune/CoreRune;->MW_PIP_GUI:Z
++
++    sput-boolean v10, Lcom/samsung/android/rune/CoreRune;->MW_PIP_BUG_FIX:Z
++
++    sput-boolean v10, Lcom/samsung/android/rune/CoreRune;->MW_PIP_MENU_BUG_FIX:Z
++
++    sput-boolean v10, Lcom/samsung/android/rune/CoreRune;->MW_PIP_ANIM_BUG_FIX:Z
++
++    sput-boolean v10, Lcom/samsung/android/rune/CoreRune;->MW_PIP_SYNC_DRAW_HANDLER:Z
++
++    if-eqz v10, :cond_37
++
++    if-eqz v11, :cond_37
++
++    move/from16 v1, v17
++
++    goto :goto_36
++
++    :cond_37
++    move/from16 v1, v16
++
++    :goto_36
++    sput-boolean v1, Lcom/samsung/android/rune/CoreRune;->MW_PIP_SHELL_TRANSITION:Z
++
++    sput-boolean v1, Lcom/samsung/android/rune/CoreRune;->MW_PIP_REMOTE_TRANSITION:Z
++
++    sput-boolean v10, Lcom/samsung/android/rune/CoreRune;->MW_PIP_LAUNCH_POLICY:Z
++
++    sput-boolean v10, Lcom/samsung/android/rune/CoreRune;->MW_PIP_DISPLAY_POLICY:Z
++
++    sput-boolean v10, Lcom/samsung/android/rune/CoreRune;->MW_PIP_RESIZE:Z
++
++    sput-boolean v10, Lcom/samsung/android/rune/CoreRune;->MW_PIP_STASH:Z
++
++    sput-boolean v10, Lcom/samsung/android/rune/CoreRune;->MW_PIP_FORCE_ENABLE_LOG:Z
++
++    sput-boolean v10, Lcom/samsung/android/rune/CoreRune;->MW_PIP_MENU_API:Z
++
++    sput-boolean v10, Lcom/samsung/android/rune/CoreRune;->MW_PIP_TO_SPLIT:Z
++
++    if-eqz v10, :cond_38
++
++    invoke-static {v3, v4}, Landroid/os/SystemProperties;->get(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
++
++    move-result-object v1
++
++    invoke-virtual {v1, v15}, Ljava/lang/String;->contains(Ljava/lang/CharSequence;)Z
++
++    move-result v1
++
++    if-nez v1, :cond_38
++
++    invoke-static {v3, v4}, Landroid/os/SystemProperties;->get(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
++
++    move-result-object v1
++
++    invoke-virtual {v1, v2}, Ljava/lang/String;->contains(Ljava/lang/CharSequence;)Z
++
++    move-result v1
++
++    if-nez v1, :cond_38
++
++    move/from16 v1, v17
++
++    goto :goto_37
++
++    :cond_38
++    move/from16 v1, v16
++
++    :goto_37
++    sput-boolean v1, Lcom/samsung/android/rune/CoreRune;->MW_PIP_DISABLE_ROUNDED_CORNER:Z
++
++    sput-boolean v16, Lcom/samsung/android/rune/CoreRune;->MW_PIP_FLIP_FOLDING_POLICY:Z
++
++    sput-boolean v10, Lcom/samsung/android/rune/CoreRune;->MW_PIP_ROTATION_BUG_FIX:Z
++
++    if-eqz v10, :cond_39
++
++    sget-boolean v1, Lcom/samsung/android/rune/CoreRune;->MW_SA_LOGGING:Z
++
++    if-eqz v1, :cond_39
++
++    move/from16 v1, v17
++
++    goto :goto_38
++
++    :cond_39
++    move/from16 v1, v16
++
++    :goto_38
++    sput-boolean v1, Lcom/samsung/android/rune/CoreRune;->MW_PIP_SA_LOGGING:Z
++
++    sput-boolean v10, Lcom/samsung/android/rune/CoreRune;->MW_PIP_SECURE_FOLDER_POLICY:Z
++
++    if-eqz v10, :cond_3a
++
++    sget-boolean v1, Lcom/samsung/android/rune/CoreRune;->MW_MULTI_SPLIT_FREEFORM_FOLDING_POLICY:Z
++
++    if-eqz v1, :cond_3a
++
++    move/from16 v1, v17
++
++    goto :goto_39
++
++    :cond_3a
++    move/from16 v1, v16
++
++    :goto_39
++    sput-boolean v1, Lcom/samsung/android/rune/CoreRune;->MW_PIP_FOLD_FOLDING_POLICY:Z
++
++    sget-boolean v1, Lcom/samsung/android/rune/CoreRune;->ONE_UI_6_1_1:Z
++
++    sput-boolean v1, Lcom/samsung/android/rune/CoreRune;->MW_NATURAL_SWITCHING_FULLSCREEN:Z
++
++    if-eqz v10, :cond_3b
++
++    if-eqz v1, :cond_3b
++
++    move/from16 v2, v17
++
++    goto :goto_3a
++
++    :cond_3b
++    move/from16 v2, v16
++
++    :goto_3a
++    sput-boolean v2, Lcom/samsung/android/rune/CoreRune;->MW_NATURAL_SWITCHING_PIP:Z
++
++    if-nez v10, :cond_3c
++
++    if-eqz v1, :cond_3c
++
++    move/from16 v1, v17
++
++    goto :goto_3b
++
++    :cond_3c
++    move/from16 v1, v16
++
++    :goto_3b
++    sput-boolean v1, Lcom/samsung/android/rune/CoreRune;->MW_NATURAL_SWITCHING_PIP2:Z
++
++    sget-boolean v1, Lcom/samsung/android/rune/CoreRune;->MW_MULTI_SPLIT:Z
++
++    sput-boolean v1, Lcom/samsung/android/rune/CoreRune;->MW_NATURAL_SWITCHING_MULTI_SPLIT:Z
++
++    sget-boolean v2, Lcom/samsung/android/rune/CoreRune;->MW_SA_LOGGING:Z
++
++    sput-boolean v2, Lcom/samsung/android/rune/CoreRune;->MW_NATURAL_SWITCHING_SA_LOGGING:Z
++
++    sput-boolean v2, Lcom/samsung/android/rune/CoreRune;->MW_DND_SA_LOGGING:Z
++
++    sput-boolean v1, Lcom/samsung/android/rune/CoreRune;->MW_DND_MULTI_SPLIT_DROP_TARGET:Z
++
++    sget-boolean v1, Lcom/samsung/android/rune/CoreRune;->IS_TABLET_DEVICE:Z
++
++    sput-boolean v17, Lcom/samsung/android/rune/CoreRune;->MW_EMBED_ACTIVITY:Z
++
++    sput-boolean v1, Lcom/samsung/android/rune/CoreRune;->MW_EMBED_ACTIVITY_DEVICE_ENABLED:Z
++
++    sput-boolean v17, Lcom/samsung/android/rune/CoreRune;->MW_EMBED_ACTIVITY_PACKAGE_ENABLED:Z
++
++    sput-boolean v17, Lcom/samsung/android/rune/CoreRune;->MW_EMBED_ACTIVITY_SYSTEM_BAR_POLICY:Z
++
++    sput-boolean v17, Lcom/samsung/android/rune/CoreRune;->MW_EMBED_ACTIVITY_MODE:Z
++
++    sput-boolean v17, Lcom/samsung/android/rune/CoreRune;->MW_EMBED_ACTIVITY_ANIMATION:Z
++
++    sput-boolean v17, Lcom/samsung/android/rune/CoreRune;->MW_EMBED_ACTIVITY_DIVIDER:Z
++
++    const-string/jumbo v2, "persist.debug.ae.performance"
++
++    move/from16 v3, v17
++
++    invoke-static {v2, v3}, Landroid/os/SystemProperties;->getBoolean(Ljava/lang/String;Z)Z
++
++    move-result v2
++
++    sput-boolean v2, Lcom/samsung/android/rune/CoreRune;->MW_EMBED_ACTIVITY_PERFORMANCE:Z
++
++    sput-boolean v16, Lcom/samsung/android/rune/CoreRune;->MW_EMBED_ACTIVITY_DEBUG_LOG:Z
++
++    sput-boolean v16, Lcom/samsung/android/rune/CoreRune;->DW_EXTERNAL_OVERLAY_DISPLAY:Z
++
++    const-string/jumbo v2, "persist.debug.dw.overlay_support_secondary_group"
++
++    move/from16 v3, v16
++
++    invoke-static {v2, v3}, Landroid/os/SystemProperties;->getBoolean(Ljava/lang/String;Z)Z
++
++    move-result v2
++
++    sput-boolean v2, Lcom/samsung/android/rune/CoreRune;->DW_ALLOCATE_SECONDARY_GROUP_TO_OVERLAY_DISPLAY:Z
++
++    const-string/jumbo v2, "persist.wm.enable.dw_persist_bounds_log"
++
++    invoke-static {v2, v3}, Landroid/os/SystemProperties;->getBoolean(Ljava/lang/String;Z)Z
++
++    move-result v2
++
++    sput-boolean v2, Lcom/samsung/android/rune/CoreRune;->DW_PERSIST_BOUNDS_LOG:Z
++
++    sput-boolean v3, Lcom/samsung/android/rune/CoreRune;->DW_MULTI_FOLD_POLICY:Z
++
++    sget-boolean v2, Lcom/samsung/android/rune/CoreRune;->MW_SHELL_CHANGE_TRANSITION:Z
++
++    if-eqz v2, :cond_3d
++
++    const-string/jumbo v2, "persist.debug.dw.vi"
++
++    const/4 v3, 0x1
++
++    invoke-static {v2, v3}, Landroid/os/SystemProperties;->getBoolean(Ljava/lang/String;Z)Z
++
++    move-result v2
++
++    if-eqz v2, :cond_3e
++
++    move v2, v3
++
++    goto :goto_3c
++
++    :cond_3d
++    const/4 v3, 0x1
++
++    :cond_3e
++    const/4 v2, 0x0
++
++    :goto_3c
++    sput-boolean v2, Lcom/samsung/android/rune/CoreRune;->DW_SHELL_CHANGE_TRANSITION:Z
++
++    const-string/jumbo v2, "persist.debug.dw.tasks_blur"
++
++    invoke-static {v2, v3}, Landroid/os/SystemProperties;->getBoolean(Ljava/lang/String;Z)Z
++
++    move-result v2
++
++    sput-boolean v2, Lcom/samsung/android/rune/CoreRune;->DW_TASK_SNAPSHOT_BLUR:Z
++
++    sput-boolean v1, Lcom/samsung/android/rune/CoreRune;->MT_APP_COMPAT_LARGE_SCREEN:Z
++
++    sput-boolean v1, Lcom/samsung/android/rune/CoreRune;->MT_ADAPTIVE_APP_BY_DEFAULT:Z
++
++    invoke-static {}, Lcom/android/internal/hidden_from_bootclasspath/com/android/window/flags/Flags;->appCompatRefactoring()Z
++
++    move-result v2
++
++    sput-boolean v2, Lcom/samsung/android/rune/CoreRune;->MT_APP_COMPAT_REFACTORING_FLAG_ENABLED:Z
++
++    sput-boolean v2, Lcom/samsung/android/rune/CoreRune;->MT_APP_COMPAT_UI_POLICY:Z
++
++    if-eqz v2, :cond_3f
++
++    if-eqz v1, :cond_3f
++
++    const/4 v2, 0x1
++
++    goto :goto_3d
++
++    :cond_3f
++    const/4 v2, 0x0
++
++    :goto_3d
++    sput-boolean v2, Lcom/samsung/android/rune/CoreRune;->MT_APP_COMPAT_UI_LARGE_SCREEN_POLICY:Z
++
++    sput-boolean v1, Lcom/samsung/android/rune/CoreRune;->MT_APP_COMPAT_ASPECT_RATIO_POLICY:Z
++
++    const/16 v16, 0x0
++
++    sput-boolean v16, Lcom/samsung/android/rune/CoreRune;->MT_APP_COMPAT_ASPECT_RATIO_SUPPORTED:Z
++
++    sput-boolean v16, Lcom/samsung/android/rune/CoreRune;->MT_APP_COMPAT_ROTATION_ASPECT_RATIO_SUPPORTED:Z
++
++    sput-boolean v1, Lcom/samsung/android/rune/CoreRune;->MT_APP_COMPAT_LANDSCAPE_VIEW_FOR_PORTRAIT_APPS:Z
++
++    sput-boolean v1, Lcom/samsung/android/rune/CoreRune;->MT_APP_COMPAT_ORIENTATION_POLICY:Z
++
++    sput-boolean v16, Lcom/samsung/android/rune/CoreRune;->MT_APP_COMPAT_ORIENTATION_POLICY_DEFAULT_ENABLED:Z
++
++    if-eqz v1, :cond_40
++
++    if-eqz v1, :cond_40
++
++    const/4 v2, 0x1
++
++    goto :goto_3e
++
++    :cond_40
++    const/4 v2, 0x0
++
++    :goto_3e
++    sput-boolean v2, Lcom/samsung/android/rune/CoreRune;->MT_APP_COMPAT_ROTATION_COMPAT_MODE:Z
++
++    sget-boolean v2, Lcom/samsung/android/rune/CoreRune;->FW_SA_LOGGING:Z
++
++    if-eqz v2, :cond_41
++
++    if-eqz v1, :cond_41
++
++    const/4 v2, 0x1
++
++    goto :goto_3f
++
++    :cond_41
++    const/4 v2, 0x0
++
++    :goto_3f
++    sput-boolean v2, Lcom/samsung/android/rune/CoreRune;->MT_APP_COMPAT_STATUS_LOGGING:Z
++
++    sput-boolean v1, Lcom/samsung/android/rune/CoreRune;->MT_APP_COMPAT_CAMERA_POLICY:Z
++
++    const/16 v16, 0x0
++
++    sput-boolean v16, Lcom/samsung/android/rune/CoreRune;->MT_APP_COMPAT_MULTI_FOLD_CAMERA_POLICY:Z
++
++    sput-boolean v16, Lcom/samsung/android/rune/CoreRune;->MT_APP_COMPAT_USE_DISPLAY_LANDSCAPE_ORIENTATION:Z
++
++    sput-boolean v16, Lcom/samsung/android/rune/CoreRune;->MT_APP_COMPAT_SENSOR_AXIS_REMAP:Z
++
++    sput-boolean v1, Lcom/samsung/android/rune/CoreRune;->MT_APP_COMPAT_CONFIGURATION:Z
++
++    sput-boolean v16, Lcom/samsung/android/rune/CoreRune;->MT_FULL_SCREEN_APPS_SUPPORT_MODE_HID:Z
++
++    sput-boolean v1, Lcom/samsung/android/rune/CoreRune;->FW_OVERLAPPING_WITH_CUTOUT_AS_DEFAULT:Z
++
++    sput-boolean v1, Lcom/samsung/android/rune/CoreRune;->FW_CUSTOM_LETTERBOX:Z
++
++    sput-boolean v1, Lcom/samsung/android/rune/CoreRune;->FW_ORIENTATION_CONTROL:Z
++
++    sput-boolean v1, Lcom/samsung/android/rune/CoreRune;->FW_ORIENTATION_CONTROL_DEFAULT_ENABLED:Z
++
++    sget-boolean v1, Landroid/os/Build;->IS_ENG:Z
++
++    sput-boolean v1, Lcom/samsung/android/rune/CoreRune;->FW_TRIM_MEMORY_LOG:Z
++
++    invoke-static {}, Landroid/os/Process;->getTotalMemory()J
++
++    move-result-wide v1
++
++    const-wide/32 v3, 0x100000
++
++    div-long/2addr v1, v3
++
++    const-wide/16 v3, 0x1800
++
++    cmp-long v1, v1, v3
++
++    if-lez v1, :cond_42
++
++    const/4 v1, 0x1
++
++    goto :goto_40
++
++    :cond_42
++    const/4 v1, 0x0
++
++    :goto_40
++    sput-boolean v1, Lcom/samsung/android/rune/CoreRune;->FW_DEDICATED_MEMORY:Z
++
++    invoke-static {}, Lcom/samsung/android/feature/SemFloatingFeature;->getInstance()Lcom/samsung/android/feature/SemFloatingFeature;
++
++    move-result-object v1
++
++    invoke-virtual {v1, v13}, Lcom/samsung/android/feature/SemFloatingFeature;->getBoolean(Ljava/lang/String;)Z
++
++    move-result v1
++
++    sput-boolean v1, Lcom/samsung/android/rune/CoreRune;->FW_WINDOW_BLUR_SUPPORTED:Z
++
++    sput-boolean v1, Lcom/samsung/android/rune/CoreRune;->FW_STACKED_BLUR_SUPPORTED:Z
++
++    invoke-static {}, Lcom/samsung/android/feature/SemCscFeature;->getInstance()Lcom/samsung/android/feature/SemCscFeature;
++
++    move-result-object v1
++
++    const-string v2, "CscFeature_Common_SupportZProjectFunctionInGlobal"
++
++    invoke-virtual {v1, v2}, Lcom/samsung/android/feature/SemCscFeature;->getBoolean(Ljava/lang/String;)Z
++
++    move-result v1
++
++    sput-boolean v1, Lcom/samsung/android/rune/CoreRune;->SUPPORT_APP_JUMP_BLOCK:Z
++
++    invoke-static/range {v18 .. v18}, Landroid/os/SystemProperties;->get(Ljava/lang/String;)Ljava/lang/String;
++
++    move-result-object v1
++
++    sput-object v1, Lcom/samsung/android/rune/CoreRune;->SYSPERF_PRODUCT_DEVICE:Ljava/lang/String;
++
++    const-string/jumbo v2, "b2q"
++
++    invoke-virtual {v2, v1}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
++
++    move-result v2
++
++    if-nez v2, :cond_44
++
++    const-string/jumbo v2, "b4q"
++
++    invoke-virtual {v2, v1}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
++
++    move-result v2
++
++    if-nez v2, :cond_44
++
++    const-string/jumbo v2, "b5q"
++
++    invoke-virtual {v2, v1}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
++
++    move-result v2
++
++    if-nez v2, :cond_44
++
++    const-string/jumbo v2, "b6q"
++
++    invoke-virtual {v2, v1}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
++
++    move-result v2
++
++    if-nez v2, :cond_44
++
++    const-string/jumbo v2, "b7s"
++
++    invoke-virtual {v2, v1}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
++
++    move-result v2
++
++    if-nez v2, :cond_44
++
++    const-string/jumbo v2, "b7r"
++
++    invoke-virtual {v2, v1}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
++
++    move-result v2
++
++    if-eqz v2, :cond_43
++
++    goto :goto_41
++
++    :cond_43
++    const/4 v2, 0x0
++
++    goto :goto_42
++
++    :cond_44
++    :goto_41
++    const/4 v2, 0x1
++
++    :goto_42
++    sput-boolean v2, Lcom/samsung/android/rune/CoreRune;->SYSPERF_BOOST_DISABLE_WHEN_FOLDED:Z
++
++    const-string/jumbo v2, "ro.hardware"
++
++    invoke-static {v2}, Landroid/os/SystemProperties;->get(Ljava/lang/String;)Ljava/lang/String;
++
++    move-result-object v2
++
++    const-string/jumbo v3, "qcom"
++
++    invoke-virtual {v3, v2}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
++
++    move-result v2
++
++    sput-boolean v2, Lcom/samsung/android/rune/CoreRune;->SYSPERF_QC_CHIPSET:Z
++
++    sput-boolean v2, Lcom/samsung/android/rune/CoreRune;->SYSPERF_QC_TASK_BOOST_ENABLE:Z
++
++    sput-boolean v2, Lcom/samsung/android/rune/CoreRune;->SYSPERF_QC_IOP_V3_ENABLE:Z
++
++    const/4 v3, 0x0
++
++    sput-boolean v3, Lcom/samsung/android/rune/CoreRune;->SYSPERF_JDM_MODEL:Z
++
++    const-string/jumbo v2, "sys.perf.boostopt"
++
++    invoke-static {v2, v3}, Landroid/os/SystemProperties;->getBoolean(Ljava/lang/String;Z)Z
++
++    move-result v2
++
++    sput-boolean v2, Lcom/samsung/android/rune/CoreRune;->SYSPERF_BOOST_OPT:Z
++
++    const-string/jumbo v2, "sys.perf.viboost"
++
++    invoke-static {v2, v3}, Landroid/os/SystemProperties;->getBoolean(Ljava/lang/String;Z)Z
++
++    move-result v2
++
++    sput-boolean v2, Lcom/samsung/android/rune/CoreRune;->SYSPERF_VI_BOOST:Z
++
++    const-string/jumbo v2, "sys.perf.dynamic_boost"
++
++    invoke-static {v2, v3}, Landroid/os/SystemProperties;->getBoolean(Ljava/lang/String;Z)Z
++
++    move-result v2
++
++    sput-boolean v2, Lcom/samsung/android/rune/CoreRune;->SYSPERF_DYNAMIC_BOOST:Z
++
++    const-string/jumbo v2, "debug.hwui.use_hint_manager"
++
++    invoke-static {v2, v3}, Landroid/os/SystemProperties;->getBoolean(Ljava/lang/String;Z)Z
++
++    move-result v2
++
++    const/16 v17, 0x1
++
++    xor-int/lit8 v2, v2, 0x1
++
++    sput-boolean v2, Lcom/samsung/android/rune/CoreRune;->SYSPERF_LAUNCHER_PROMOTION:Z
++
++    const-string/jumbo v2, "sys.perf.active.readahead"
++
++    invoke-static {v2, v3}, Landroid/os/SystemProperties;->getBoolean(Ljava/lang/String;Z)Z
++
++    move-result v2
++
++    sput-boolean v2, Lcom/samsung/android/rune/CoreRune;->SYSPERF_ACTIVE_READAHEAD:Z
++
++    const-string/jumbo v2, "ro.slmk.allied_proc_protect"
++
++    const-string/jumbo v4, "false"
++
++    invoke-static {v2, v4}, Landroid/os/SystemProperties;->get(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
++
++    move-result-object v2
++
++    invoke-virtual {v15, v2}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
++
++    move-result v2
++
++    sput-boolean v2, Lcom/samsung/android/rune/CoreRune;->ALLIED_PROC_PROTECTION_LMKD:Z
++
++    const-string/jumbo v2, "com.samsung.speg.disable"
++
++    invoke-static {v2, v3}, Landroid/os/SystemProperties;->getBoolean(Ljava/lang/String;Z)Z
++
++    move-result v2
++
++    const/16 v17, 0x1
++
++    xor-int/lit8 v2, v2, 0x1
++
++    sput-boolean v2, Lcom/samsung/android/rune/CoreRune;->SYSFW_APP_SPEG:Z
++
++    sget-boolean v2, Landroid/os/Build;->IS_USER:Z
++
++    xor-int/lit8 v2, v2, 0x1
++
++    sput-boolean v2, Lcom/samsung/android/rune/CoreRune;->SYSUI_GRADLE_BUILD:Z
++
++    sput-boolean v17, Lcom/samsung/android/rune/CoreRune;->SYSPERF_ACTIVE_APP_ADCP_ENABLE:Z
++
++    const-string/jumbo v2, "pa1q"
++
++    invoke-virtual {v2, v1}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
++
++    move-result v2
++
++    if-nez v2, :cond_46
++
++    const-string/jumbo v2, "pa2q"
++
++    invoke-virtual {v2, v1}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
++
++    move-result v2
++
++    if-nez v2, :cond_46
++
++    const-string/jumbo v2, "pa3q"
++
++    invoke-virtual {v2, v1}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
++
++    move-result v2
++
++    if-nez v2, :cond_46
++
++    const-string/jumbo v2, "b7q"
++
++    invoke-virtual {v2, v1}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
++
++    move-result v2
++
++    if-nez v2, :cond_46
++
++    const-string/jumbo v2, "q7q"
++
++    invoke-virtual {v2, v1}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
++
++    move-result v1
++
++    if-eqz v1, :cond_45
++
++    goto :goto_43
++
++    :cond_45
++    const/4 v1, 0x0
++
++    goto :goto_44
++
++    :cond_46
++    :goto_43
++    const/4 v1, 0x1
++
++    :goto_44
++    sput-boolean v1, Lcom/samsung/android/rune/CoreRune;->SYSPERF_ATLAS_ENABLED_DEVICES:Z
++
++    invoke-static {v7}, Landroid/os/SystemProperties;->get(Ljava/lang/String;)Ljava/lang/String;
++
++    move-result-object v2
++
++    invoke-virtual {v2, v8}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
++
++    move-result v2
++
++    if-eqz v2, :cond_47
++
++    if-eqz v1, :cond_47
++
++    const-string/jumbo v1, "persist.sys.atlas.enable"
++
++    invoke-static {v1}, Landroid/os/SystemProperties;->get(Ljava/lang/String;)Ljava/lang/String;
++
++    move-result-object v1
++
++    invoke-virtual {v1, v0}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
++
++    move-result v0
++
++    if-nez v0, :cond_47
++
++    const/4 v0, 0x1
++
++    goto :goto_45
++
++    :cond_47
++    const/4 v0, 0x0
++
++    :goto_45
++    sput-boolean v0, Lcom/samsung/android/rune/CoreRune;->SYSPERF_ATLAS_ENABLE:Z
++
++    invoke-static {v7}, Landroid/os/SystemProperties;->get(Ljava/lang/String;)Ljava/lang/String;
++
++    move-result-object v0
++
++    invoke-virtual {v0, v8}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
++
++    move-result v0
++
++    if-eqz v0, :cond_48
++
++    invoke-static {v14}, Landroid/os/SystemProperties;->get(Ljava/lang/String;)Ljava/lang/String;
++
++    move-result-object v0
++
++    const-string/jumbo v1, "SM-S91"
++
++    invoke-virtual {v0, v1}, Ljava/lang/String;->startsWith(Ljava/lang/String;)Z
++
++    move-result v0
++
++    if-eqz v0, :cond_48
++
++    const/4 v0, 0x1
++
++    goto :goto_46
++
++    :cond_48
++    const/4 v0, 0x0
++
++    :goto_46
++    sput-boolean v0, Lcom/samsung/android/rune/CoreRune;->FAST_MADVISE_ENABLED:Z
++
++    const/16 v16, 0x0
++
++    sput-boolean v16, Lcom/samsung/android/rune/CoreRune;->SUPPORT_IQI:Z
++
++    const-string/jumbo v0, "TMB"
++
++    const-string/jumbo v1, "ro.csc.sales_code"
++
++    invoke-static {v1}, Landroid/os/SystemProperties;->get(Ljava/lang/String;)Ljava/lang/String;
++
++    move-result-object v2
++
++    invoke-virtual {v0, v2}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
++
++    move-result v0
++
++    if-nez v0, :cond_4a
++
++    const-string/jumbo v0, "TMK"
++
++    invoke-static {v1}, Landroid/os/SystemProperties;->get(Ljava/lang/String;)Ljava/lang/String;
++
++    move-result-object v1
++
++    invoke-virtual {v0, v1}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
++
++    move-result v0
++
++    if-eqz v0, :cond_49
++
++    goto :goto_47
++
++    :cond_49
++    const/4 v0, 0x0
++
++    goto :goto_48
++
++    :cond_4a
++    :goto_47
++    const/4 v0, 0x1
++
++    :goto_48
++    sput-boolean v0, Lcom/samsung/android/rune/CoreRune;->MNO_TMO_DEVICE_REPORTING:Z
++
++    const-string/jumbo v0, "debug.skia.force_sw_gles"
++
++    const/4 v3, 0x0
++
++    invoke-static {v0, v3}, Landroid/os/SystemProperties;->getBoolean(Ljava/lang/String;Z)Z
++
++    move-result v0
++
++    sput-boolean v0, Lcom/samsung/android/rune/CoreRune;->GFW_DEBUG_DISABLE_HWRENDERING:Z
++
++    invoke-static {}, Lcom/samsung/android/feature/SemCscFeature;->getInstance()Lcom/samsung/android/feature/SemCscFeature;
++
++    move-result-object v0
++
++    const-string v1, "CscFeature_SmartManager_ConfigSubFeatures"
++
++    invoke-virtual {v0, v1}, Lcom/samsung/android/feature/SemCscFeature;->getString(Ljava/lang/String;)Ljava/lang/String;
++
++    move-result-object v0
++
++    const-string/jumbo v1, "trafficmanager"
++
++    invoke-virtual {v0, v1}, Ljava/lang/String;->contains(Ljava/lang/CharSequence;)Z
++
++    move-result v0
++
++    sput-boolean v0, Lcom/samsung/android/rune/CoreRune;->SUPPORT_TRAFFIC_MANAGER:Z
++
++    invoke-static {}, Lcom/samsung/android/feature/SemFloatingFeature;->getInstance()Lcom/samsung/android/feature/SemFloatingFeature;
++
++    move-result-object v0
++
++    const-string/jumbo v1, "SEC_FLOATING_FEATURE_COMMON_SUPPORT_CARLIFE"
++
++    invoke-virtual {v0, v1}, Lcom/samsung/android/feature/SemFloatingFeature;->getBoolean(Ljava/lang/String;)Z
++
++    move-result v0
++
++    sput-boolean v0, Lcom/samsung/android/rune/CoreRune;->BAIDU_CARLIFE:Z
++
++    sput-boolean v0, Lcom/samsung/android/rune/CoreRune;->CARLIFE_DISPLAY_GROUP:Z
++
++    sput-boolean v0, Lcom/samsung/android/rune/CoreRune;->CARLIFE_NAVBAR:Z
++
++    invoke-static {}, Lcom/samsung/android/feature/SemFloatingFeature;->getInstance()Lcom/samsung/android/feature/SemFloatingFeature;
++
++    move-result-object v0
++
++    invoke-virtual {v0, v6}, Lcom/samsung/android/feature/SemFloatingFeature;->getInt(Ljava/lang/String;)I
++
++    move-result v0
++
++    if-lez v0, :cond_4b
++
++    const/4 v3, 0x1
++
++    goto :goto_49
++
++    :cond_4b
++    const/4 v3, 0x0
++
++    :goto_49
++    sput-boolean v3, Lcom/samsung/android/rune/CoreRune;->DIRECT_WRITING:Z
++
++    const/16 v16, 0x0
++
++    sput-boolean v16, Lcom/samsung/android/rune/CoreRune;->SECONDARY_LAUNCHER_ACTIVITY_SUPPORT_FOR_DEX:Z
++
++    invoke-static {}, Lcom/samsung/android/feature/SemFloatingFeature;->getInstance()Lcom/samsung/android/feature/SemFloatingFeature;
++
++    move-result-object v0
++
++    invoke-virtual {v0, v5}, Lcom/samsung/android/feature/SemFloatingFeature;->getString(Ljava/lang/String;)Ljava/lang/String;
++
++    move-result-object v0
++
++    invoke-virtual {v9, v0}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
++
++    move-result v0
++
++    sput-boolean v0, Lcom/samsung/android/rune/CoreRune;->SUPPORT_SMARTMANAGER_CN:Z
++
++    invoke-static {}, Lcom/samsung/android/feature/SemFloatingFeature;->getInstance()Lcom/samsung/android/feature/SemFloatingFeature;
++
++    move-result-object v0
++
++    const-string/jumbo v1, "SEC_FLOATING_FEATURE_COMMON_SUPPORT_BIXBY_TOUCH"
++
++    invoke-virtual {v0, v1}, Lcom/samsung/android/feature/SemFloatingFeature;->getBoolean(Ljava/lang/String;)Z
++
++    move-result v0
++
++    sput-boolean v0, Lcom/samsung/android/rune/CoreRune;->BIXBY_TOUCH:Z
++
++    const-string/jumbo v0, "ro.otch.support.entrance"
++
++    invoke-static {v0}, Landroid/os/SystemProperties;->get(Ljava/lang/String;)Ljava/lang/String;
++
++    move-result-object v0
++
++    invoke-virtual {v15, v0}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
++
++    move-result v0
++
++    sput-boolean v0, Lcom/samsung/android/rune/CoreRune;->FW_SUPPORT_ONE_TOUCH:Z
++
++    const-string/jumbo v0, "debug.graphics.render.engine.policy"
++
++    const/4 v3, 0x1
++
++    invoke-static {v0, v3}, Landroid/os/SystemProperties;->getBoolean(Ljava/lang/String;Z)Z
++
++    move-result v0
++
++    sput-boolean v0, Lcom/samsung/android/rune/CoreRune;->GRAPHICS_RENDER_ENGINE_POLICY:Z
++
++    const-string/jumbo v0, "persist.graphics.renderer.hcf.enabled"
++
++    invoke-static {v0, v3}, Landroid/os/SystemProperties;->getBoolean(Ljava/lang/String;Z)Z
++
++    move-result v0
++
++    sput-boolean v0, Lcom/samsung/android/rune/CoreRune;->GRAPHICS_RENDERER_HCF:Z
++
++    const-string/jumbo v0, "persist.graphics.renderer.imagefilter.enabled"
++
++    invoke-static {v0, v3}, Landroid/os/SystemProperties;->getBoolean(Ljava/lang/String;Z)Z
++
++    move-result v0
++
++    sput-boolean v0, Lcom/samsung/android/rune/CoreRune;->GRAPHICS_RENDERER_IMAGEFILTER:Z
++
++    const-string/jumbo v0, "persist.graphics.renderer.reimagefilter.enabled"
++
++    invoke-static {v0, v3}, Landroid/os/SystemProperties;->getBoolean(Ljava/lang/String;Z)Z
++
++    move-result v0
++
++    sput-boolean v0, Lcom/samsung/android/rune/CoreRune;->GRAPHICS_RENDERER_REIMAGEFILTER:Z
++
++    const-string/jumbo v0, "persist.graphics.renderer.canvasblur.capture.enabled"
++
++    invoke-static {v0, v3}, Landroid/os/SystemProperties;->getBoolean(Ljava/lang/String;Z)Z
++
++    move-result v0
++
++    sput-boolean v0, Lcom/samsung/android/rune/CoreRune;->GRAPHICS_RENDERER_CANVASBLUR_CAPTURE:Z
++
++    sget v0, Landroid/os/Build$VERSION;->SEM_PLATFORM_INT:I
++
++    const v1, 0x29a04
++
++    if-lt v0, v1, :cond_4c
++
++    goto :goto_4a
++
++    :cond_4c
++    move/from16 v3, v16
++
++    :goto_4a
++    sput-boolean v3, Lcom/samsung/android/rune/CoreRune;->POWER_SAVING_SERVICE_RESET_ON_USER_SWITCH:Z
++
++    return-void
++.end method
++
++.method private constructor blacklist <init>()V
++    .locals 0
++
++    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
++
++    return-void
++.end method
++
++.method public static blacklist getAIVersion()I
++    .locals 1
++
++    :try_start_0
++    const-string v0, "20253"
++
++    invoke-static {v0}, Ljava/lang/Integer;->parseInt(Ljava/lang/String;)I
++
++    move-result v0
++    :try_end_0
++    .catch Ljava/lang/NumberFormatException; {:try_start_0 .. :try_end_0} :catch_0
++
++    return v0
++
++    :catch_0
++    const/4 v0, -0x1
++
++    return v0
++.end method
++
++.method public static blacklist getInstance()Lcom/samsung/android/rune/CoreRune;
++    .locals 1
++
++    sget-object v0, Lcom/samsung/android/rune/CoreRune;->sInstance:Lcom/samsung/android/rune/CoreRune;
++
++    if-nez v0, :cond_0
++
++    new-instance v0, Lcom/samsung/android/rune/CoreRune;
++
++    invoke-direct {v0}, Lcom/samsung/android/rune/CoreRune;-><init>()V
++
++    sput-object v0, Lcom/samsung/android/rune/CoreRune;->sInstance:Lcom/samsung/android/rune/CoreRune;
++
++    :cond_0
++    sget-object v0, Lcom/samsung/android/rune/CoreRune;->sInstance:Lcom/samsung/android/rune/CoreRune;
++
++    return-object v0
++.end method
++
++.method public static blacklist isSamsungLogEnabled()Z
++    .locals 2
++
++    sget-object v0, Lcom/samsung/android/rune/CoreRune;->mCachedSamsungLogPropValue:Ljava/lang/String;
++
++    if-nez v0, :cond_0
++
++    const-string/jumbo v0, "persist.log.semlevel"
++
++    const-string v1, "0"
++
++    invoke-static {v0, v1}, Landroid/os/SystemProperties;->get(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
++
++    move-result-object v0
++
++    sput-object v0, Lcom/samsung/android/rune/CoreRune;->mCachedSamsungLogPropValue:Ljava/lang/String;
++
++    :cond_0
++    const-string v0, "0xFFFFFFFF"
++
++    sget-object v1, Lcom/samsung/android/rune/CoreRune;->mCachedSamsungLogPropValue:Ljava/lang/String;
++
++    invoke-virtual {v0, v1}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
++
++    move-result v0
++
++    return v0
++.end method
+-- 
+2.43.0
+
