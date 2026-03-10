@@ -2,8 +2,8 @@
   <img loading="lazy" src="readme-res/banner.png"/>
 </h1>
 <p align="center">
-  <a href="https://github.com/devcore94/MonsterROM-REBORN/blob/sixteen/LICENSE"><img loading="lazy" src="https://img.shields.io/github/license/devcore94/MonsterROM-REBORN?style=for-the-badge&logo=github"/></a>
-  <a href="https://github.com/devcore94/MonsterROM-REBORN/commits/sixteen"><img loading="lazy" src="https://img.shields.io/github/last-commit/devcore94/MonsterROM-REBORN/sixteen?style=for-the-badge"/></a>
+  <a href="https://github.com/devcore94/MonsterROM-REBORN/blob/sixteenQPR2/LICENSE"><img loading="lazy" src="https://img.shields.io/github/license/devcore94/MonsterROM-REBORN?style=for-the-badge&logo=github"/></a>
+  <a href="https://github.com/devcore94/MonsterROM-REBORN/commits/sixteenQPR2"><img loading="lazy" src="https://img.shields.io/github/last-commit/devcore94/MonsterROM-REBORN/sixteenQPR2?style=for-the-badge"/></a>
   <a href="https://github.com/devcore94/MonsterROM-REBORN/stargazers"><img loading="lazy" src="https://img.shields.io/github/stars/devcore94/MonsterROM-REBORN?style=for-the-badge"/></a>
   <a href="https://github.com/devcore94/MonsterROM-REBORN/actions/workflows/build.yml"><img loading="lazy" src="https://img.shields.io/github/actions/workflow/status/devcore94/MonsterROM-REBORN/build.yml?style=for-the-badge"/></a>
   <a href="https://crowdin.com/project/MonsterROM-REBORN"><img loading="lazy" src="https://img.shields.io/badge/Crowdin-263238?style=for-the-badge&logo=crowdin"/></a>
