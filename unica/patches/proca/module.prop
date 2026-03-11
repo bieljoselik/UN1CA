@@ -1,4 +1,4 @@
 id=proca
 name=PROCA kernel patch
-author=devcore94
+author=salvogiangri
 description=Removes PROCA from stock kernel image.

@@ -1,4 +1,4 @@
 id=nfc
 name=nfcfix
-author=devcore94,dupa
+author=salvogiangri,dupa
 description=fixing crash of nfc when opening in settings.

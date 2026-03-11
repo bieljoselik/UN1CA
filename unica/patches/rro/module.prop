@@ -1,4 +1,4 @@
 id=rro
 name=/product RRO configs
-author=devcore94
+author=salvogiangri
 description=Replaces /product RRO configs with target ones.

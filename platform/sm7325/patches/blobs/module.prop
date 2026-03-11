@@ -1,4 +1,4 @@
 id=blobs
 name=Blobs
-author=devcore94
+author=salvogiangri
 description=Replaces source blobs with target-compatible ones.

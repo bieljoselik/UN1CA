@@ -1,4 +1,4 @@
 id=vndk
 name=VNDK
-author=devcore94, Fede2782
+author=salvogiangri, Fede2782
 description=Checks the source device vendor API and replaces it if it's mismatched from target device.

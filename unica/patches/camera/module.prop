@@ -1,4 +1,4 @@
 id=camera
 name=Camera patches
-author=devcore94
+author=salvogiangri
 description=Applies camera-specific patches in work dir.

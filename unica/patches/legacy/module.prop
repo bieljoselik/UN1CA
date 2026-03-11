@@ -1,4 +1,4 @@
 id=legacy
 name=Legacy patches
-author=devcore94
+author=salvogiangri
 description=Applies patches for legacy devices.

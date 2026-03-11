@@ -1,4 +1,4 @@
 id=singlesim
 name=Single SIM fix
-author=devcore94
+author=salvogiangri
 description=Fixes wrong SIM count on single SIM variants.

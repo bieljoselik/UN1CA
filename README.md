@@ -2,16 +2,16 @@
   <img loading="lazy" src="readme-res/banner.png"/>
 </h1>
 <p align="center">
-  <a href="https://github.com/devcore94/MonsterROM-REBORN/blob/sixteenQPR2/LICENSE"><img loading="lazy" src="https://img.shields.io/github/license/devcore94/MonsterROM-REBORN?style=for-the-badge&logo=github"/></a>
-  <a href="https://github.com/devcore94/MonsterROM-REBORN/commits/sixteenQPR2"><img loading="lazy" src="https://img.shields.io/github/last-commit/devcore94/MonsterROM-REBORN/sixteenQPR2?style=for-the-badge"/></a>
-  <a href="https://github.com/devcore94/MonsterROM-REBORN/stargazers"><img loading="lazy" src="https://img.shields.io/github/stars/devcore94/MonsterROM-REBORN?style=for-the-badge"/></a>
-  <a href="https://github.com/devcore94/MonsterROM-REBORN/actions/workflows/build.yml"><img loading="lazy" src="https://img.shields.io/github/actions/workflow/status/devcore94/MonsterROM-REBORN/build.yml?style=for-the-badge"/></a>
+  <a href="https://github.com/salvogiangri/MonsterROM-REBORN/blob/sixteenQPR2/LICENSE"><img loading="lazy" src="https://img.shields.io/github/license/salvogiangri/MonsterROM-REBORN?style=for-the-badge&logo=github"/></a>
+  <a href="https://github.com/salvogiangri/MonsterROM-REBORN/commits/sixteenQPR2"><img loading="lazy" src="https://img.shields.io/github/last-commit/salvogiangri/MonsterROM-REBORN/sixteenQPR2?style=for-the-badge"/></a>
+  <a href="https://github.com/salvogiangri/MonsterROM-REBORN/stargazers"><img loading="lazy" src="https://img.shields.io/github/stars/salvogiangri/MonsterROM-REBORN?style=for-the-badge"/></a>
+  <a href="https://github.com/salvogiangri/MonsterROM-REBORN/actions/workflows/build.yml"><img loading="lazy" src="https://img.shields.io/github/actions/workflow/status/salvogiangri/MonsterROM-REBORN/build.yml?style=for-the-badge"/></a>
   <a href="https://crowdin.com/project/MonsterROM-REBORN"><img loading="lazy" src="https://img.shields.io/badge/Crowdin-263238?style=for-the-badge&logo=crowdin"/></a>
 </p>
 <p align="center">MonsterROM-REBORN <i>(/ˈu.ni.ka/)</i> is a work-in-progress custom firmware for Samsung Galaxy devices.</p>
 
 <p align="center">
-  <a href="https://github.com/devcore94/MonsterROM-REBORN/discussions">🚀 Discussions</a>
+  <a href="https://github.com/salvogiangri/MonsterROM-REBORN/discussions">🚀 Discussions</a>
   •
   <a href="https://t.me/unicarom">💬 Telegram</a>
 </p>
@@ -61,7 +61,7 @@ Any form of contribution, suggestions, bug report or feature request for the pro
 - Outdoor mode support
 - Auto PIN confirm with 4 digits
 - [BluetoothLibraryPatcher](https://github.com/3arthur6/BluetoothLibraryPatcher) integrated
-- [KnoxPatch](https://github.com/devcore94/KnoxPatch) integrated
+- [KnoxPatch](https://github.com/salvogiangri/KnoxPatch) integrated
 - Extra CSC features enabled (Call recording, Hiya, Network speed in status bar, AltZLife)
 
 \* Not available on MediaTek devices<br>
@@ -94,7 +94,7 @@ This project is licensed under the terms of the [GNU General Public License v3.0
 - [platform_build](https://android.googlesource.com/platform/build/) (ext4_utils, f2fs_utils, signapk), licensed under the [Apache License 2.0](https://source.android.com/docs/setup/about/licenses)
 
 # Contributors
-<a href="https://github.com/devcore94/MonsterROM-REBORN/graphs/contributors"><img loading="lazy" src="https://contrib.rocks/image?repo=devcore94/MonsterROM-REBORN"/></a>
+<a href="https://github.com/salvogiangri/MonsterROM-REBORN/graphs/contributors"><img loading="lazy" src="https://contrib.rocks/image?repo=salvogiangri/MonsterROM-REBORN"/></a>
 
 # Credits
 A special thanks goes to the following for their invaluable contributions in no particular order:
@@ -109,4 +109,4 @@ A special thanks goes to the following for their invaluable contributions in no 
 - *All the MonsterROM-REBORN project forks, contributors, testers and users ❤️*
 
 # Stargazers over time
-[![Stargazers over time](https://starchart.cc/devcore94/MonsterROM-REBORN.svg)](https://starchart.cc/devcore94/MonsterROM-REBORN)
+[![Stargazers over time](https://starchart.cc/salvogiangri/MonsterROM-REBORN.svg)](https://starchart.cc/salvogiangri/MonsterROM-REBORN)

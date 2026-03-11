@@ -1,4 +1,4 @@
 id=adb
 name=Debug USB
-author=devcore94
+author=salvogiangri
 description=Enables ADB on boot.
