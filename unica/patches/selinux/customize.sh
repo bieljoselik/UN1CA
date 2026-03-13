@@ -82,6 +82,21 @@ for e in $ENTRIES; do
     fi
 done
 
+LOG_STEP_IN "- Apply genconfsrulesfix to platsepolicy.cil"
+# Delete specific genfscon lines
+PLAT_SEPOLICY="$WORK_DIR/system/system/etc/selinux/plat_sepolicy.cil"
+sed -i "$PLAT_SEPOLICY" \
+    -e '\#(genfscon bpf "/cputimeinstate" (u object_r fs_bpf_cputimeinstate ((s0) (s0))))#d' \
+    -e '\#(genfscon proc "/sys/vm/dirty_writeback_centisecs" (u object_r proc_dirty ((s0) (s0))))#d' \
+    -e '\#(genfscon proc "/sys/kernel/firmware_config" (u object_r proc_firmware_config ((s0) (s0))))#d' \
+    -e '\#(genfscon sysfs "/devices/virtual/misc/ublk-control/" (u object_r sysfs_ublk ((s0) (s0))))#d' \
+    -e '\#(genfscon sysfs "/devices/virtual/block/ublk" (u object_r sysfs_ublk ((s0) (s0))))#d' \
+    -e '\#(genfscon sysfs "/class/ublk-char/" (u object_r sysfs_ublk ((s0) (s0))))#d' \
+    -e '\#(genfscon sysfs "/kernel/btf" (u object_r sysfs_btf ((s0) (s0))))#d' \
+    -e '\#(genfscon tracefs "/events/f2fs/f2fs_set_page_dirty/" (u object_r debugfs_tracing ((s0) (s0))))#d' \
+    -e '\#(genfscon tracefs "/hypervisor" (u object_r debugfs_tracing ((s0) (s0))))#d'
+LOG_STEP_OUT
+
 for e in $DUPLICATES; do
     if grep -q "^$e.*" "$WORK_DIR/$(GET_SYSTEM_EXT)/etc/selinux/system_ext_property_contexts"; then
         # the problematic entry is currently present in system_ext, check if we need to remove it

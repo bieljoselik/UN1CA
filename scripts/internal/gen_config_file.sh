@@ -75,7 +75,7 @@ fi
 #     it is set in unica/configs/version.sh.
 #
 #   ROM_BUILD_TIMESTAMP
-#     Integer containing the build timestamp in seconds, this is used by the MonsterROM-REBORN Updates app.
+#     Integer containing the build timestamp in seconds, this is used by the UN1CA Updates app.
 #     Defaults to the current time of execution of the script.
 #
 #   [SOURCE/TARGET]_FIRMWARE
@@ -441,7 +441,6 @@ fi
     GET_BUILD_VAR "TARGET_BOARD_API_LEVEL"
     GET_BUILD_VAR "TARGET_DISABLE_AVB_SIGNING" "false"
     GET_BUILD_VAR "TARGET_INCLUDE_PATCHED_VBMETA" "false"
-    GET_BUILD_VAR "TARGET_INSTALL_METHOD" "odin"
     GET_BUILD_VAR "TARGET_KEEP_ORIGINAL_SIGN" "false"
     GET_BUILD_VAR "TARGET_BOOT_PARTITION_SIZE" "none"
     GET_BUILD_VAR "TARGET_DTBO_PARTITION_SIZE" "none"

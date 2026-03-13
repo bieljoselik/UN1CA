@@ -1,20 +1,6 @@
 #!/usr/bin/env bash
-#
-# Copyright (C) 2025 Salvo Giangreco
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
+# Copyright (c) 2025 Salvo Giangreco
+# SPDX-License-Identifier: GPL-3.0-or-later
 
 # [
 source "$SRC_DIR/scripts/utils/firmware_utils.sh" || exit 1
@@ -28,7 +14,6 @@ LATEST_FIRMWARE=""
 DOWNLOADED_FIRMWARE=""
 BL_TAR=""
 AP_TAR=""
-CSC_TAR=""
 
 TMP_DIR="$(mktemp -d)"
 
@@ -75,7 +60,7 @@ EXTRACT_KERNEL_BINARIES()
 EXTRACT_OS_PARTITIONS()
 {
     # https://android.googlesource.com/platform/build/+/refs/tags/android-15.0.0_r1/tools/releasetools/common.py#131
-    local FILES="system.img vendor.img product.img system_ext.img odm.img vendor_dlkm.img odm_dlkm.img system_dlkm.img optics.img prism.img"
+    local FILES="system.img vendor.img product.img system_ext.img odm.img vendor_dlkm.img odm_dlkm.img system_dlkm.img"
 
     LOG_STEP_IN "- Extracting OS partitions"
 
@@ -101,18 +86,14 @@ EXTRACT_OS_PARTITIONS()
         done
 
         rm -f "$FW_DIR/${MODEL}_${CSC}/super.img"
-    fi
-    for f in $FILES; do
-        [ -f "$FW_DIR/${MODEL}_${CSC}/$f" ] && continue
-        if FILE_EXISTS_IN_TAR "$AP_TAR" "$f".lz4; then
+    else
+        for f in $FILES; do
             EXTRACT_FILE_FROM_TAR "$AP_TAR" "$f" || exit 1
-        elif FILE_EXISTS_IN_TAR "$CSC_TAR" "$f".lz4; then
-            EXTRACT_FILE_FROM_TAR "$CSC_TAR" "$f" || exit 1
-        fi
-        [ -f "$FW_DIR/${MODEL}_${CSC}/$f" ] || continue
-        UNSPARSE_IMAGE "$FW_DIR/${MODEL}_${CSC}/$f" || exit 1
-        STORE_OS_PARTITION_METADATA "$FW_DIR/${MODEL}_${CSC}/$f"
-    done
+            [ -f "$FW_DIR/${MODEL}_${CSC}/$f" ] || continue
+            UNSPARSE_IMAGE "$FW_DIR/${MODEL}_${CSC}/$f" || exit 1
+            STORE_OS_PARTITION_METADATA "$FW_DIR/${MODEL}_${CSC}/$f"
+        done
+    fi
 
     local PARTITION
     for f in $FILES; do
@@ -370,8 +351,8 @@ for i in "${FIRMWARES[@]}"; do
 
     LATEST_FIRMWARE="$(GET_LATEST_FIRMWARE "$MODEL" "$CSC")"
     if [ ! "$LATEST_FIRMWARE" ]; then
-        LOGW "Latest available firmware could not be fetched"
-        #exit 1
+        LOGE "Latest available firmware could not be fetched"
+        exit 1
     fi
 
     LOG_STEP_IN "- Processing $MODEL firmware with $CSC CSC"
@@ -413,7 +394,6 @@ for i in "${FIRMWARES[@]}"; do
 
     BL_TAR="$(find "$ODIN_DIR/${MODEL}_${CSC}" -name "BL_$(cut -d "/" -f 1 -s <<< "$DOWNLOADED_FIRMWARE")*.md5" | sort -r | head -n 1)"
     AP_TAR="$(find "$ODIN_DIR/${MODEL}_${CSC}" -name "AP_$(cut -d "/" -f 1 -s <<< "$DOWNLOADED_FIRMWARE")*.md5" | sort -r | head -n 1)"
-    CSC_TAR="$(find "$ODIN_DIR/${MODEL}_${CSC}" -name "CSC_*.md5" | sort -r | head -n 1)"
 
     if [ ! "$BL_TAR" ]; then
         LOG "\033[0;31m! No BL tar found\033[0m"

@@ -149,7 +149,7 @@ if $BUILD_ROM; then
 fi
 
 if $BUILD_TAR; then
-    LOG_STEP_IN true "Creating TAR"
+    LOG_STEP_IN true "Creating tar"
     "$SRC_DIR/scripts/internal/build_odin_package.sh" || exit 1
     LOG_STEP_OUT
 fi
