@@ -4,7 +4,6 @@ ADD_TO_WORK_DIR "e2sxxx" "system" "system/apex/com.android.bt.apex" 0 0 644
 
 LOG_STEP_OUT
 
-
 if [ ! -f "$WORK_DIR/system/system/lib64/libbluetooth_jni.so" ]; then
     LOG_STEP_IN "- Extracting libbluetooth_jni.so from com.android.bt.apex"
 
