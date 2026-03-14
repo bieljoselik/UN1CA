@@ -5,8 +5,9 @@ sed -i "${LINE}s/,fileencryption=aes-256-xts:aes-256-cts:v2//g" "$WORK_DIR/vendo
 
 LOG "- Fixing screenrecorder"
 # OMX
-SET_PROP "system" "debug.stagefright.ccodec" "0"
- 
+sed -i '/^debug\.stagefright\.ccodec=/d' "$WORK_DIR/system/system/build.prop"
+sed -i '/#Property to enable Codec2 for audio and OMX for Video/d' "$WORK_DIR/system/system/build.prop"
+
 LOG "- Adjusting DPI"
 # DPI
 SET_PROP "vendor" "ro.sf.init.lcd_density" "$(GET_PROP "vendor" "ro.sf.lcd_density")"
