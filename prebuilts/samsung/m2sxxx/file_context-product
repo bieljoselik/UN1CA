@@ -1,0 +1,9 @@
+/product/etc/selinux/mapping u:object_r:system_file:s0
+/product/etc/selinux/mapping/202404\.cil u:object_r:system_file:s0
+/product/etc/selinux/mapping/202504\.cil u:object_r:system_file:s0
+/product/etc/selinux/mapping/29\.0\.cil u:object_r:system_file:s0
+/product/etc/selinux/mapping/30\.0\.cil u:object_r:system_file:s0
+/product/etc/selinux/mapping/31\.0\.cil u:object_r:system_file:s0
+/product/etc/selinux/mapping/32\.0\.cil u:object_r:system_file:s0
+/product/etc/selinux/mapping/33\.0\.cil u:object_r:system_file:s0
+/product/etc/selinux/mapping/34\.0\.cil u:object_r:system_file:s0

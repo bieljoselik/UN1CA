@@ -1,7 +1,7 @@
 # Copyright (c) 2025 Salvo Giangreco
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-# MonsterROM-REBORN debloat list
+# UN1CA debloat list
 # - Add entries inside the specific partition containing that file (<PARTITION>_DEBLOAT+="")
 # - DO NOT add the partition name at the start of any entry (eg. "/system/dpolicy_system")
 # - DO NOT add a slash at the start of any entry (eg. "/dpolicy_system")
@@ -12,6 +12,12 @@ dpolicy_system
 "
 VENDOR_DEBLOAT+="
 etc/dpolicy
+"
+# Samsung SPen stuff
+SYSTEM_DEBLOAT+="
+system/priv-app/AirCommand
+system/priv-app/AirReadingGlass
+system/priv-app/SmartEye
 "
 
 # Samsung PROCA certificate DB
@@ -176,11 +182,6 @@ system/etc/sysconfig/preinstalled-packages-com.mygalaxy.service.xml
 system/priv-app/MyGalaxyService
 "
 
-# Phoneconfiguration
-SYSTEM_DEBLOAT+="
-system/priv-app/CIDManager
-"
-
 # Samsung Analytics
 SYSTEM_DEBLOAT+="
 system/app/DsmsAPK
@@ -333,4 +334,8 @@ system/etc/sysconfig/feature-a11y-preload-voacc.xml
 # YouTube
 PRODUCT_DEBLOAT+="
 app/YouTube
+"
+# Location
+SYSTEM_EXT_DEBLOAT+="
+priv-app/com.qualcomm.location
 "

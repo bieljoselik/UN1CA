@@ -1,20 +1,6 @@
 #!/usr/bin/env bash
-#
-# Copyright (C) 2025 Salvo Giangreco
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
+# Copyright (c) 2025 Salvo Giangreco
+# SPDX-License-Identifier: GPL-3.0-or-later
 
 # [
 source "$SRC_DIR/scripts/utils/build_utils.sh" || exit 1
@@ -28,7 +14,6 @@ FILE=""
 
 INPUT_FILE=""
 OUTPUT_PATH=""
-ARGS=""
 
 THREAD_COUNT=$(awk -v max="$(nproc)" '/MemTotal/ {
   tc = int(($2 + 1048575) / 2097152);
@@ -45,21 +30,26 @@ BUILD()
     fi
 
     LOG "- Building ${INPUT_FILE//$WORK_DIR/}"
-    
+
     # Copy original META-INF
     mkdir -p "$OUTPUT_PATH/build/apk"
     cp -a "$OUTPUT_PATH/original/META-INF" "$OUTPUT_PATH/build/apk/META-INF"
 
-    # Build APK with --shorten-resource-paths (https://developer.android.com/tools/aapt2#optimize_options)
-    EVAL "apktool b -j \"$THREAD_COUNT\" -p \"$FRAMEWORK_DIR\" -srp \"$OUTPUT_PATH\"" || exit 1
+    EVAL "apktool b -j \"$THREAD_COUNT\" -p \"$FRAMEWORK_DIR\" \"$OUTPUT_PATH\"" || exit 1
 
+    find "$OUTPUT_PATH" -maxdepth 1 -type f -name "*.dex" -delete
 
     local FILE_NAME
     FILE_NAME="$(basename "$INPUT_FILE")"
 
-    LOG "- Zipaligning ${INPUT_FILE//$WORK_DIR/}"
-    EVAL "zipalign -p 4 \"$OUTPUT_PATH/dist/$FILE_NAME\" \"$OUTPUT_PATH/dist/temp\"" || exit 1
-    mv -f "$OUTPUT_PATH/dist/temp" "$OUTPUT_PATH/dist/$FILE_NAME"
+    if [[ "$INPUT_FILE" == *".apk" ]]; then
+        local CERT_PREFIX="aosp"
+        $ROM_IS_OFFICIAL && CERT_PREFIX="unica"
+
+        LOG "- Zipaligning ${INPUT_FILE//$WORK_DIR/}"
+        EVAL "zipalign -p 4 \"$OUTPUT_PATH/dist/$FILE_NAME\" \"$OUTPUT_PATH/dist/temp\"" || exit 1
+        mv -f "$OUTPUT_PATH/dist/temp" "$OUTPUT_PATH/dist/$FILE_NAME"
+    fi
 
     mkdir -p "$(dirname "$INPUT_FILE")"
     mv -f "$OUTPUT_PATH/dist/$FILE_NAME" "$INPUT_FILE"
@@ -96,7 +86,6 @@ DECODE()
     fi
 
     LOG "- Decoding ${INPUT_FILE//$WORK_DIR/}"
-    [[ "$INPUT_FILE" != *rro_*.apk ]] && ARGS="-r"
 
     # Decode APK with --no-debug-info, which will disassemble DEX file with the following flags:
     # - Disabled synthetic accessors comments
@@ -104,7 +93,6 @@ DECODE()
     # - Use .locals directive instead of the .registers one
     # - Use a sequential numbering scheme for labels
     EVAL "apktool d --no-debug-info -j \"$THREAD_COUNT\" -o \"$OUTPUT_PATH\" -p \"$FRAMEWORK_DIR\" -t \"$FRAMEWORK_TAG\" \"$INPUT_FILE\"" || exit 1
-
 }
 
 PREPARE_SCRIPT()
@@ -163,6 +151,7 @@ PREPARE_SCRIPT()
             ;;
     esac
     FILE_PATH+="/$FILE"
+
     INPUT_FILE="$FILE_PATH"
     OUTPUT_PATH="$APKTOOL_DIR/$PARTITION/${FILE//system\//}"
 }
